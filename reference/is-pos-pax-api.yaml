@@ -1,0 +1,192 @@
+openapi: 3.1.0
+x-stoplight:
+  id: tgvfiv56rre5x
+info:
+  title: POS PAX Public API
+  version: '1.0'
+servers:
+  - url: 'http://localhost:3000'
+paths:
+  /configuration:
+    get:
+      summary: POS configuration
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Configuration'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+      operationId: get-configuration
+      description: 'Prima chiamata da effettuare dopo il login, ritorna lista di articoli ed altre informazioni.'
+      x-internal: false
+    parameters: []
+  '/cards/{track}':
+    get:
+      summary: Card info
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Card-info'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '':
+          description: ''
+      operationId: get-cards
+    parameters:
+      - schema:
+          type: string
+        name: track
+        in: path
+        required: true
+  /devices/pax/supplies/info:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Supplies-info'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+      operationId: get-devices-pax-supplies-info
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: card_id
+        - schema:
+            type: string
+          in: query
+          name: type_card_id
+        - schema:
+            type: string
+          in: query
+          name: is_oil
+  /supplies/validation:
+    post:
+      summary: ''
+      operationId: post-supplies-validation
+      responses:
+        '200':
+          description: OK
+  /devices/pax/reversal/info:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses: {}
+      operationId: get-devices-pax-reversal-info
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: card_id
+        - schema:
+            type: string
+          in: query
+          name: card_type_id
+        - schema:
+            type: string
+          in: query
+          name: is_oil
+components:
+  schemas:
+    Configuration:
+      type: object
+      x-examples:
+        Example 1:
+          terminal_id: ''
+          supplier_id: 0
+          card_types:
+            - 0
+            - 0
+            - 0
+          articles:
+            - id: 0
+              name: ''
+              unit_price: 1
+      description: POS inital configuration
+      properties:
+        terminal_id:
+          type: string
+        supplier_id:
+          type: integer
+        card_types:
+          type: array
+          items:
+            type: integer
+        articles:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+              unit_price:
+                type: integer
+              is_oil:
+                type: boolean
+    Card-info:
+      type: object
+      x-examples:
+        Example 1:
+          id: 0
+          is_enabled: true
+          type_id: 0
+      properties:
+        is_enabled:
+          type: boolean
+        type_id:
+          type: integer
+      description: Card type and status informations
+    Supplies-info:
+      type: object
+      properties:
+        customer_data:
+          type: array
+          items:
+            type: integer
+        articles:
+          type: array
+          items:
+            type: integer
+        requires_pin:
+          type: boolean
+      x-examples:
+        Example 1:
+          customer_data:
+            - 2
+            - 3
+          articles:
+            - 3
+            - 4
+            - 8
+          requires_pin: true
+  securitySchemes:
+    Cognito:
+      type: oauth2
+      flows:
+        password:
+          tokenUrl: ''
+          refreshUrl: ''
+          scopes: {}
+security:
+  - Cognito: []
