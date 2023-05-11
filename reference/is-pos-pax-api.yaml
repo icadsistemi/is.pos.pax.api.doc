@@ -54,7 +54,7 @@ paths:
         required: true
   /devices/pax/supplies/info:
     get:
-      summary: Your GET endpoint
+      summary: Supplies info
       tags: []
       responses:
         '200':
@@ -83,14 +83,14 @@ paths:
           name: is_oil
   /supplies/validation:
     post:
-      summary: ''
+      summary: Validate and save supply
       operationId: post-supplies-validation
       responses:
         '200':
           description: OK
   /devices/pax/reversal/info:
     get:
-      summary: Your GET endpoint
+      summary: Get last reversal info
       tags: []
       responses: {}
       operationId: get-devices-pax-reversal-info
@@ -134,6 +134,28 @@ paths:
           description: Internal Server Error
       operationId: get-rewards-track
       description: 'For point cards, return the list of available rewards, filtering with available points and active campaigns.'
+  /transactions/preauth:
+    post:
+      summary: Preauth request
+      operationId: post-transactions-preauth
+      responses:
+        '200':
+          description: OK. You need to check inside the body to retrieve the preauth request result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PreauthResponse'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      description: Used to check if the card has enough credit to perform the operation.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PreauthRequest'
+              description: Preauth request data
 components:
   schemas:
     Configuration:
@@ -500,6 +522,80 @@ components:
         - name
         - type
         - rewards
+    PreauthRequest:
+      title: PreauthRequest
+      x-stoplight:
+        id: t7g43q1jbdgvy
+      type: object
+      description: Used to create a preauthorization request
+      properties:
+        card_track:
+          type: string
+          description: 'Track of the used card. Example: 70055730001000057=2209009000615800000'
+        random_pin_key:
+          type: string
+          description: Random pin key used to generate the session encryption key
+        label_key:
+          type: string
+          description: Label used to recognize which key use on server side
+        crypted_pin:
+          type: string
+          description: The pin encrypted with the session key
+        datetime:
+          type: string
+          description: Datetime of the request
+          format: date-time
+        total_amount:
+          type: number
+          description: Amount requested to be authorized
+        tran_id:
+          type: integer
+          description: Transaction id
+      required:
+        - card_track
+        - random_pin_key
+        - label_key
+        - crypted_pin
+        - datetime
+        - total_amount
+        - tran_id
+    PreauthResponse:
+      title: PreauthResponse
+      x-stoplight:
+        id: 6nlcd7ng8mgkw
+      type: object
+      properties:
+        action_code:
+          type: string
+          description: The action code is the status of the request. Action codes starting with '0' are considered as a positive response.
+        approval_code:
+          type: string
+          description: Approval code generated for positive responses.
+        authorized_amount:
+          type: number
+          description: The authorized amount with this request
+        available_products:
+          type: array
+          description: Products available for this card
+          items:
+            type: string
+        vehicle_plate:
+          type: string
+          description: Option vehicle plate binded to the card
+        icc_data:
+          type: string
+          description: 'ICC data, for EMV transactions'
+        balance_amount:
+          type: number
+          description: Total balance amount
+      required:
+        - action_code
+        - approval_code
+        - authorized_amount
+        - available_products
+        - vehicle_plate
+        - icc_data
+        - balance_amount
   securitySchemes:
     Cognito:
       type: oauth2
