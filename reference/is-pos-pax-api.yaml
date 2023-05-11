@@ -596,6 +596,112 @@ components:
         - vehicle_plate
         - icc_data
         - balance_amount
+    SupplyOilInput:
+      title: SupplyOilInput
+      x-stoplight:
+        id: 6pd5lgrxsz2xt
+      type: object
+      description: Input model for the supplies requests
+      properties:
+        card_track:
+          type: string
+          description: 'Track of the used card. Example: 70055730001000057=2209009000615800000'
+        tran_id:
+          type: integer
+          description: Transaction id
+        products:
+          type:
+            - array
+          description: List of products bought
+          items:
+            type: object
+            properties:
+              product_code:
+                type: string
+                description: Product's code
+              unit_of_measure:
+                type: string
+                description: Product's unit of measure
+              quantity:
+                type: number
+                description: Product's quantity
+              unit_price:
+                type: number
+                description: Product's unit price
+              amount:
+                type: number
+                description: Product's amount
+            required:
+              - product_code
+              - unit_of_measure
+              - quantity
+              - unit_price
+              - amount
+        random_pin_key:
+          type: string
+        label_key:
+          type: string
+        crypted_pin:
+          type: string
+        date_time:
+          type: string
+        total_amount:
+          type: number
+        km:
+          type: integer
+        drivercode:
+          type: integer
+        vehiclecode:
+          type: string
+        pos_data_code:
+          type: string
+        function_code:
+          type: string
+        message_reason_code:
+          type: string
+        batch_number:
+          type: string
+        currency_code:
+          type: string
+        icc_related_data:
+          type: string
+        unencrypted_id:
+          type: string
+        work_order:
+          type: string
+        vehicle_number:
+          type: string
+        driver_id:
+          type: string
+        service_level:
+          type: boolean
+        delivery_note_number:
+          type: string
+        default_vat:
+          type: string
+      required:
+        - card_track
+        - tran_id
+        - products
+        - random_pin_key
+    SupplyOilOutput:
+      type: object
+      properties:
+        action_code:
+          type: string
+        approval_code:
+          type: string
+        vehicle_plate:
+          type: string
+        icc_data:
+          type: string
+      x-examples:
+        Example 1:
+          action_code: '000'
+          approval_code: '123'
+          vehicle_plate: 12ABC34
+          icc_data: DF2003ABCDEF
+      description: Output model for the supplies requests
   securitySchemes:
     Cognito:
       type: oauth2
