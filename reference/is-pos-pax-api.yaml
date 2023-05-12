@@ -156,6 +156,56 @@ paths:
             schema:
               $ref: '#/components/schemas/PreauthRequest'
               description: Preauth request data
+  /transactions/oil:
+    post:
+      summary: ''
+      operationId: post-transactions-oil
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SupplyOilOutput'
+                description: Oil supply response data
+      description: Used to validate and registered an oil supply using a card.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SupplyOilInput'
+              description: Oil supply request data
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: Auth Bearer token
+  /transactions/nonoil:
+    post:
+      summary: ''
+      operationId: post-transactions-nonoil
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SupplyNonOilOutput'
+                description: Non oil supply response data
+      description: Used to validate and registered a non oil supply using a card.
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: Auth Bearer token
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SupplyNonOilInput'
+              description: Non oil supply request data
 components:
   schemas:
     Configuration:
@@ -596,6 +646,208 @@ components:
         - vehicle_plate
         - icc_data
         - balance_amount
+    SupplyOilInput:
+      title: SupplyOilInput
+      x-stoplight:
+        id: 6pd5lgrxsz2xt
+      type: object
+      description: Input model for the supplies requests
+      properties:
+        card_track:
+          type: string
+          description: 'Track of the used card. Example: 70055730001000057=2209009000615800000'
+        tran_id:
+          type: integer
+          description: Transaction id
+        products:
+          type:
+            - array
+          description: List of products bought
+          items:
+            type: object
+            properties:
+              product_code:
+                type: string
+                description: Product's code
+              unit_of_measure:
+                type: string
+                description: Product's unit of measure
+              quantity:
+                type: number
+                description: Product's quantity
+              unit_price:
+                type: number
+                description: Product's unit price
+              amount:
+                type: number
+                description: Product's amount
+            required:
+              - product_code
+              - unit_of_measure
+              - quantity
+              - unit_price
+              - amount
+        random_pin_key:
+          type: string
+          description: Random pin key used to generate the session encryption key
+        label_key:
+          type: string
+          description: Label used to recognize which key use on server side
+        crypted_pin:
+          type: string
+          description: The pin encrypted with the session key
+        date_time:
+          type: string
+          description: 'Request date time '
+        total_amount:
+          type: number
+          description: Transaction's total amount that the host should authorize
+        km:
+          type: integer
+          description: Vehicle's kilometers
+        drivercode:
+          type: integer
+        vehiclecode:
+          type: string
+        pos_data_code:
+          type: string
+        function_code:
+          type: string
+        message_reason_code:
+          type: string
+        batch_number:
+          type: string
+        currency_code:
+          type: string
+        icc_related_data:
+          type: string
+        unencrypted_id:
+          type: string
+        work_order:
+          type: string
+        vehicle_number:
+          type: string
+        driver_id:
+          type: string
+        service_level:
+          type: boolean
+          description: 'Represent the operative mode: True means SelfServe, False means FullServe, Null means NotSpecified'
+        delivery_note_number:
+          type: string
+        default_vat:
+          type: string
+      required:
+        - card_track
+        - tran_id
+        - products
+        - random_pin_key
+        - label_key
+        - crypted_pin
+        - date_time
+        - total_amount
+    SupplyOilOutput:
+      type: object
+      x-examples:
+        Example 1:
+          action_code: '000'
+          approval_code: '123'
+          vehicle_plate: 12ABC34
+          icc_data: DF2003ABCDEF
+      description: Output model for the supplies requests
+      properties:
+        action_code:
+          type: string
+          description: The action code is the status of the request. Action codes starting with '0' are considered as a positive response.
+        approval_code:
+          type: string
+          description: Approval code generated for positive responses.
+        vehicle_plate:
+          type: string
+          description: Option vehicle plate binded to the card
+        icc_data:
+          type: string
+          description: 'ICC data, for EMV transactions'
+      required:
+        - action_code
+    SupplyNonOilInput:
+      type: object
+      x-examples:
+        Example 1:
+          card_track: 70055730001000065=2209009000615800000
+          total_amount: 2
+          date_time: '2023-05-11T09:00:00.000'
+          tran_id: 1234567890
+          transaction_details:
+            - article_code: '1'
+              quantity: 2
+              unit_price: 1
+              amount: 2
+          card_pin: 56ABD55E11D4FF0D2F7136943BF2E49C
+      properties:
+        card_track:
+          type: string
+          description: 'Track of the used card. Example: 70055730001000057=2209009000615800000'
+        total_amount:
+          type: number
+          description: Transaction's total amount that the host should authorize
+        date_time:
+          type: string
+          description: 'Request date time '
+        tran_id:
+          type: integer
+          description: Transaction id
+        transaction_details:
+          type: array
+          description: List of bought articles with details
+          items:
+            type: object
+            properties:
+              article_code:
+                type: string
+                description: Article code bought
+              quantity:
+                type: integer
+                description: 'Article quantity '
+              unit_price:
+                type: number
+                description: Article unit price
+              amount:
+                type: number
+                description: 'Article amount '
+            required:
+              - article_code
+              - quantity
+              - unit_price
+              - amount
+        card_pin:
+          type: string
+          description: Card pin encrypted
+      required:
+        - card_track
+        - total_amount
+        - date_time
+        - tran_id
+        - transaction_details
+        - card_pin
+    SupplyNonOilOutput:
+      type: object
+      x-examples:
+        Example 1:
+          action_code: '000'
+          approval_code: '123'
+          vehicle_plate: 12ABC34
+      properties:
+        action_code:
+          type: string
+          description: The action code is the status of the request. Action codes starting with '0' are considered as a positive response.
+        approval_code:
+          type: string
+          description: Approval code generated for positive responses.
+        vehicle_plate:
+          type: string
+          description: Option vehicle plate binded to the card
+      required:
+        - action_code
   securitySchemes:
     Cognito:
       type: oauth2
