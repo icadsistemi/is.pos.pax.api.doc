@@ -156,6 +156,56 @@ paths:
             schema:
               $ref: '#/components/schemas/PreauthRequest'
               description: Preauth request data
+  /transactions/oil:
+    post:
+      summary: ''
+      operationId: post-transactions-oil
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SupplyOilOutput'
+                description: Oil supply response data
+      description: Used to validate and registered an oil supply using a card.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SupplyOilInput'
+              description: Oil supply request data
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: Auth Bearer token
+  /transactions/nonoil:
+    post:
+      summary: ''
+      operationId: post-transactions-nonoil
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SupplyNonOilOutput'
+                description: Non oil supply response data
+      description: Used to validate and registered a non oil supply using a card.
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: Auth Bearer token
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SupplyNonOilInput'
+              description: Non oil supply request data
 components:
   schemas:
     Configuration:
