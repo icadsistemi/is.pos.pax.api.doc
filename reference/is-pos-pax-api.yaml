@@ -639,16 +639,22 @@ components:
               - amount
         random_pin_key:
           type: string
+          description: Random pin key used to generate the session encryption key
         label_key:
           type: string
+          description: Label used to recognize which key use on server side
         crypted_pin:
           type: string
+          description: The pin encrypted with the session key
         date_time:
           type: string
+          description: 'Request date time '
         total_amount:
           type: number
+          description: Transaction's total amount that the host should authorize
         km:
           type: integer
+          description: Vehicle's kilometers
         drivercode:
           type: integer
         vehiclecode:
@@ -675,6 +681,7 @@ components:
           type: string
         service_level:
           type: boolean
+          description: 'Represent the operative mode: True means SelfServe, False means FullServe, Null means NotSpecified'
         delivery_note_number:
           type: string
         default_vat:
@@ -684,17 +691,12 @@ components:
         - tran_id
         - products
         - random_pin_key
+        - label_key
+        - crypted_pin
+        - date_time
+        - total_amount
     SupplyOilOutput:
       type: object
-      properties:
-        action_code:
-          type: string
-        approval_code:
-          type: string
-        vehicle_plate:
-          type: string
-        icc_data:
-          type: string
       x-examples:
         Example 1:
           action_code: '000'
@@ -702,6 +704,21 @@ components:
           vehicle_plate: 12ABC34
           icc_data: DF2003ABCDEF
       description: Output model for the supplies requests
+      properties:
+        action_code:
+          type: string
+          description: The action code is the status of the request. Action codes starting with '0' are considered as a positive response.
+        approval_code:
+          type: string
+          description: Approval code generated for positive responses.
+        vehicle_plate:
+          type: string
+          description: Option vehicle plate binded to the card
+        icc_data:
+          type: string
+          description: 'ICC data, for EMV transactions'
+      required:
+        - action_code
   securitySchemes:
     Cognito:
       type: oauth2
