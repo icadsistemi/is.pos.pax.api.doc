@@ -719,6 +719,85 @@ components:
           description: 'ICC data, for EMV transactions'
       required:
         - action_code
+    SupplyNonOilInput:
+      type: object
+      x-examples:
+        Example 1:
+          card_track: 70055730001000065=2209009000615800000
+          total_amount: 2
+          date_time: '2023-05-11T09:00:00.000'
+          tran_id: 1234567890
+          transaction_details:
+            - article_code: '1'
+              quantity: 2
+              unit_price: 1
+              amount: 2
+          card_pin: 56ABD55E11D4FF0D2F7136943BF2E49C
+      properties:
+        card_track:
+          type: string
+          description: 'Track of the used card. Example: 70055730001000057=2209009000615800000'
+        total_amount:
+          type: number
+          description: Transaction's total amount that the host should authorize
+        date_time:
+          type: string
+          description: 'Request date time '
+        tran_id:
+          type: integer
+          description: Transaction id
+        transaction_details:
+          type: array
+          description: List of bought articles with details
+          items:
+            type: object
+            properties:
+              article_code:
+                type: string
+                description: Article code bought
+              quantity:
+                type: integer
+                description: 'Article quantity '
+              unit_price:
+                type: number
+                description: Article unit price
+              amount:
+                type: number
+                description: 'Article amount '
+            required:
+              - article_code
+              - quantity
+              - unit_price
+              - amount
+        card_pin:
+          type: string
+          description: Card pin encrypted
+      required:
+        - card_track
+        - total_amount
+        - date_time
+        - tran_id
+        - transaction_details
+        - card_pin
+    SupplyNonOilOutput:
+      type: object
+      x-examples:
+        Example 1:
+          action_code: '000'
+          approval_code: '123'
+          vehicle_plate: 12ABC34
+      properties:
+        action_code:
+          type: string
+          description: The action code is the status of the request. Action codes starting with '0' are considered as a positive response.
+        approval_code:
+          type: string
+          description: Approval code generated for positive responses.
+        vehicle_plate:
+          type: string
+          description: Option vehicle plate binded to the card
+      required:
+        - action_code
   securitySchemes:
     Cognito:
       type: oauth2
