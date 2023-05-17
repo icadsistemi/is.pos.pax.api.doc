@@ -52,35 +52,6 @@ paths:
         name: track
         in: path
         required: true
-  /devices/pax/supplies/info:
-    get:
-      summary: Your GET endpoint
-      tags: []
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Supplies-info'
-        '401':
-          description: Unauthorized
-        '403':
-          description: Forbidden
-      operationId: get-devices-pax-supplies-info
-      parameters:
-        - schema:
-            type: string
-          in: query
-          name: card_id
-        - schema:
-            type: string
-          in: query
-          name: type_card_id
-        - schema:
-            type: string
-          in: query
-          name: is_oil
   /supplies/validation:
     post:
       summary: ''
@@ -90,7 +61,7 @@ paths:
           description: OK
   /transactions/info/reversal:
     get:
-      summary: Your GET endpoint
+      summary: Transaction reversal info
       tags: []
       responses:
         '200':
@@ -455,43 +426,6 @@ components:
             - 4
             - 8
           requires_pin: true
-    TransactionInfo:
-      type: object
-      properties:
-        customer_data:
-          type: array
-          items:
-            type: integer
-        is_oil:
-          type: boolean
-        articles:
-          type: array
-          items:
-            type: integer
-        requires_pin:
-          type: boolean
-      x-examples:
-        Example 1:
-          action_code: '000'
-          approval_code: '123'
-          vehicle_plate: 12ABC34
-          icc_data: DF2003ABCDEF
-      description: Output model for the supplies requests
-      properties:
-        action_code:
-          type: string
-          description: The action code is the status of the request. Action codes starting with '0' are considered as a positive response.
-        approval_code:
-          type: string
-          description: Approval code generated for positive responses.
-        vehicle_plate:
-          type: string
-          description: Option vehicle plate binded to the card
-        icc_data:
-          type: string
-          description: 'ICC data, for EMV transactions'
-      required:
-        - action_code
     SupplyNonOilInput:
       type: object
       x-examples:
