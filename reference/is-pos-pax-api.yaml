@@ -123,6 +123,38 @@ paths:
           in: query
           name: card_track
     parameters: []
+  /recharges/reversal:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RechargesReversal'
+              examples:
+                Example 1:
+                  value:
+                    id: 529818
+                    date_time: '2023-01-20T17:45:24Z'
+                    bill: 100
+                    bonus_credit: 20
+                    update_required: false
+                    requires_pin: true
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity (WebDAV)
+        '500':
+          description: Internal Server Error
+      operationId: get-recharges-reversal
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: card_track
 components:
   schemas:
     Configuration:
@@ -561,6 +593,29 @@ components:
             - 4
             - 8
           requires_pin: true
+    RechargesReversal:
+      title: RechargesReversal
+      x-stoplight:
+        id: zcwnf9vyzktqx
+      type: object
+      properties:
+        id:
+          type: integer
+          description: id unique
+        date_time:
+          type: string
+          format: date-time
+          readOnly: true
+        bill:
+          type: number
+        bonus_credit:
+          type: number
+        update_required:
+          type: boolean
+          description: true if the terminal must update its settings
+        requires_pin:
+          type: boolean
+          description: 'true if the pin mandatory for the next reversal '
   securitySchemes:
     Cognito:
       type: oauth2
