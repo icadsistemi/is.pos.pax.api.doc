@@ -3,7 +3,8 @@ x-stoplight:
   id: tgvfiv56rre5x
 info:
   title: POS PAX Public API
-  version: '1.0'
+  version: 0.1.1
+  description: POS PAX API documentation
 servers:
   - url: 'https://mxp-public-pos-api.dev.icadsistemi.com/v1'
 paths:
@@ -123,9 +124,9 @@ paths:
           in: query
           name: card_track
     parameters: []
-  /recharges/reversal:
+  /recharges/info/reversal:
     get:
-      summary: Your GET endpoint
+      summary: Retrieve recharge info for reversal
       tags: []
       responses:
         '200':
@@ -155,6 +156,7 @@ paths:
             type: string
           in: query
           name: card_track
+    parameters: []
   /recharges:
     post:
       summary: Memorize recharge
@@ -465,12 +467,14 @@ components:
           id: 0
           is_enabled: true
           type_id: 0
+      description: Card type and status informations
       properties:
         is_enabled:
           type: boolean
         type_id:
           type: integer
-      description: Card type and status informations
+        update_required:
+          type: boolean
     Supplies-info:
       type: object
       properties:
@@ -654,6 +658,15 @@ components:
           description: 'true if the pin mandatory for the next reversal '
     RechargesInput:
       type: object
+      x-examples:
+        Example 1:
+          card_track: 70055730001000057=2209009000615800000
+          bill_id: 53
+          pin: 68B4E28A576654D1
+          payment_mode: 2
+          key_label: QT_IFSF
+          random_pin_key: 2C9E11B025F712CA37437D853BD6E7D4
+          transaction_id: ''
       properties:
         card_track:
           type: string
@@ -669,15 +682,13 @@ components:
           type: string
         transaction_id:
           type: string
-      x-examples:
-        Example 1:
-          card_track: 70055730001000057=2209009000615800000
-          bill_id: 53
-          pin: 68B4E28A576654D1
-          payment_mode: 2
-          key_label: QT_IFSF
-          random_pin_key: 2C9E11B025F712CA37437D853BD6E7D4
-          transaction_id: ''
+      required:
+        - card_track
+        - bill_id
+        - pin
+        - key_label
+        - random_pin_key
+        - transaction_id
     RechargesBills:
       type: object
       properties:
