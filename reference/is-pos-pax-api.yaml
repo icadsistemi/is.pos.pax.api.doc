@@ -11,7 +11,8 @@ paths:
   /configuration:
     get:
       summary: POS configuration
-      tags: []
+      tags:
+        - configuration
       responses:
         '200':
           description: OK
@@ -32,7 +33,8 @@ paths:
   '/cards/{track}':
     get:
       summary: Card info
-      tags: []
+      tags:
+        - cards
       responses:
         '200':
           description: OK
@@ -53,17 +55,11 @@ paths:
         name: track
         in: path
         required: true
-  /supplies/validation:
-    post:
-      summary: ''
-      operationId: post-supplies-validation
-      responses:
-        '200':
-          description: OK
   /transactions/reversal/info:
     get:
       summary: Transaction reversal info
-      tags: []
+      tags:
+        - transactions
       responses:
         '200':
           description: OK
@@ -93,18 +89,11 @@ paths:
           in: query
           name: is_oil
     parameters: []
-  '/rewards/{track}':
-    parameters:
-      - schema:
-          type: string
-        name: track
-        in: path
-        required: true
-        description: Track 2 of the requested card
   /transactions/info:
     get:
       summary: Retrieve info to perform an oil or nonoil transaction
-      tags: []
+      tags:
+        - transactions
       responses:
         '200':
           description: OK
@@ -127,7 +116,8 @@ paths:
   /recharges/reversal/info:
     get:
       summary: Retrieve recharge info for reversal
-      tags: []
+      tags:
+        - recharges
       responses:
         '200':
           description: OK
@@ -175,6 +165,8 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/RechargesInput'
+      tags:
+        - recharges
   '/cards/{track}/recharges/bills':
     parameters:
       - schema:
@@ -184,7 +176,8 @@ paths:
         required: true
     get:
       summary: Get recharges bills
-      tags: []
+      tags:
+        - recharges
       responses:
         '200':
           description: OK
