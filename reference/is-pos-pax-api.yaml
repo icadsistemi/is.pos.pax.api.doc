@@ -155,6 +155,19 @@ paths:
             type: string
           in: query
           name: card_track
+  /recharges:
+    post:
+      summary: Memorize recharge
+      operationId: post-recharges
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal Server Error
 components:
   schemas:
     Configuration:
@@ -616,6 +629,32 @@ components:
         requires_pin:
           type: boolean
           description: 'true if the pin mandatory for the next reversal '
+    RechargesInput:
+      type: object
+      properties:
+        card_track:
+          type: string
+        bill_id:
+          type: integer
+        pin:
+          type: string
+        payment_mode:
+          type: integer
+        key_label:
+          type: string
+        random_pin_key:
+          type: string
+        transaction_id:
+          type: string
+      x-examples:
+        Example 1:
+          card_track: 70055730001000057=2209009000615800000
+          bill_id: 53
+          pin: 68B4E28A576654D1
+          payment_mode: 2
+          key_label: QT_IFSF
+          random_pin_key: 2C9E11B025F712CA37437D853BD6E7D4
+          transaction_id: ''
   securitySchemes:
     Cognito:
       type: oauth2
