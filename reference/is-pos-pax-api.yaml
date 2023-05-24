@@ -5,7 +5,7 @@ info:
   title: POS PAX Public API
   version: '1.0'
 servers:
-  - url: 'http://localhost:3000'
+  - url: 'https://mxp-public-pos-api.dev.icadsistemi.com/v1'
 paths:
   /configuration:
     get:
