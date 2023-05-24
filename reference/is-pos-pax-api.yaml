@@ -168,6 +168,29 @@ paths:
           description: Forbidden
         '500':
           description: Internal Server Error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RechargesInput'
+  '/cards/{track}/recharges/bills':
+    parameters:
+      - schema:
+          type: string
+        name: track
+        in: path
+        required: true
+    get:
+      summary: Get recharges bills
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RechargesBills'
+      operationId: get-cards-track-recharges-bills
 components:
   schemas:
     Configuration:
@@ -655,6 +678,29 @@ components:
           key_label: QT_IFSF
           random_pin_key: 2C9E11B025F712CA37437D853BD6E7D4
           transaction_id: ''
+    RechargesBills:
+      type: object
+      properties:
+        bills:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              amount:
+                type: integer
+              bonus_credit:
+                type: integer
+        update_required:
+          type: boolean
+      x-examples:
+        Example 1:
+          bills:
+            - id: 15
+              amount: 50
+              bonus_credit: 1
+          update_required: false
   securitySchemes:
     Cognito:
       type: oauth2
