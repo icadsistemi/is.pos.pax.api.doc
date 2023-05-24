@@ -60,7 +60,7 @@ paths:
       responses:
         '200':
           description: OK
-  /transactions/info/reversal:
+  /transactions/reversal/info:
     get:
       summary: Transaction reversal info
       tags: []
@@ -124,7 +124,7 @@ paths:
           in: query
           name: card_track
     parameters: []
-  /recharges/info/reversal:
+  /recharges/reversal/info:
     get:
       summary: Retrieve recharge info for reversal
       tags: []
