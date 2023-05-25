@@ -3,49 +3,52 @@ x-stoplight:
   id: tgvfiv56rre5x
 info:
   title: POS PAX Public API
-  version: "0.2"
+  version: '0.3'
   description: POS PAX API documentation
 servers:
-  - url: "https://mxp-public-pos-api.dev.icadsistemi.com/v1"
+  - url: 'https://mxp-public-pos-api.dev.icadsistemi.com/v1'
+    description: development
+  - url: 'https://mxp-public-pos-api.prod.icadsistemi.com/v1'
+    description: production
 paths:
   /configuration:
     get:
       summary: POS configuration
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Configuration"
-        "401":
+                $ref: '#/components/schemas/Configuration'
+        '401':
           description: Unauthorized
-        "403":
+        '403':
           description: Forbidden
-        "500":
+        '500':
           description: Internal Server Error
       operationId: get-configuration
-      description: "First endpoint to be called after login, returns POS configuration."
+      description: 'First endpoint to be called after login, returns POS configuration.'
       x-internal: false
       tags:
         - Configuration
     parameters: []
-  "/cards/{track}":
+  '/cards/{track}':
     get:
       summary: Card info
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Card-info"
-        "401":
+                $ref: '#/components/schemas/Card-info'
+        '401':
           description: Unauthorized
-        "403":
+        '403':
           description: Forbidden
-        "":
-          description: ""
+        '':
+          description: ''
       operationId: get-cards
       tags:
         - Cards
@@ -59,22 +62,22 @@ paths:
     get:
       summary: Transaction reversal info
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/InfoPosTransactionReversal"
-        "401":
+                $ref: '#/components/schemas/InfoPosTransactionReversal'
+        '401':
           description: Unauthorized
-        "422":
+        '422':
           description: Unprocessable Entity (WebDAV)
           content:
             application/json:
               schema:
                 type: object
                 properties: {}
-        "500":
+        '500':
           description: Internal Server Error
       operationId: get-devices-pax-reversal-info
       parameters:
@@ -93,14 +96,14 @@ paths:
     get:
       summary: Retrieve info to perform an oil or nonoil transaction
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/TransactionInfo"
+                $ref: '#/components/schemas/TransactionInfo'
       operationId: get-transaction-info
-      description: ""
+      description: ''
       parameters:
         - schema:
             type: string
@@ -117,26 +120,26 @@ paths:
     get:
       summary: Retrieve recharge info for reversal
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/RechargesReversal"
+                $ref: '#/components/schemas/RechargesReversal'
               examples:
                 Example 1:
                   value:
                     id: 529818
-                    date_time: "2023-01-20T17:45:24Z"
+                    date_time: '2023-01-20T17:45:24Z'
                     bill: 100
                     bonus_credit: 20
                     update_required: false
                     requires_pin: true
-        "401":
+        '401':
           description: Unauthorized
-        "422":
+        '422':
           description: Unprocessable Entity (WebDAV)
-        "500":
+        '500':
           description: Internal Server Error
       operationId: get-recharges-reversal
       parameters:
@@ -152,22 +155,22 @@ paths:
       summary: Memorize recharge
       operationId: post-recharges
       responses:
-        "200":
+        '200':
           description: OK
-        "401":
+        '401':
           description: Unauthorized
-        "403":
+        '403':
           description: Forbidden
-        "500":
+        '500':
           description: Internal Server Error
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/RechargesInput"
+              $ref: '#/components/schemas/RechargesInput'
       tags:
         - Recharges
-  "/cards/{track}/recharges/bills":
+  '/cards/{track}/recharges/bills':
     parameters:
       - schema:
           type: string
@@ -177,16 +180,16 @@ paths:
     get:
       summary: Get recharges bills
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/RechargesBills"
+                $ref: '#/components/schemas/RechargesBills'
       operationId: get-cards-track-recharges-bills
       tags:
         - Recharges
-  "/cards/{track}/rewards/":
+  '/cards/{track}/rewards/':
     parameters:
       - schema:
           type: string
@@ -199,7 +202,7 @@ paths:
       tags:
         - Rewards
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
@@ -207,55 +210,55 @@ paths:
                 type: array
                 description: List of campaign which has available rewards for the input card
                 items:
-                  $ref: "#/components/schemas/CampaignRewards"
-        "404":
+                  $ref: '#/components/schemas/CampaignRewards'
+        '404':
           description: Not Found
-        "500":
+        '500':
           description: Internal Server Error
       operationId: get-rewards-track
-      description: "For point cards, return the list of available rewards, filtering with available points and active campaigns."
+      description: 'For point cards, return the list of available rewards, filtering with available points and active campaigns.'
   /transactions/preauth:
     post:
       summary: Preauth request
       operationId: post-transactions-preauth
       responses:
-        "200":
+        '200':
           description: OK. You need to check inside the body to retrieve the preauth request result
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/PreauthResponse"
-        "401":
+                $ref: '#/components/schemas/PreauthResponse'
+        '401':
           description: Unauthorized
-        "500":
+        '500':
           description: Internal Server Error
       description: Used to check if the card has enough credit to perform the operation.
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/PreauthRequest"
+              $ref: '#/components/schemas/PreauthRequest'
               description: Preauth request data
       tags:
         - Transactions
   /transactions/oil:
     post:
-      summary: ""
+      summary: ''
       operationId: post-transactions-oil
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/SupplyOilOutput"
+                $ref: '#/components/schemas/SupplyOilOutput'
                 description: Oil supply response data
       description: Used to validate and registered an oil supply using a card.
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/SupplyOilInput"
+              $ref: '#/components/schemas/SupplyOilInput'
               description: Oil supply request data
       parameters:
         - schema:
@@ -267,15 +270,15 @@ paths:
         - Transactions
   /transactions/nonoil:
     post:
-      summary: ""
+      summary: ''
       operationId: post-transactions-nonoil
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/SupplyNonOilOutput"
+                $ref: '#/components/schemas/SupplyNonOilOutput'
                 description: Non oil supply response data
       description: Used to validate and registered a non oil supply using a card.
       parameters:
@@ -288,7 +291,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/SupplyNonOilInput"
+              $ref: '#/components/schemas/SupplyNonOilInput'
               description: Non oil supply request data
       tags:
         - Transactions
@@ -298,10 +301,10 @@ paths:
         Example 1:
           card_track: 70055730001000065=2209009000615800000
           total_amount: 2
-          date_time: "2023-05-11T09:00:00.000"
+          date_time: '2023-05-11T09:00:00.000'
           tran_id: 1234567890
           transaction_details:
-            - article_code: "1"
+            - article_code: '1'
               quantity: 2
               unit_price: 1
               amount: 2
@@ -309,13 +312,13 @@ paths:
       properties:
         card_track:
           type: string
-          description: "Track of the used card. Example: 70055730001000057=2209009000615800000"
+          description: 'Track of the used card. Example: 70055730001000057=2209009000615800000'
         total_amount:
           type: number
           description: Transaction's total amount that the host should authorize
         date_time:
           type: string
-          description: "Request date time "
+          description: 'Request date time '
         tran_id:
           type: integer
           description: Transaction id
@@ -330,13 +333,13 @@ paths:
                 description: Article code bought
               quantity:
                 type: integer
-                description: "Article quantity "
+                description: 'Article quantity '
               unit_price:
                 type: number
                 description: Article unit price
               amount:
                 type: number
-                description: "Article amount "
+                description: 'Article amount '
             required:
               - article_code
               - quantity
@@ -356,8 +359,8 @@ paths:
       type: object
       x-examples:
         Example 1:
-          action_code: "000"
-          approval_code: "123"
+          action_code: '000'
+          approval_code: '123'
           vehicle_plate: 12ABC34
       properties:
         action_code:
@@ -371,7 +374,7 @@ paths:
           description: Option vehicle plate binded to the card
       required:
         - action_code
-  "/cards/{track}/points":
+  '/cards/{track}/points':
     parameters:
       - schema:
           type: string
@@ -381,12 +384,12 @@ paths:
     get:
       summary: Get card point balance
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/PointsOutput"
+                $ref: '#/components/schemas/PointsOutput'
       operationId: get-cards-track-points
       tags:
         - Rewards
@@ -701,10 +704,10 @@ components:
         Example 1:
           card_track: 70055730001000065=2209009000615800000
           total_amount: 2
-          date_time: "2023-05-11T09:00:00.000"
+          date_time: '2023-05-11T09:00:00.000'
           tran_id: 1234567890
           transaction_details:
-            - article_code: "1"
+            - article_code: '1'
               quantity: 2
               unit_price: 1
               amount: 2
@@ -712,13 +715,13 @@ components:
       properties:
         card_track:
           type: string
-          description: "Track of the used card. Example: 70055730001000057=2209009000615800000"
+          description: 'Track of the used card. Example: 70055730001000057=2209009000615800000'
         total_amount:
           type: number
           description: Transaction's total amount that the host should authorize
         date_time:
           type: string
-          description: "Request date time "
+          description: 'Request date time '
         tran_id:
           type: integer
           description: Transaction id
@@ -733,13 +736,13 @@ components:
                 description: Article code bought
               quantity:
                 type: integer
-                description: "Article quantity "
+                description: 'Article quantity '
               unit_price:
                 type: number
                 description: Article unit price
               amount:
                 type: number
-                description: "Article amount "
+                description: 'Article amount '
             required:
               - article_code
               - quantity
@@ -759,8 +762,8 @@ components:
       type: object
       x-examples:
         Example 1:
-          action_code: "000"
-          approval_code: "123"
+          action_code: '000'
+          approval_code: '123'
           vehicle_plate: 12ABC34
       properties:
         action_code:
@@ -811,14 +814,14 @@ components:
           description: data time of the transaction
           readOnly: true
         articles:
-          $ref: "#/components/schemas/Articles"
+          $ref: '#/components/schemas/Articles'
           description: articles model of the transaction
         update_required:
           type: boolean
           description: true if the terminal must update its settings
         requires_pin:
           type: boolean
-          description: "true if the pin mandatory for the next reversal "
+          description: 'true if the pin mandatory for the next reversal '
         is_oil:
           type: boolean
           customer_data:
@@ -852,7 +855,7 @@ components:
           description: true if the terminal must update its settings
         requires_pin:
           type: boolean
-          description: "true if the pin mandatory for the next reversal "
+          description: 'true if the pin mandatory for the next reversal '
     CampaignRewards:
       title: CampaignRewards
       x-stoplight:
@@ -878,7 +881,7 @@ components:
           type: array
           description: Arrray of available rewards
           items:
-            $ref: "#/components/schemas/Reward"
+            $ref: '#/components/schemas/Reward'
       required:
         - id
         - name
@@ -894,7 +897,7 @@ components:
           payment_mode: 2
           key_label: QT_IFSF
           random_pin_key: 2C9E11B025F712CA37437D853BD6E7D4
-          transaction_id: ""
+          transaction_id: ''
       properties:
         card_track:
           type: string
@@ -949,7 +952,7 @@ components:
       properties:
         card_track:
           type: string
-          description: "Track of the used card. Example: 70055730001000057=2209009000615800000"
+          description: 'Track of the used card. Example: 70055730001000057=2209009000615800000'
         random_pin_key:
           type: string
           description: Random pin key used to generate the session encryption key
@@ -1002,7 +1005,7 @@ components:
           description: Option vehicle plate binded to the card
         icc_data:
           type: string
-          description: "ICC data, for EMV transactions"
+          description: 'ICC data, for EMV transactions'
         balance_amount:
           type: number
           description: Total balance amount
@@ -1023,7 +1026,7 @@ components:
       properties:
         card_track:
           type: string
-          description: "Track of the used card. Example: 70055730001000057=2209009000615800000"
+          description: 'Track of the used card. Example: 70055730001000057=2209009000615800000'
         tran_id:
           type: integer
           description: Transaction id
@@ -1066,7 +1069,7 @@ components:
           description: The pin encrypted with the session key
         date_time:
           type: string
-          description: "Request date time "
+          description: 'Request date time '
         total_amount:
           type: number
           description: Transaction's total amount that the host should authorize
@@ -1099,7 +1102,7 @@ components:
           type: string
         service_level:
           type: boolean
-          description: "Represent the operative mode: True means SelfServe, False means FullServe, Null means NotSpecified"
+          description: 'Represent the operative mode: True means SelfServe, False means FullServe, Null means NotSpecified'
         delivery_note_number:
           type: string
         default_vat:
@@ -1117,8 +1120,8 @@ components:
       type: object
       x-examples:
         Example 1:
-          action_code: "000"
-          approval_code: "123"
+          action_code: '000'
+          approval_code: '123'
           vehicle_plate: 12ABC34
           icc_data: DF2003ABCDEF
       description: Output model for the supplies requests
@@ -1134,7 +1137,7 @@ components:
           description: Option vehicle plate binded to the card
         icc_data:
           type: string
-          description: "ICC data, for EMV transactions"
+          description: 'ICC data, for EMV transactions'
       required:
         - action_code
     PointsOutput:
@@ -1145,41 +1148,15 @@ components:
       x-examples:
         Example 1:
           points: 0
-    TransactionInfo:
-      type: object
-      properties:
-        customer_data:
-          type: array
-          items:
-            type: integer
-        is_oil:
-          type: boolean
-        articles:
-          type: array
-          items:
-            type: integer
-        requires_pin:
-          type: boolean
-      x-examples:
-        Example 1:
-          customer_data:
-            - 2
-            - 3
-          is_oil: false
-          articles:
-            - 3
-            - 4
-            - 8
-          requires_pin: true
   securitySchemes:
     Cognito:
       type: oauth2
       flows:
         password:
-          tokenUrl: ""
-          refreshUrl: ""
+          tokenUrl: ''
+          refreshUrl: ''
           scopes: {}
-      description: ""
+      description: ''
   responses: {}
 security:
   - Cognito: []
