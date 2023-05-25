@@ -11,8 +11,6 @@ paths:
   /configuration:
     get:
       summary: POS configuration
-      tags:
-        - configuration
       responses:
         "200":
           description: OK
@@ -29,12 +27,12 @@ paths:
       operationId: get-configuration
       description: "First endpoint to be called after login, returns POS configuration."
       x-internal: false
+      tags:
+        - Configuration
     parameters: []
   "/cards/{track}":
     get:
       summary: Card info
-      tags:
-        - cards
       responses:
         "200":
           description: OK
@@ -49,6 +47,8 @@ paths:
         "":
           description: ""
       operationId: get-cards
+      tags:
+        - Cards
     parameters:
       - schema:
           type: string
@@ -58,8 +58,6 @@ paths:
   /transactions/reversal/info:
     get:
       summary: Transaction reversal info
-      tags:
-        - transactions
       responses:
         "200":
           description: OK
@@ -88,12 +86,12 @@ paths:
             type: string
           in: query
           name: is_oil
+      tags:
+        - Transactions
     parameters: []
   /transactions/info:
     get:
       summary: Retrieve info to perform an oil or nonoil transaction
-      tags:
-        - transactions
       responses:
         "200":
           description: OK
@@ -112,12 +110,12 @@ paths:
             type: string
           in: query
           name: card_track
+      tags:
+        - Transactions
     parameters: []
   /recharges/reversal/info:
     get:
       summary: Retrieve recharge info for reversal
-      tags:
-        - recharges
       responses:
         "200":
           description: OK
@@ -146,6 +144,8 @@ paths:
             type: string
           in: query
           name: card_track
+      tags:
+        - Recharges
     parameters: []
   /recharges:
     post:
@@ -166,7 +166,7 @@ paths:
             schema:
               $ref: "#/components/schemas/RechargesInput"
       tags:
-        - recharges
+        - Recharges
   "/cards/{track}/recharges/bills":
     parameters:
       - schema:
@@ -176,8 +176,6 @@ paths:
         required: true
     get:
       summary: Get recharges bills
-      tags:
-        - recharges
       responses:
         "200":
           description: OK
@@ -186,6 +184,8 @@ paths:
               schema:
                 $ref: "#/components/schemas/RechargesBills"
       operationId: get-cards-track-recharges-bills
+      tags:
+        - Recharges
   "/cards/{track}/rewards/":
     parameters:
       - schema:
@@ -196,7 +196,8 @@ paths:
         description: Track 2 of the requested card
     get:
       summary: Available rewards
-      tags: []
+      tags:
+        - Rewards
       responses:
         "200":
           description: OK
@@ -235,6 +236,8 @@ paths:
             schema:
               $ref: "#/components/schemas/PreauthRequest"
               description: Preauth request data
+      tags:
+        - Transactions
   /transactions/oil:
     post:
       summary: ""
@@ -260,6 +263,8 @@ paths:
           in: header
           name: Authorization
           description: Auth Bearer token
+      tags:
+        - Transactions
   /transactions/nonoil:
     post:
       summary: ""
@@ -285,6 +290,8 @@ paths:
             schema:
               $ref: "#/components/schemas/SupplyNonOilInput"
               description: Non oil supply request data
+      tags:
+        - Transactions
     SupplyNonOilInput:
       type: object
       x-examples:
@@ -364,6 +371,25 @@ paths:
           description: Option vehicle plate binded to the card
       required:
         - action_code
+  "/cards/{track}/points":
+    parameters:
+      - schema:
+          type: string
+        name: track
+        in: path
+        required: true
+    get:
+      summary: Get card point balance
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PointsOutput"
+      operationId: get-cards-track-points
+      tags:
+        - Rewards
 components:
   schemas:
     Configuration:
@@ -1111,6 +1137,40 @@ components:
           description: "ICC data, for EMV transactions"
       required:
         - action_code
+    PointsOutput:
+      type: object
+      properties:
+        points:
+          type: integer
+      x-examples:
+        Example 1:
+          points: 0
+    TransactionInfo:
+      type: object
+      properties:
+        customer_data:
+          type: array
+          items:
+            type: integer
+        is_oil:
+          type: boolean
+        articles:
+          type: array
+          items:
+            type: integer
+        requires_pin:
+          type: boolean
+      x-examples:
+        Example 1:
+          customer_data:
+            - 2
+            - 3
+          is_oil: false
+          articles:
+            - 3
+            - 4
+            - 8
+          requires_pin: true
   securitySchemes:
     Cognito:
       type: oauth2
