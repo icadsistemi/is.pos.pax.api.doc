@@ -157,6 +157,10 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Output'
         '401':
           description: Unauthorized
         '403':
@@ -393,6 +397,31 @@ paths:
       operationId: get-cards-track-points
       tags:
         - Rewards
+  /recharges/reversal:
+    post:
+      summary: Perform a reversal recharge
+      operationId: post-recharges-reversal
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Output'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '422':
+          description: Unprocessable Entity (WebDAV)
+        '500':
+          description: Internal Server Error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RechargesReversalInput'
+      description: ''
 components:
   schemas:
     Configuration:
@@ -1148,6 +1177,39 @@ components:
       x-examples:
         Example 1:
           points: 0
+    RechargesReversalInput:
+      type: object
+      properties:
+        card_track:
+          type: string
+        recharge_id:
+          type: integer
+        pin:
+          type: string
+        key_label:
+          type: string
+        random_pin_key:
+          type: string
+        transaction_id:
+          type: string
+      x-examples:
+        Example 1:
+          card_track: 1234567890=12345678900987654321
+          recharge_id: 531303
+          pin: IFGHERYIGEGTRH
+          key_label: ASDFGHJ
+          random_pin_key: GERGRDHE6HVJYJ TRJFJTYJRTJ
+          transaction_id: '32894987453'
+    Output:
+      type: object
+      x-examples:
+        Example 1:
+          result: '000'
+      properties:
+        result:
+          type: string
+        ticket:
+          type: string
   securitySchemes:
     Cognito:
       type: oauth2
