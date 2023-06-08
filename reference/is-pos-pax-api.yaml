@@ -160,7 +160,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Output'
+                $ref: '#/components/schemas/GenericOutput'
         '401':
           description: Unauthorized
         '403':
@@ -255,7 +255,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SupplyOilOutput'
+                $ref: '#/components/schemas/GenericOutput'
                 description: Oil supply response data
       description: Used to validate and registered an oil supply using a card.
       requestBody:
@@ -282,7 +282,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SupplyNonOilOutput'
+                $ref: '#/components/schemas/GenericOutput'
                 description: Non oil supply response data
       description: Used to validate and registered a non oil supply using a card.
       parameters:
@@ -407,7 +407,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Output'
+                $ref: '#/components/schemas/GenericOutput'
         '401':
           description: Unauthorized
         '403':
@@ -1210,6 +1210,29 @@ components:
           type: string
         ticket:
           type: string
+    GenericOutput:
+      type: object
+      properties:
+        result:
+          type: string
+        ticket:
+          type: array
+          items:
+            type: object
+            properties:
+              content:
+                type: string
+              font:
+                type: string
+      x-examples:
+        Example 1:
+          result: '000'
+          ticket:
+            - content: Ricarica effettuata!
+              font: test
+            - content: 'Importo: 500.00'
+            - content: 'Abbuono: 0.00'
+            - content: 'Saldo tessera: 3510.00'
   securitySchemes:
     Cognito:
       type: oauth2
