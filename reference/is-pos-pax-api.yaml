@@ -456,6 +456,22 @@ paths:
             schema:
               $ref: '#/components/schemas/RechargesReversalInput'
       description: ''
+  /transactions/reversal/oil:
+    post:
+      summary: ''
+      operationId: post-transactions-reversal-oil
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericOutput'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OilTransactionReversalInput'
 components:
   schemas:
     Configuration:
@@ -1158,6 +1174,15 @@ components:
                 type: string
               font:
                 type: string
+        display:
+          type: array
+          items:
+            type: object
+            properties:
+              content:
+                type: string
+              font:
+                type: string
       x-examples:
         Example 1:
           result: '000'
@@ -1167,6 +1192,35 @@ components:
             - content: 'Importo: 500.00'
             - content: 'Abbuono: 0.00'
             - content: 'Saldo tessera: 3510.00'
+          display:
+            - content: Ricarica effettuata!
+              font: test
+            - content: 'Importo: 500.00'
+            - content: 'Abbuono: 0.00'
+            - content: 'Saldo tessera: 3510.00'
+    OilTransactionReversalInput:
+      type: object
+      properties:
+        reversal_transaction_id:
+          type: integer
+        pin:
+          type: string
+        key_label:
+          type: string
+        random_pin_key:
+          type: string
+        transaction_id:
+          type: integer
+        card_track:
+          type: string
+      x-examples:
+        Example 1:
+          reversal_transaction_id: 123
+          pin: '1234567890'
+          key_label: ''
+          random_pin_key: ''
+          transaction_id: 124
+          card_track: ''
   securitySchemes:
     Cognito:
       type: oauth2
