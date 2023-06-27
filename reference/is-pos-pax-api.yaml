@@ -472,6 +472,30 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/OilTransactionReversalInput'
+  /rewards/pending:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PendingRewardsOutput'
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity (WebDAV)
+        '500':
+          description: Internal Server Error
+      operationId: get-rewards-pending
+      description: Get rewards pending
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: card_track
 components:
   schemas:
     Configuration:
@@ -1221,6 +1245,22 @@ components:
           random_pin_key: ''
           transaction_id: 124
           card_track: ''
+    PendingRewardsOutput:
+      title: PendingRewardsOutput
+      x-stoplight:
+        id: g1ko07ezok0jh
+      type: object
+      description: pending rewards model output
+      properties:
+        reward_request_id:
+          type: integer
+        reward_name:
+          type: string
+        datetime:
+          type: string
+          format: date-time
+        points:
+          type: number
   securitySchemes:
     Cognito:
       type: oauth2
