@@ -466,7 +466,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GenericOutput'
+                $ref: '#/components/schemas/GenericOutputWithIccData'
       requestBody:
         content:
           application/json:
@@ -1222,6 +1222,50 @@ components:
             - content: 'Importo: 500.00'
             - content: 'Abbuono: 0.00'
             - content: 'Saldo tessera: 3510.00'
+    GenericOutputWithIccData:
+      type: object
+      x-examples:
+        Example 1:
+          result: '000'
+          ticket:
+            - content: Ricarica effettuata!
+              font: test
+            - content: 'Importo: 500.00'
+            - content: 'Abbuono: 0.00'
+            - content: 'Saldo tessera: 3510.00'
+          display:
+            - content: Ricarica effettuata!
+              font: test
+            - content: 'Importo: 500.00'
+            - content: 'Abbuono: 0.00'
+            - content: 'Saldo tessera: 3510.00'
+      x-stoplight:
+        id: 5aec8640f98c3
+      title: GenericOutputWithIccData
+      description: Used to model a standard transaction output with icc_data included
+      properties:
+        result:
+          type: string
+        ticket:
+          type: array
+          items:
+            type: object
+            properties:
+              content:
+                type: string
+              font:
+                type: string
+        display:
+          type: array
+          items:
+            type: object
+            properties:
+              content:
+                type: string
+              font:
+                type: string
+        icc_data:
+          type: string
     OilTransactionReversalInput:
       type: object
       properties:
