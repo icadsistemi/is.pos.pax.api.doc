@@ -407,6 +407,42 @@ paths:
             type: string
           in: query
           name: card_track
+  /rewards/request:
+    post:
+      summary: ''
+      operationId: post-rewards-request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RewardMemoRequest'
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RewardMemoErrorResponse'
+  '/rewards/delivery/{pn_reward_id}':
+    post:
+      summary: Reward Delivery
+      operationId: rewards-delivery
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+    parameters:
+      - schema:
+          type: string
+        name: pn_reward_id
+        in: path
+        required: true
+        description: reward id
 components:
   schemas:
     Configuration:
@@ -1284,6 +1320,74 @@ components:
         - name
         - points
         - is_fuelcoupon
+    RewardMemoRequest:
+      title: RewardMemoRequest
+      x-stoplight:
+        id: 3a6j33tlj7yvy
+      type: object
+      description: reward memo request
+      properties:
+        residue:
+          type: integer
+          description: 'if set 0, it is not used.'
+        campaign_id:
+          type: integer
+          description: campaing id
+        is_delivered:
+          type: boolean
+          description: 'if the reward is delivered '
+        is_customer_request:
+          type: boolean
+          description: if is customer request
+        item_id:
+          type: integer
+          description: reward id
+        pan:
+          type: string
+          description: pan of the card
+        points:
+          type: integer
+          description: points for the reward
+        transaction_number:
+          type: integer
+          description: 'set autoincrement transaction number '
+        timestamp:
+          type: string
+          format: date-time
+          description: date time of the transaction
+        is_oil:
+          type: boolean
+          description: if reward is oil or not oil
+        is_reversal:
+          type: boolean
+          description: if the reward is reversal or not.
+      required:
+        - residue
+        - campaign_id
+        - is_delivered
+        - is_customer_request
+        - item_id
+        - pan
+        - points
+        - transaction_number
+        - timestamp
+        - is_oil
+        - is_reversal
+    RewardMemoErrorResponse:
+      title: RewardMemoErrorResponse
+      x-stoplight:
+        id: 4sqnsqugsjbjh
+      type: object
+      properties:
+        code:
+          type: string
+          description: internal code
+        errorDetails:
+          type: string
+          description: error details
+        message:
+          type: string
+          description: type error
   securitySchemes:
     Cognito:
       type: oauth2
