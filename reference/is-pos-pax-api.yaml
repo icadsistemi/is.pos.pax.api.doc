@@ -500,64 +500,6 @@ components:
   schemas:
     Configuration:
       type: object
-      properties:
-        terminal_id:
-          type: string
-        supplier_id:
-          type: integer
-        card_types:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: integer
-              name:
-                type: string
-              code:
-                type: integer
-        measure_units:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: integer
-              name:
-                type: string
-              measure_unit:
-                type: string
-        enabled_card_types:
-          type: array
-          items:
-            type: integer
-        articles:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: integer
-              name:
-                type: string
-              unit_price:
-                type: integer
-              is_oil:
-                type: boolean
-              measure_unit_id:
-                type: integer
-        ticket:
-          type: object
-          properties:
-            header:
-              type: array
-              items:
-                type: object
-                properties:
-                  content:
-                    type: string
-                  font:
-                    type: string
       x-examples:
         Example 1:
           terminal_id: '0'
@@ -663,6 +605,108 @@ components:
                 font: medium
               - content: '       25125 Brescia (BS)'
                 font: medium
+      properties:
+        terminal_id:
+          type: string
+        supplier_id:
+          type: integer
+        card_types:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+              code:
+                type: integer
+        measure_units:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+              measure_unit:
+                type: string
+        enabled_card_types:
+          type: array
+          items:
+            type: integer
+        articles:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+              unit_price:
+                type: integer
+              is_oil:
+                type: boolean
+              measure_unit_id:
+                type: integer
+        ticket:
+          type: object
+          properties:
+            header:
+              type: array
+              items:
+                type: object
+                properties:
+                  content:
+                    type: string
+                  font:
+                    type: string
+        card_types_operations:
+          type: object
+          description: "This object shows the possible operations for each card type.\nThe card types are:\n\tRIC --> rechargeable card\n\tFM  --> end of month card\n\tSC  --> discount card\n\tPTI --> points card\n\tGT  --> gt cards (fai, uta, dkv, radius/edc, eurowag, romac)\n\tFC  --> fuel coupon\n\nAvailable operations are:\n\tT  --> transaction\n\tS  --> transaction reversal\n\tR  --> recharge\n\tSR --> recharge reversal\n\tSP --> balance point\n\tPR --> reward request\n\tRP --> reward deliver\n\tLP --> available rewards list and pending rewards list\n\tSP --> reward request reversal"
+          required:
+            - RIC
+            - FM
+            - SC
+            - PTI
+            - GT
+            - FC
+          properties:
+            RIC:
+              type: array
+              description: Operations availble for rechargeable cards
+              items:
+                type: string
+            FM:
+              type: array
+              description: Operations availble for end of month cards
+              items:
+                type: string
+            SC:
+              type: array
+              description: Operations availble for discount cards
+              items:
+                type: string
+            PTI:
+              type: array
+              description: Operations availble for points cards
+              items:
+                type: string
+            GT:
+              type: array
+              description: Operations availble for GT cards
+              items:
+                type: string
+            FC:
+              type: array
+              description: Operations availble for fuel coupons
+              items:
+                type: string
+      required:
+        - card_types_operations
+      description: Firs dll
     Card-info:
       type: object
       x-examples:
