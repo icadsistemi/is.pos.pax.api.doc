@@ -257,7 +257,7 @@ paths:
         - Transactions
   /transactions/oil:
     post:
-      summary: ''
+      summary: Transaction oil
       operationId: post-transactions-oil
       responses:
         '200':
@@ -290,7 +290,7 @@ paths:
         - Transactions
   /transactions/nonoil:
     post:
-      summary: transaction-onoil
+      summary: Transaction nonoil
       operationId: post-transactions-nonoil
       responses:
         '200':
@@ -369,7 +369,7 @@ paths:
       description: ''
   /transactions/reversal/oil:
     post:
-      summary: ''
+      summary: Transaction reversal oil
       operationId: post-transactions-reversal-oil
       responses:
         '200':
@@ -385,7 +385,7 @@ paths:
               $ref: '#/components/schemas/OilTransactionReversalInput'
   /rewards/pending:
     get:
-      summary: Your GET endpoint
+      summary: Pending Reward
       tags: []
       responses:
         '200':
@@ -409,7 +409,7 @@ paths:
           name: card_track
   /rewards/request:
     post:
-      summary: ''
+      summary: Reward request
       operationId: post-rewards-request
       requestBody:
         content:
