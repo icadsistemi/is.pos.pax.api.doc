@@ -3,7 +3,7 @@ x-stoplight:
   id: tgvfiv56rre5x
 info:
   title: POS PAX Public API
-  version: '0.6.2'
+  version: 0.6.3
   description: POS PAX API documentation
 servers:
   - url: 'https://mxp-public-pos-api.dev.icadsistemi.com/v1'
@@ -472,6 +472,21 @@ paths:
         '401':
           description: Unauthorized
       description: ''
+  /transactions/points:
+    post:
+      summary: ''
+      operationId: post-transactions-points
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+      description: Card points transaction or reversal
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CardPointsTransactionInput'
 components:
   schemas:
     Configuration:
@@ -1455,6 +1470,56 @@ components:
           transaction_id: 53c786b82d124fadb1e8e374
           locked_amount: 10
       title: ''
+    CardPointsTransactionInput:
+      type: object
+      properties:
+        gross_amount:
+          type: integer
+        net_amount:
+          type: integer
+        quantity:
+          type: number
+        km:
+          type: integer
+        unit_price:
+          type: number
+        notes:
+          type: string
+        extra_code:
+          type: integer
+        is_standalone:
+          type: boolean
+        item_id:
+          type: integer
+        pan:
+          type: string
+        points:
+          type: integer
+        transaction_number:
+          type: integer
+        timestamp:
+          type: string
+        is_oil:
+          type: boolean
+        is_reversal:
+          type: boolean
+      x-examples:
+        Example 1:
+          gross_amount: 20
+          net_amount: 0
+          quantity: 10.78
+          km: 100
+          unit_price: 1.856
+          notes: asd asd asdf
+          extra_code: 0
+          is_standalone: false
+          item_id: 23
+          pan: '70055740001000049'
+          points: 0
+          transaction_number: 0
+          timestamp: '2023-07-11T16:18:43Z'
+          is_oil: false
+          is_reversal: true
   securitySchemes:
     Cognito:
       type: oauth2
