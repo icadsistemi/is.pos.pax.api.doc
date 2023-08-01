@@ -454,6 +454,42 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/FuelcouponValidationInput'
+  /fuelcoupons/reversal:
+    post:
+      summary: Reversal fuelcoupon
+      operationId: ''
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FuelcouponReversalOutput'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FuelcouponReversalOutputError'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                transaction_id:
+                  type: string
+      description: send transactionid for reversal fuelcoupon request
+    parameters: []
   '/rewards/deliveries/{id}':
     parameters:
       - schema:
@@ -1470,6 +1506,56 @@ components:
           transaction_id: 53c786b82d124fadb1e8e374
           locked_amount: 10
       title: ''
+    FuelcouponReversalOutput:
+      type: object
+      properties:
+        ticket:
+          type: array
+          items:
+            type: object
+            properties:
+              content:
+                type: string
+              font:
+                type: string
+        display:
+          type: array
+          items:
+            type: object
+            properties:
+              content:
+                type: string
+              font:
+                type: string
+        transaction_id:
+          type: integer
+      x-stoplight:
+        id: 60d2727931a93
+    FuelcouponReversalOutputError:
+      type: object
+      x-stoplight:
+        id: 3ad4b6c3338f2
+      properties:
+        ticket:
+          type: array
+          items:
+            type: object
+            properties:
+              content:
+                type: string
+              font:
+                type: string
+        display:
+          type: array
+          items:
+            type: object
+            properties:
+              content:
+                type: string
+              font:
+                type: string
+        result:
+          type: string
     CardPointsTransactionInput:
       type: object
       properties:
