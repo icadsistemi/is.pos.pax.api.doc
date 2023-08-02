@@ -3,7 +3,7 @@ x-stoplight:
   id: tgvfiv56rre5x
 info:
   title: POS PAX Public API
-  version: 0.6.3
+  version: 0.6.4
   description: POS PAX API documentation
 servers:
   - url: 'https://mxp-public-pos-api.dev.icadsistemi.com/v1'
@@ -490,6 +490,24 @@ paths:
                   type: string
       description: send transactionid for reversal fuelcoupon request
     parameters: []
+  /fuelcoupons/reversal/info:
+    get:
+      summary: Fuelcoupons Reversal info
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InfoPosFuelcouponTransactionReversal'
+      operationId: get-fuelcoupons-reversal-info
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: fuelcoupon_code
+          description: Fuelcoupon full code
   '/rewards/deliveries/{id}':
     parameters:
       - schema:
@@ -908,6 +926,24 @@ components:
             - 4
             - 8
           requires_pin: true
+    InfoPosFuelcouponTransactionReversal:
+      title: InfoPosTransactionReversal
+      type: object
+      examples: []
+      x-stoplight:
+        id: 73011bf09c558
+      properties:
+        id:
+          type: integer
+          description: transaction id unique
+        date_time:
+          type: string
+          format: date-time
+          description: data time of the transaction
+          readOnly: true
+        articles:
+          $ref: '#/components/schemas/Articles'
+          description: articles model of the transaction
     RechargesReversal:
       title: RechargesReversal
       x-stoplight:
