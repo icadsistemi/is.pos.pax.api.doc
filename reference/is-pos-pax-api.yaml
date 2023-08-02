@@ -3,7 +3,7 @@ x-stoplight:
   id: tgvfiv56rre5x
 info:
   title: POS PAX Public API
-  version: 0.6.4
+  version: 0.6.3
   description: POS PAX API documentation
 servers:
   - url: 'https://mxp-public-pos-api.dev.icadsistemi.com/v1'
@@ -501,6 +501,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InfoPosFuelcouponTransactionReversal'
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity (WebDAV)
+        '500':
+          description: Internal Server Error
       operationId: get-fuelcoupons-reversal-info
       parameters:
         - schema:
