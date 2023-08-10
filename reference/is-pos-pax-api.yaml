@@ -656,6 +656,7 @@ components:
                 font: medium
               - content: '       25125 Brescia (BS)'
                 font: medium
+      description: First dll
       properties:
         terminal_id:
           type: string
@@ -755,9 +756,23 @@ components:
               description: Operations availble for fuel coupons
               items:
                 type: string
+        data_collection:
+          type: object
+          description: Details about data collection of the fuelstationof the terminal
+          required:
+            - has_data_collection
+            - pumps
+          properties:
+            has_data_collection:
+              type: boolean
+              description: 'If true, this terminal has the data collection active and can retrieve last transactions data'
+            pumps:
+              type: integer
+              description: Number of the pumps in the fuel station
       required:
         - card_types_operations
-      description: Firs dll
+        - data_collection
+      title: ''
     Card-info:
       type: object
       x-examples:
