@@ -352,16 +352,65 @@ paths:
               schema:
                 $ref: '#/components/schemas/RewardMemoErrorResponse'
       description: Used for reward request and for reversal of an existing reward request
+  /supplies/datacollection:
+    get:
+      summary: Retrieve last supplies from a pump
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    supply_id:
+                      type: integer
+                      description: ID of the supply. This will be send to the server to purchase it and perform a transaction.
+                    quantity:
+                      type: number
+                      description: Supplied quantity of the product
+                    unit_price:
+                      type: number
+                      description: Unit price of the product
+                    amount:
+                      type: number
+                      description: Total amount
+                    product:
+                      type: string
+                      description: Product name
+                  required:
+                    - supply_id
+                    - quantity
+                    - unit_price
+                    - amount
+                    - product
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity (WebDAV)
+      operationId: get-supplies-datacollection
+      description: Used to get the last 10 supplies from a specific pump of a fuel station with the new data collection active.
+      parameters:
+        - schema:
+            type: integer
+          in: query
+          name: pump
+          description: Number of the pump
   /transactions/info:
     get:
       summary: Retrieve info to perform an oil or nonoil transaction
       responses:
-        '400':
-          description: Bad Request
+        '200':
+          description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Supplies-info'
+        '400':
+          description: Bad Request
         '401':
           description: Unauthorized
         '500':
