@@ -11,28 +11,6 @@ servers:
   - url: 'https://mxp-public-pos-api.prod.icadsistemi.com/v1'
     description: production
 paths:
-  /configuration:
-    get:
-      summary: POS configuration
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Configuration'
-        '400':
-          description: Bad Request
-        '401':
-          description: Unauthorized
-        '500':
-          description: Internal Server Error
-      operationId: get-configuration
-      description: 'First endpoint to be called after login, returns POS configuration.'
-      x-internal: false
-      tags:
-        - Configuration
-    parameters: []
   '/cards/{track}':
     get:
       summary: Card info
@@ -58,122 +36,6 @@ paths:
         name: track
         in: path
         required: true
-  /transactions/reversal/info:
-    get:
-      summary: Transaction reversal info
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/InfoPosTransactionReversal'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                type: object
-                properties: {}
-        '401':
-          description: Unauthorized
-        '500':
-          description: Internal Server Error
-      operationId: get-devices-pax-reversal-info
-      parameters:
-        - schema:
-            type: string
-          in: query
-          name: card_track
-        - schema:
-            type: string
-          in: query
-          name: is_oil
-      tags:
-        - Transactions
-    parameters: []
-  /transactions/info:
-    get:
-      summary: Retrieve info to perform an oil or nonoil transaction
-      responses:
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Supplies-info'
-        '401':
-          description: Unauthorized
-        '500':
-          description: Internal Server Error
-      operationId: get-transaction-info
-      description: ''
-      parameters:
-        - schema:
-            type: string
-          in: query
-          name: card_track
-      tags:
-        - Transactions
-    parameters: []
-  /recharges/reversal/info:
-    get:
-      summary: Retrieve recharge info for reversal
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RechargesReversal'
-              examples:
-                Example 1:
-                  value:
-                    id: 529818
-                    date_time: '2023-01-20T17:45:24Z'
-                    bill: 100
-                    bonus_credit: 20
-                    update_required: false
-                    requires_pin: true
-        '400':
-          description: Bad Request
-        '401':
-          description: Unauthorized
-        '500':
-          description: Internal Server Error
-      operationId: get-recharges-reversal
-      parameters:
-        - schema:
-            type: string
-          in: query
-          name: card_track
-      tags:
-        - Recharges
-    parameters: []
-  /recharges:
-    post:
-      summary: Memorize recharge
-      operationId: post-recharges
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GenericOutput'
-        '400':
-          description: Bad Request
-        '401':
-          description: Unauthorized
-        '500':
-          description: Internal Server Error
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/RechargesInput'
-      tags:
-        - Recharges
   '/cards/{track}/recharges/bills':
     parameters:
       - schema:
@@ -199,6 +61,31 @@ paths:
       operationId: get-cards-track-recharges-bills
       tags:
         - Recharges
+  '/cards/{track}/points':
+    parameters:
+      - schema:
+          type: string
+        name: track
+        in: path
+        required: true
+    get:
+      summary: Get card point balance
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PointsOutput'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      operationId: get-cards-track-points
+      tags:
+        - Rewards
   '/cards/{track}/rewards/':
     parameters:
       - schema:
@@ -229,231 +116,28 @@ paths:
           description: Internal Server Error
       operationId: get-rewards-track
       description: 'For point cards, return the list of available rewards, filtering with available points and active campaigns.'
-  /transactions/preauth:
-    post:
-      summary: Preauth request
-      operationId: post-transactions-preauth
-      responses:
-        '200':
-          description: OK. You need to check inside the body to retrieve the preauth request result
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PreauthResponse'
-        '400':
-          description: Bad Request
-        '401':
-          description: Unauthorized
-        '500':
-          description: Internal Server Error
-      description: Used to check if the card has enough credit to perform the operation.
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/PreauthRequest'
-              description: Preauth request data
-      tags:
-        - Transactions
-  /transactions/oil:
-    post:
-      summary: Transaction oil
-      operationId: post-transactions-oil
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GenericOutput'
-                description: Oil supply response data
-        '400':
-          description: Bad Request
-        '401':
-          description: Unauthorized
-        '500':
-          description: Internal Server Error
-      description: Used to validate and registered an oil supply using a card.
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/SupplyOilInput'
-              description: Oil supply request data
-      parameters:
-        - schema:
-            type: string
-          in: header
-          name: Authorization
-          description: Auth Bearer token
-      tags:
-        - Transactions
-  /transactions/nonoil:
-    post:
-      summary: Transaction nonoil
-      operationId: post-transactions-nonoil
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SupplyNonOilOutput'
-        '400':
-          description: Bad Request
-        '401':
-          description: Unauthorized
-        '500':
-          description: Internal Server Error
-      description: Used to validate and registered a non oil supply using a card.
-      parameters:
-        - schema:
-            type: string
-          in: header
-          name: Authorization
-          description: Auth Bearer token
-      tags:
-        - Transactions-non-oil
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/SupplyNonOilInput'
-  '/cards/{track}/points':
-    parameters:
-      - schema:
-          type: string
-        name: track
-        in: path
-        required: true
+  /configuration:
     get:
-      summary: Get card point balance
+      summary: POS configuration
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PointsOutput'
+                $ref: '#/components/schemas/Configuration'
         '400':
           description: Bad Request
         '401':
           description: Unauthorized
         '500':
           description: Internal Server Error
-      operationId: get-cards-track-points
+      operationId: get-configuration
+      description: 'First endpoint to be called after login, returns POS configuration.'
+      x-internal: false
       tags:
-        - Rewards
-  /recharges/reversal:
-    post:
-      summary: Perform a reversal recharge
-      operationId: post-recharges-reversal
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GenericOutput'
-        '400':
-          description: Bad Request
-        '401':
-          description: Unauthorized
-        '500':
-          description: Internal Server Error
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/RechargesReversalInput'
-      description: ''
-  /transactions/reversal/oil:
-    post:
-      summary: Transaction reversal oil
-      operationId: post-transactions-reversal-oil
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GenericOutputWithIccData'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/OilTransactionReversalInput'
-          application/xml:
-            schema:
-              type: object
-              properties: {}
-          multipart/form-data:
-            schema:
-              type: object
-              properties: {}
-          text/html:
-            schema:
-              type: object
-              properties: {}
-          text/plain:
-            schema:
-              type: object
-              properties: {}
-  /rewards/pending:
-    get:
-      summary: Pending Reward
-      tags: []
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PendingRewardsOutput'
-        '401':
-          description: Unauthorized
-        '422':
-          description: Unprocessable Entity (WebDAV)
-        '500':
-          description: Internal Server Error
-      operationId: get-rewards-pending
-      description: Get rewards pending
-      parameters:
-        - schema:
-            type: string
-          in: query
-          name: card_track
-  /rewards/request:
-    post:
-      summary: Reward request
-      operationId: post-rewards-request
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/RewardMemoRequest'
-      responses:
-        '204':
-          description: No Content
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RewardMemoErrorResponse'
-      description: Used for reward request and for reversal of an existing reward request
-  /fuelcoupons/validate:
-    post:
-      summary: Validate fuelcoupon
-      operationId: post-fuelcoupons-validate
-      responses:
-        '200':
-          description: OK
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/FuelcouponValidationInput'
+        - Configuration
+    parameters: []
   /fuelcoupons/reversal:
     post:
       summary: Reversal fuelcoupon
@@ -514,6 +198,99 @@ paths:
           in: query
           name: fuelcoupon_code
           description: Fuelcoupon full code
+  /fuelcoupons/validate:
+    post:
+      summary: Validate fuelcoupon
+      operationId: post-fuelcoupons-validate
+      responses:
+        '200':
+          description: OK
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FuelcouponValidationInput'
+  /recharges:
+    post:
+      summary: Memorize recharge
+      operationId: post-recharges
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericOutput'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RechargesInput'
+      tags:
+        - Recharges
+  /recharges/reversal:
+    post:
+      summary: Perform a reversal recharge
+      operationId: post-recharges-reversal
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericOutput'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RechargesReversalInput'
+      description: ''
+  /recharges/reversal/info:
+    get:
+      summary: Retrieve recharge info for reversal
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RechargesReversal'
+              examples:
+                Example 1:
+                  value:
+                    id: 529818
+                    date_time: '2023-01-20T17:45:24Z'
+                    bill: 100
+                    bonus_credit: 20
+                    update_required: false
+                    requires_pin: true
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      operationId: get-recharges-reversal
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: card_track
+      tags:
+        - Recharges
+    parameters: []
   '/rewards/deliveries/{id}':
     parameters:
       - schema:
@@ -532,6 +309,163 @@ paths:
         '401':
           description: Unauthorized
       description: ''
+  /rewards/pending:
+    get:
+      summary: Pending Reward
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PendingRewardsOutput'
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity (WebDAV)
+        '500':
+          description: Internal Server Error
+      operationId: get-rewards-pending
+      description: Get rewards pending
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: card_track
+  /rewards/request:
+    post:
+      summary: Reward request
+      operationId: post-rewards-request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RewardMemoRequest'
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RewardMemoErrorResponse'
+      description: Used for reward request and for reversal of an existing reward request
+  /transactions/info:
+    get:
+      summary: Retrieve info to perform an oil or nonoil transaction
+      responses:
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Supplies-info'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      operationId: get-transaction-info
+      description: ''
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: card_track
+      tags:
+        - Transactions
+    parameters: []
+  /transactions/nonoil:
+    post:
+      summary: Transaction nonoil
+      operationId: post-transactions-nonoil
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SupplyNonOilOutput'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      description: Used to validate and registered a non oil supply using a card.
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: Auth Bearer token
+      tags:
+        - Transactions-non-oil
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SupplyNonOilInput'
+  /transactions/oil:
+    post:
+      summary: Transaction oil
+      operationId: post-transactions-oil
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericOutput'
+                description: Oil supply response data
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      description: Used to validate and registered an oil supply using a card.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SupplyOilInput'
+              description: Oil supply request data
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: Auth Bearer token
+      tags:
+        - Transactions
+  /transactions/preauth:
+    post:
+      summary: Preauth request
+      operationId: post-transactions-preauth
+      responses:
+        '200':
+          description: OK. You need to check inside the body to retrieve the preauth request result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PreauthResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      description: Used to check if the card has enough credit to perform the operation.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PreauthRequest'
+              description: Preauth request data
+      tags:
+        - Transactions
   /transactions/points:
     post:
       summary: ''
@@ -547,6 +481,72 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/CardPointsTransactionInput'
+  /transactions/reversal/info:
+    get:
+      summary: Transaction reversal info
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InfoPosTransactionReversal'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      operationId: get-devices-pax-reversal-info
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: card_track
+        - schema:
+            type: string
+          in: query
+          name: is_oil
+      tags:
+        - Transactions
+    parameters: []
+  /transactions/reversal/oil:
+    post:
+      summary: Transaction reversal oil
+      operationId: post-transactions-reversal-oil
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericOutputWithIccData'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OilTransactionReversalInput'
+          application/xml:
+            schema:
+              type: object
+              properties: {}
+          multipart/form-data:
+            schema:
+              type: object
+              properties: {}
+          text/html:
+            schema:
+              type: object
+              properties: {}
+          text/plain:
+            schema:
+              type: object
+              properties: {}
 components:
   schemas:
     Configuration:
