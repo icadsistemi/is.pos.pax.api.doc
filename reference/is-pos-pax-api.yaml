@@ -736,43 +736,18 @@ components:
                     type: string
         card_types_operations:
           type: object
-          description: "This object shows the possible operations for each card type.\nThe card types are:\n\tRIC --> rechargeable card\n\tFM  --> end of month card\n\tSC  --> discount card\n\tPTI --> points card\n\tGT  --> gt cards (fai, uta, dkv, radius/edc, eurowag, romac)\n\tFC  --> fuel coupon\n\nAvailable operations are:\n\tT  --> transaction\n\tS  --> transaction reversal\n\tR  --> recharge\n\tSR --> recharge reversal\n\tSP --> balance point\n\tPR --> reward request\n\tRP --> reward deliver\n\tLP --> available rewards list and pending rewards list\n\tSP --> reward request reversal"
-          required:
-            - RIC
-            - FM
-            - SC
-            - PTI
-            - GT
-            - FC
+          description: "This object shows the possible operations for each card type.\nThe keys represents the card type id.\n\nAvailable operations are:\n\tT  --> transaction\n\tS  --> transaction reversal\n\tR  --> recharge\n\tSR --> recharge reversal\n\tSP --> balance point\n\tPR --> reward request\n\tRP --> reward deliver\n\tLP --> available rewards list and pending rewards list\n\tSP --> reward request reversal"
           properties:
-            RIC:
+            '1':
               type: array
-              description: Operations availble for rechargeable cards
               items:
                 type: string
-            FM:
+            '2':
               type: array
-              description: Operations availble for end of month cards
               items:
                 type: string
-            SC:
+            ..:
               type: array
-              description: Operations availble for discount cards
-              items:
-                type: string
-            PTI:
-              type: array
-              description: Operations availble for points cards
-              items:
-                type: string
-            GT:
-              type: array
-              description: Operations availble for GT cards
-              items:
-                type: string
-            FC:
-              type: array
-              description: Operations availble for fuel coupons
               items:
                 type: string
         data_collection:
@@ -788,10 +763,24 @@ components:
             pumps:
               type: integer
               description: Number of the pumps in the fuel station
+        data_collection - copy:
+          type: object
+          description: Details about data collection of the fuelstationof the terminal
+          required:
+            - has_data_collection
+            - pumps
+          properties:
+            has_data_collection:
+              type: boolean
+              description: 'If true, this terminal has the data collection active and can retrieve last transactions data'
+            pumps:
+              type: integer
+              description: Number of the pumps in the fuel station
       required:
         - card_types_operations
         - data_collection
-      title: ''
+        - data_collection - copy
+      examples: []
     Card-info:
       type: object
       x-examples:
