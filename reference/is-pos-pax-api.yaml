@@ -425,10 +425,10 @@ paths:
       tags:
         - Transactions
     parameters: []
-  /transactions/oil:
+  /transactions:
     post:
-      summary: Transaction oil
-      operationId: post-transactions-oil
+      summary: Transaction supply
+      operationId: post-transactions
       responses:
         '200':
           description: OK
@@ -458,6 +458,7 @@ paths:
           description: Auth Bearer token
       tags:
         - Transactions
+    parameters: []
   /transactions/preauth:
     post:
       summary: Preauth request
