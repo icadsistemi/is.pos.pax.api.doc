@@ -138,6 +138,45 @@ paths:
       tags:
         - Configuration
     parameters: []
+  /configuration/ack:
+    parameters: []
+    post:
+      summary: ''
+      operationId: post-configuration-ack
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Terminal not found
+        '422':
+          description: Unprocessable Entity (malformed or missing input)
+        '500':
+          description: Internal Server Error
+      description: 'Endpoint to call when a configuration phase (first or forced dll) is completed to inform the server about the result, success or not.'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              x-examples:
+                Example 1:
+                  guid: 52f0277a-ef53-4e7f-a952-aa3eb7e94397
+                  is_success: false
+                  error_description: malformed input
+              properties:
+                guid:
+                  type: string
+                  description: Unique identifier for ACK request
+                is_success:
+                  type: boolean
+                  description: Represent if the dll is completed with success or not
+                error_description:
+                  type: string
+                  description: Inform the host about the error occurred. Present only if the request is a NACK
+              required:
+                - guid
+                - is_success
+        description: ''
   /fuelcoupons/reversal:
     post:
       summary: Reversal fuelcoupon
@@ -435,8 +474,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GenericOutput'
-                description: Oil supply response data
+                $ref: '#/components/schemas/SupplyOutput'
+                description: Supply response data
         '400':
           description: Bad Request
         '401':
@@ -448,7 +487,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SupplyOilInput'
+              $ref: '#/components/schemas/SupplyInput'
               description: Oil supply request data
       parameters:
         - schema:
@@ -675,7 +714,7 @@ components:
                 font: medium
               - content: '       25125 Brescia (BS)'
                 font: medium
-      description: First dll
+      description: First/Forced dll
       examples: []
       properties:
         terminal_id:
@@ -777,11 +816,14 @@ components:
             pumps:
               type: integer
               description: Number of the pumps in the fuel station
+        guid:
+          type: string
+          description: 'Represent the dll unique identifier '
       required:
         - card_types_operations
         - data_collection
         - data_collection - copy
-      title: ''
+        - guid
     Card-info:
       type: object
       x-examples:
@@ -1083,10 +1125,10 @@ components:
         - vehicle_plate
         - icc_data
         - balance_amount
-    SupplyOilInput:
-      title: SupplyOilInput
+    SupplyInput:
+      title: SupplyInput
       x-stoplight:
-        id: 6pd5lgrxsz2xt
+        id: 4d6cd59623de0
       type: object
       description: Input model for the supplies requests
       properties:
@@ -1167,7 +1209,7 @@ components:
         - crypted_pin
         - date_time
         - total_amount
-    SupplyOilOutput:
+    SupplyOutput:
       type: object
       x-examples:
         Example 1:
@@ -1218,6 +1260,9 @@ components:
         - ticket
         - display
         - action_code
+      x-stoplight:
+        id: a2e452ceca0f5
+      title: ''
     PointsOutput:
       type: object
       properties:
