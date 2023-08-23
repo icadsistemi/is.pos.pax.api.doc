@@ -549,15 +549,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InfoPosTransactionReversal'
-        '400':
-          description: Bad Request
+        '401':
+          description: Unauthorized
           content:
             application/json:
               schema:
                 type: object
                 properties: {}
-        '401':
-          description: Unauthorized
+        '404':
+          description: Not Found
+        '422':
+          description: Unprocessable Entity (WebDAV)
         '500':
           description: Internal Server Error
       operationId: get-devices-pax-reversal-info
@@ -566,12 +568,9 @@ paths:
             type: string
           in: query
           name: card_track
-        - schema:
-            type: string
-          in: query
-          name: is_oil
       tags:
         - Transactions
+      description: The endpoint is used to return the last reversable transaction related to that card and terminal.
     parameters: []
   /transactions/reversal/oil:
     post:
@@ -867,15 +866,20 @@ components:
           type: boolean
         update_required:
           type: boolean
-    Articles:
-      title: Articles
+    Supplies:
+      title: Supplies
       x-stoplight:
         id: 8db3394aaad8f
       type: array
-      description: Articles model for info pos transaction reversal model
+      description: Represent a set of supplied articles contained in a single transaction
+      x-internal: false
       items:
         type: object
         properties:
+          id:
+            type: number
+          date_time:
+            type: string
           article_name:
             type: string
             description: name of the article
@@ -888,6 +892,8 @@ components:
           quantity:
             type: number
             description: quantity of the transaction
+          is_oil:
+            type: boolean
     InfoPosTransactionReversal:
       title: InfoPosTransactionReversal
       x-stoplight:
@@ -895,34 +901,23 @@ components:
       type: object
       examples: []
       properties:
-        id:
-          type: integer
-          description: transaction id unique
-        date_time:
-          type: string
-          format: date-time
-          description: data time of the transaction
-          readOnly: true
-        articles:
-          $ref: '#/components/schemas/Articles'
-          description: articles model of the transaction
         update_required:
           type: boolean
           description: true if the terminal must update its settings
         requires_pin:
           type: boolean
           description: 'true if the pin mandatory for the next reversal '
-        is_oil:
-          type: boolean
-          customer_data:
-            - 2
-            - 3
-          is_oil: false
-          articles:
-            - 3
-            - 4
-            - 8
-          requires_pin: true
+        total_amount:
+          type: number
+          description: 'Transaction total amount, the sum of each article amount'
+        articles:
+          $ref: '#/components/schemas/Supplies'
+          description: articles model of the transaction
+      required:
+        - update_required
+        - requires_pin
+        - total_amount
+        - articles
     InfoPosFuelcouponTransactionReversal:
       title: InfoPosTransactionReversal
       type: object
@@ -939,7 +934,7 @@ components:
           description: data time of the transaction
           readOnly: true
         articles:
-          $ref: '#/components/schemas/Articles'
+          $ref: '#/components/schemas/Supplies'
           description: articles model of the transaction
     RechargesReversal:
       title: RechargesReversal
