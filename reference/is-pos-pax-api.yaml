@@ -832,26 +832,12 @@ components:
             pumps:
               type: integer
               description: Number of the pumps in the fuel station
-        data_collection - copy:
-          type: object
-          description: Details about data collection of the fuelstationof the terminal
-          required:
-            - has_data_collection
-            - pumps
-          properties:
-            has_data_collection:
-              type: boolean
-              description: 'If true, this terminal has the data collection active and can retrieve last transactions data'
-            pumps:
-              type: integer
-              description: Number of the pumps in the fuel station
         guid:
           type: string
           description: 'Represent the dll unique identifier '
       required:
         - card_types_operations
         - data_collection
-        - data_collection - copy
         - guid
     Card-info:
       type: object
