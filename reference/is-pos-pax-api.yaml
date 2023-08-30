@@ -3,7 +3,7 @@ x-stoplight:
   id: tgvfiv56rre5x
 info:
   title: POS PAX Public API
-  version: 0.6.5
+  version: 0.6.7
   description: POS PAX API documentation
 servers:
   - url: 'https://mxp-public-pos-api.dev.icadsistemi.com/v1'
@@ -202,7 +202,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FuelcouponReversalOutputError'
+                $ref: '#/components/schemas/GenericOutputError'
       requestBody:
         content:
           application/json:
@@ -382,7 +382,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FuelcouponReversalOutput'
+                $ref: '#/components/schemas/GenericOutputError'
         '500':
           description: Internal Server Error
       description: Reverse a pending reward and restore cards points
@@ -1578,10 +1578,10 @@ components:
           type: integer
       x-stoplight:
         id: 60d2727931a93
-    FuelcouponReversalOutputError:
+    GenericOutputError:
       type: object
       x-stoplight:
-        id: 3ad4b6c3338f2
+        id: a0dfc79c3995e
       properties:
         ticket:
           type: array
