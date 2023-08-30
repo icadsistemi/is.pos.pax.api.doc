@@ -559,8 +559,12 @@ paths:
       summary: Transaction points
       operationId: post-transactions-points
       responses:
-        '204':
-          description: No Content
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericOutput'
         '400':
           description: Bad Request
       description: Card points transaction
