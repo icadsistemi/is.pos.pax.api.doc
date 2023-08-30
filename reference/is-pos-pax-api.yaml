@@ -556,7 +556,7 @@ paths:
         - Transactions
   /transactions/points:
     post:
-      summary: ''
+      summary: Transaction points
       operationId: post-transactions-points
       responses:
         '204':
@@ -569,6 +569,26 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/CardPointsTransactionInput'
+  /transactions/points/reversal:
+    post:
+      summary: Reversal transaction points
+      operationId: post-transactions-points-reversal
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericOutput'
+        '500':
+          description: Internal Server Error
+      description: 'Endpoint used to reverse a points transaction '
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PointsReversalInput'
+    parameters: []
   /transactions/reversal/info:
     get:
       summary: Transaction reversal info
@@ -1634,6 +1654,7 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Products'
+      examples: []
     ExternalGtInfo:
       title: ExternalGtInfo
       x-stoplight:
@@ -1702,6 +1723,37 @@ components:
         - amount
         - is_oil
       description: Represent a single product present in a transaction
+    PointsReversalInput:
+      title: PointsReversalInput
+      x-stoplight:
+        id: fm33hg9vx8xwq
+      type: object
+      properties:
+        card_track:
+          type: string
+          description: Represent the card track
+        transaction_id:
+          type: integer
+          description: Represent the transaction identifier
+        supplies:
+          type: array
+          description: Represent the all transaction elements to revert
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                description: Represent the single element transaction identifier
+              is_oil:
+                type: boolean
+                description: 'Information about single element transaction typology: true if oil, false if not oil'
+            required:
+              - id
+              - is_oil
+      required:
+        - card_track
+        - transaction_id
+        - supplies
   securitySchemes:
     Cognito:
       type: oauth2
