@@ -413,6 +413,10 @@ paths:
       responses:
         '204':
           description: No Content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericOutput'
         '400':
           description: Bad Request
           content:
@@ -1461,54 +1465,34 @@ components:
         - points
         - is_fuelcoupon
     RewardMemoRequest:
-      title: RewardMemoRequest
+      title: RewardRequest
       x-stoplight:
         id: 3a6j33tlj7yvy
       type: object
-      description: reward memo request
+      description: reward request
       properties:
-        residue:
-          type: integer
-          description: 'if set 0, it is not used.'
         campaign_id:
           type: integer
-          description: campaing id
-        is_delivered:
-          type: boolean
-          description: 'if the reward is delivered '
-        is_customer_request:
-          type: boolean
-          description: if is customer request
-        item_id:
+          description: campaign id identifier
+        reward_id:
           type: integer
-          description: reward id
-        pan:
+          description: reward identifier
+        card_track:
           type: string
-          description: pan of the card
-        points:
-          type: integer
-          description: points for the reward
+          description: Card Track
         transaction_number:
           type: integer
           description: 'set autoincrement transaction number '
         timestamp:
           type: string
           format: date-time
-          description: date time of the transaction
-        is_nonoil:
-          type: boolean
-          description: 'If true is a nonoil request, oil otherwise'
+          description: 'Transaction date time '
       required:
-        - residue
         - campaign_id
-        - is_delivered
-        - is_customer_request
-        - item_id
-        - pan
-        - points
+        - reward_id
+        - card_track
         - transaction_number
         - timestamp
-        - is_nonoil
     RewardMemoErrorResponse:
       title: RewardMemoErrorResponse
       x-stoplight:
