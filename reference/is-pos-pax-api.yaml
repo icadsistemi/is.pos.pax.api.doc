@@ -3,7 +3,7 @@ x-stoplight:
   id: tgvfiv56rre5x
 info:
   title: POS PAX Public API
-  version: 0.6.7
+  version: 0.6.8
   description: POS PAX API documentation
 servers:
   - url: 'https://mxp-public-pos-api.dev.icadsistemi.com/v1'
@@ -86,36 +86,6 @@ paths:
       operationId: get-cards-track-points
       tags:
         - Rewards
-  '/cards/{track}/rewards/':
-    parameters:
-      - schema:
-          type: string
-        name: track
-        in: path
-        required: true
-        description: Track 2 of the requested card
-    get:
-      summary: Available rewards
-      tags:
-        - Available Rewards
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: array
-                description: List of campaign which has available rewards for the input card
-                items:
-                  $ref: '#/components/schemas/CampaignRewards'
-        '400':
-          description: Bad Request
-        '401':
-          description: Unauthorized
-        '500':
-          description: Internal Server Error
-      operationId: get-rewards-track
-      description: 'For point cards, return the list of available rewards, filtering with available points and active campaigns.'
   /configuration:
     get:
       summary: POS configuration
@@ -330,6 +300,35 @@ paths:
       tags:
         - Recharges
     parameters: []
+  /rewards:
+    parameters: []
+    get:
+      summary: Available rewards
+      tags:
+        - Available Rewards
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                description: List of campaign which has available rewards for the input card
+                items:
+                  $ref: '#/components/schemas/CampaignRewards'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      operationId: get-rewards-track
+      description: 'For point cards, return the list of available rewards, filtering with available points and active campaigns.'
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: card_track
   '/rewards/deliveries/{id}':
     parameters:
       - schema:
