@@ -225,7 +225,7 @@ paths:
               $ref: '#/components/schemas/FuelcouponValidationInput'
   /recharges:
     post:
-      summary: Memorize recharge
+      summary: Recharge card
       operationId: post-recharges
       responses:
         '200':
@@ -247,9 +247,10 @@ paths:
               $ref: '#/components/schemas/RechargesInput'
       tags:
         - Recharges
+      description: ''
   /recharges/reversal:
     post:
-      summary: Perform a reversal recharge
+      summary: Reverse a card recharge
       operationId: post-recharges-reversal
       responses:
         '200':
