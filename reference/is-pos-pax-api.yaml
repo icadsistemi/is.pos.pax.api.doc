@@ -214,6 +214,10 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FuelcouponValidationOutput'
       requestBody:
         content:
           application/json:
@@ -1524,20 +1528,6 @@ components:
         - fuelcoupon_code
     FuelcouponValidationOutput:
       type: object
-      properties:
-        display:
-          type: array
-          items:
-            type: object
-            properties:
-              font:
-                type: string
-              message:
-                type: string
-        transaction_id:
-          type: string
-        locked_amount:
-          type: integer
       x-examples:
         Example 1:
           display:
@@ -1545,7 +1535,31 @@ components:
               message: aa
           transaction_id: 53c786b82d124fadb1e8e374
           locked_amount: 10
-      title: ''
+      title: FuelcouponValidationOutput
+      properties:
+        display:
+          type: array
+          description: Display data
+          items:
+            type: object
+            properties:
+              font:
+                type: string
+              message:
+                type: string
+            required:
+              - font
+              - message
+        transaction_id:
+          type: string
+          description: 'This identifier is used to relates the fuelcoupons to the same transaction. So for the same transaction, if the user wants to use multiple fuelcoupons, the POS should send everytime the same transaction_id for each call to this API'
+        locked_amount:
+          type: integer
+          description: Available amount for the used fuelcoupon
+      required:
+        - display
+        - transaction_id
+        - locked_amount
     FuelcouponReversalOutput:
       type: object
       properties:
