@@ -818,7 +818,7 @@ components:
               name:
                 type: string
               unit_price:
-                type: integer
+                type: number
               is_oil:
                 type: boolean
               measure_unit_id:
