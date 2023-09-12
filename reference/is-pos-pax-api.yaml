@@ -817,10 +817,10 @@ components:
                 type: integer
               name:
                 type: string
-              unit_price:
-                type: number
               is_oil:
                 type: boolean
+              unit_price:
+                type: number
               measure_unit_id:
                 type: integer
         ticket:
@@ -867,6 +867,31 @@ components:
         guid:
           type: string
           description: 'Represent the dll unique identifier '
+        payment_modes:
+          type: object
+          properties:
+            recharges:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  name:
+                    type: string
+                  '':
+                    type: string
+            data_collection:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  name:
+                    type: string
+                  '':
+                    type: string
       required:
         - card_types_operations
         - data_collection
