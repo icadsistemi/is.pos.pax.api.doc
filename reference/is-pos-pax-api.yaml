@@ -823,6 +823,8 @@ components:
                 type: number
               measure_unit_id:
                 type: integer
+              precision:
+                type: integer
         ticket:
           type: object
           properties:
@@ -878,8 +880,6 @@ components:
                   id:
                     type: string
                   name:
-                    type: string
-                  '':
                     type: string
             data_collection:
               type: array
