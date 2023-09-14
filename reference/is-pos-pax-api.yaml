@@ -517,6 +517,10 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericOutput'
         '422':
           description: |-
             Unprocessable Entity (WebDAV)
@@ -524,6 +528,11 @@ paths:
       description: |-
         Endpoint to close transactions, need to be called at the end of payment operations to receive the formatted receipts and moreover inform data-collection how the supplies are payed (in case DC is enabled).
         In case of multipayments and multiproducts in the same transaction, it will trigger an error.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransactionAckInput'
   /transactions/info:
     get:
       summary: Retrieve info to perform an oil or nonoil transaction
@@ -1793,6 +1802,102 @@ components:
         - card_track
         - transaction_id
         - supplies
+    TransactionAckInput:
+      title: TransactionAckInput
+      x-stoplight:
+        id: ob68ydmp3sy6h
+      type: object
+      properties:
+        supply_amount:
+          type: number
+          description: Total amount for the entire transaction
+        supply_receipt_number:
+          type: integer
+          description: Receipt number to print on it
+        payments:
+          type: array
+          description: List of payments and related products bought
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+                description: 'Payment mode identifier '
+              name:
+                type: string
+                description: Payment mode name to print on receipt
+              amount:
+                type: number
+                description: Amount payed with the payment mode
+              card_track:
+                type: string
+                description: 'Card track for the used one. It is a conditional field, present only if the payment mode require it. Eg: is not present for fuelcoupons or credit card'
+              fuelcoupon_number:
+                type: integer
+                description: 'Fuelcoupon number for the used one. It is a conditional field, present only if the payment mode require it. Eg: is not present for card transactions or credit card'
+              stan:
+                type: integer
+                description: Incremental number representing the operation number. Each payment represent an operation.
+              datetime:
+                type: string
+                description: Payment operation timestamp
+              customer_data:
+                type: object
+                description: 'Contains all the customer data like km, driver code and all the data inserted by the user during card transaction'
+                properties:
+                  km:
+                    type: integer
+                    description: Represent the Km inserted by the user
+                  driver_code:
+                    type: integer
+                    description: Represent the driver code inserted by the user
+              purchased_product:
+                type: array
+                description: Bought product list with that payment mode
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: Product identifier
+                    supply_id:
+                      type: number
+                      description: 'Conditional field, representing the supply identifier selected by the user. It is present only if data-collection is enabled on fuelstation'
+                    name:
+                      type: string
+                      description: Product name to print on receipt
+                    quantity:
+                      type: number
+                      description: Bought product quantity
+                    unit_price:
+                      type: number
+                      description: 'Bought product unit price '
+                    measure_unit:
+                      type: string
+                      description: Bought product measure unit
+                    amount:
+                      type: number
+                      description: 'Bought product amount '
+                  required:
+                    - id
+                    - name
+                    - quantity
+                    - unit_price
+                    - measure_unit
+                    - amount
+            required:
+              - id
+              - name
+              - amount
+              - stan
+              - datetime
+              - purchased_product
+      required:
+        - supply_amount
+        - supply_receipt_number
+        - payments
+      examples: []
+      description: ''
   securitySchemes:
     Cognito:
       type: oauth2
