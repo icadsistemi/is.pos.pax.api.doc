@@ -476,32 +476,6 @@ paths:
           in: query
           name: pump
           description: Number of the pump
-  /transactions/info:
-    get:
-      summary: Retrieve info to perform an oil or nonoil transaction
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Supplies-info'
-        '400':
-          description: Bad Request
-        '401':
-          description: Unauthorized
-        '500':
-          description: Internal Server Error
-      operationId: get-transaction-info
-      description: ''
-      parameters:
-        - schema:
-            type: string
-          in: query
-          name: card_track
-      tags:
-        - Transactions
-    parameters: []
   /transactions:
     post:
       summary: Transaction supply
@@ -533,6 +507,46 @@ paths:
           in: header
           name: Authorization
           description: Auth Bearer token
+      tags:
+        - Transactions
+    parameters: []
+  /transactions/ack:
+    post:
+      summary: Transactions ACK
+      operationId: post-transactions-ack
+      responses:
+        '200':
+          description: OK
+        '422':
+          description: |-
+            Unprocessable Entity (WebDAV)
+            Input is malformed
+      description: |-
+        Endpoint to close transactions, need to be called at the end of payment operations to receive the formatted receipts and moreover inform data-collection how the supplies are payed (in case DC is enabled).
+        In case of multipayments and multiproducts in the same transaction, it will trigger an error.
+  /transactions/info:
+    get:
+      summary: Retrieve info to perform an oil or nonoil transaction
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Supplies-info'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      operationId: get-transaction-info
+      description: ''
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: card_track
       tags:
         - Transactions
     parameters: []
