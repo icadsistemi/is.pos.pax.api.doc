@@ -657,38 +657,6 @@ paths:
         - Transactions
       description: The endpoint is used to return the last reversable transaction related to that card and terminal.
     parameters: []
-  /transactions/reversal/oil:
-    post:
-      summary: Transaction reversal oil
-      operationId: post-transactions-reversal-oil
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GenericOutputWithIccData'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/OilTransactionReversalInput'
-          application/xml:
-            schema:
-              type: object
-              properties: {}
-          multipart/form-data:
-            schema:
-              type: object
-              properties: {}
-          text/html:
-            schema:
-              type: object
-              properties: {}
-          text/plain:
-            schema:
-              type: object
-              properties: {}
 components:
   schemas:
     Configuration:
@@ -1453,29 +1421,6 @@ components:
                 type: string
         icc_data:
           type: string
-    OilTransactionReversalInput:
-      type: object
-      properties:
-        reversal_transaction_id:
-          type: integer
-        pin:
-          type: string
-        key_label:
-          type: string
-        random_pin_key:
-          type: string
-        transaction_id:
-          type: integer
-        card_track:
-          type: string
-      x-examples:
-        Example 1:
-          reversal_transaction_id: 123
-          pin: '1234567890'
-          key_label: ''
-          random_pin_key: ''
-          transaction_id: 124
-          card_track: ''
     PendingRewardsOutput:
       title: PendingRewardsOutput
       x-stoplight:
