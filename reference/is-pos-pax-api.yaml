@@ -972,14 +972,14 @@ components:
         total_amount:
           type: number
           description: 'Transaction total amount, the sum of each article amount'
-        articles:
+        supplies:
           $ref: '#/components/schemas/Supplies'
-          description: articles model of the transaction
+          description: supplies model of the transaction
       required:
         - update_required
         - requires_pin
         - total_amount
-        - articles
+        - supplies
     InfoPosFuelcouponTransactionReversal:
       title: InfoPosTransactionReversal
       type: object
