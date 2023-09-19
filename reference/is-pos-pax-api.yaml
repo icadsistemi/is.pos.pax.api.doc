@@ -3,7 +3,7 @@ x-stoplight:
   id: tgvfiv56rre5x
 info:
   title: POS PAX Public API
-  version: 0.6.8
+  version: 0.6.9
   description: POS PAX API documentation
 servers:
   - url: 'https://mxp-public-pos-api.dev.icadsistemi.com/v1'
@@ -624,6 +624,24 @@ paths:
             schema:
               $ref: '#/components/schemas/PointsReversalInput'
     parameters: []
+  /transactions/reversal:
+    post:
+      summary: Transaction Reversal
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericOutput'
+      operationId: post-transactions-reversal
+      description: The endpoint is used to reverse a transaction.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransactionReversalInput'
   /transactions/reversal/info:
     get:
       summary: Transaction reversal info
@@ -659,6 +677,115 @@ paths:
     parameters: []
 components:
   schemas:
+    CampaignRewards:
+      title: CampaignRewards
+      x-stoplight:
+        id: qjbhk1o80xtrn
+      type: object
+      description: A campaign with all its rewards
+      properties:
+        id:
+          type: integer
+          description: ID of the campaign
+        name:
+          type: string
+          description: Name of the campaign
+        type:
+          type: integer
+          description: |-
+            Allowed values are:
+
+            - 1: this is a OIL campaign
+            - 2: this is a NON OIL campaign
+            - 3: this is a mixed campaign
+        rewards:
+          type: array
+          description: Arrray of available rewards
+          items:
+            $ref: '#/components/schemas/Reward'
+      required:
+        - id
+        - name
+        - type
+        - rewards
+    CardPointsTransactionInput:
+      type: object
+      x-examples:
+        Example 1:
+          gross_amount: 20
+          net_amount: 0
+          quantity: 10.78
+          km: 100
+          unit_price: 1.856
+          notes: asd asd asdf
+          extra_code: 0
+          is_standalone: false
+          item_id: 23
+          pan: '70055740001000049'
+          points: 0
+          transaction_number: 0
+          timestamp: '2023-07-11T16:18:43Z'
+          is_oil: false
+          is_reversal: true
+      properties:
+        card_track:
+          type: string
+          description: Represent the card track
+        transaction_id:
+          type: integer
+          description: Represent the transaction identifier
+        supplies_ov_ids:
+          type: string
+          description: Represent each supply id selected by the user
+        date_time:
+          type: string
+          description: Represent the transaction datetime
+        total_amount:
+          type: number
+          description: Total amount for transaction
+        km:
+          type: integer
+          description: 'Km inserted by the user, if requested during transaction'
+        driver_code:
+          type: integer
+          description: 'Driver code inserted by the user, if requested during transaction'
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/Products'
+      examples: []
+    Card-info:
+      type: object
+      x-examples:
+        Example 1:
+          id: 0
+          is_enabled: true
+          type_id: 0
+      description: Card type and status informations
+      properties:
+        is_enabled:
+          type: boolean
+        type_id:
+          type: integer
+        update_required:
+          type: boolean
+    ChipInfo:
+      title: ChipInfo
+      x-stoplight:
+        id: zvrnbibi21ohj
+      type: object
+      description: Input model for the information required only EMV cards.
+      properties:
+        icc_related_data:
+          type: string
+        unencrypted_id:
+          type: string
+        work_order:
+          type: string
+        vehicle_number:
+          type: string
+        driver_id:
+          type: string
     Configuration:
       type: object
       x-examples:
@@ -885,80 +1012,209 @@ components:
         - card_types_operations
         - data_collection
         - guid
-    Card-info:
+    ExternalGtInfo:
+      title: ExternalGtInfo
+      x-stoplight:
+        id: mkvtbtobg0yya
       type: object
-      x-examples:
-        Example 1:
-          id: 0
-          is_enabled: true
-          type_id: 0
-      description: Card type and status informations
+      description: 'Input model for the information required only for external GTs (eg: DKV)'
       properties:
-        is_enabled:
-          type: boolean
-        type_id:
-          type: integer
-        update_required:
-          type: boolean
-    Supplies-info:
+        pos_data_code:
+          type: string
+        function_code:
+          type: string
+        message_reason_code:
+          type: string
+        batch_number:
+          type: string
+        currency_code:
+          type: string
+        service_level:
+          type: string
+        delivery_note_number:
+          type: string
+        default_vat:
+          type: string
+    FuelcouponReversalOutput:
       type: object
-      x-examples:
-        Example 1:
-          customer_data:
-            - 2
-            - 3
-          articles:
-            - 3
-            - 4
-            - 8
-          requires_pin: true
       properties:
-        customer_data:
+        ticket:
           type: array
           items:
-            type: integer
-        articles:
-          type: object
-          properties:
-            id:
-              type: integer
-            is_oil:
-              type: boolean
-        requires_pin:
-          type: boolean
-        update_required:
-          type: boolean
-    Supplies:
-      title: Supplies
+            type: object
+            properties:
+              content:
+                type: string
+              font:
+                type: string
+        display:
+          type: array
+          items:
+            type: object
+            properties:
+              content:
+                type: string
+              font:
+                type: string
+        transaction_id:
+          type: integer
       x-stoplight:
-        id: 8db3394aaad8f
-      type: array
-      description: Represent a set of supplied articles contained in a single transaction
-      x-internal: false
-      items:
-        type: object
-        properties:
-          article_name:
-            type: string
-            description: name of the article
-          amount:
-            type: number
-            description: amount of the transaction
-          unit_price:
-            type: number
-            description: unit price of the transaction
-          quantity:
-            type: number
-            description: quantity of the transaction
-          is_oil:
-            type: boolean
-            description: 'information about the selled articles: if oil or not'
-          card_id:
-            type: integer
-            description: Card id used for the transaction
-          card_pan:
-            type: string
-            description: Card Pan used for the transaction
+        id: 60d2727931a93
+    FuelcouponValidationInput:
+      type: object
+      x-examples:
+        Example 1:
+          fuelcoupon_code: '0000000000009906970358268'
+          transaction_id: 53c786b82d124fadb1e8e374
+      properties:
+        fuelcoupon_code:
+          type: string
+        transaction_id:
+          type: string
+          description: Mandatory only if multiple fuelcoupon code are used for transaction
+      required:
+        - fuelcoupon_code
+    FuelcouponValidationOutput:
+      type: object
+      x-examples:
+        Example 1:
+          display:
+            - font: medium
+              message: aa
+          transaction_id: 53c786b82d124fadb1e8e374
+          locked_amount: 10
+      title: FuelcouponValidationOutput
+      properties:
+        display:
+          type: array
+          description: Display data
+          items:
+            type: object
+            properties:
+              font:
+                type: string
+              message:
+                type: string
+            required:
+              - font
+              - message
+        transaction_id:
+          type: string
+          description: 'This identifier is used to relates the fuelcoupons to the same transaction. So for the same transaction, if the user wants to use multiple fuelcoupons, the POS should send everytime the same transaction_id for each call to this API'
+        locked_amount:
+          type: integer
+          description: Available amount for the used fuelcoupon
+      required:
+        - display
+        - transaction_id
+        - locked_amount
+    GenericOutput:
+      type: object
+      properties:
+        result:
+          type: string
+        ticket:
+          type: array
+          items:
+            type: object
+            properties:
+              content:
+                type: string
+              font:
+                type: string
+        display:
+          type: array
+          items:
+            type: object
+            properties:
+              content:
+                type: string
+              font:
+                type: string
+      x-examples:
+        Example 1:
+          result: '000'
+          ticket:
+            - content: Ricarica effettuata!
+              font: test
+            - content: 'Importo: 500.00'
+            - content: 'Abbuono: 0.00'
+            - content: 'Saldo tessera: 3510.00'
+          display:
+            - content: Ricarica effettuata!
+              font: test
+            - content: 'Importo: 500.00'
+            - content: 'Abbuono: 0.00'
+            - content: 'Saldo tessera: 3510.00'
+    GenericOutputError:
+      type: object
+      x-stoplight:
+        id: a0dfc79c3995e
+      properties:
+        ticket:
+          type: array
+          items:
+            type: object
+            properties:
+              content:
+                type: string
+              font:
+                type: string
+        display:
+          type: array
+          items:
+            type: object
+            properties:
+              content:
+                type: string
+              font:
+                type: string
+        result:
+          type: string
+    GenericOutputWithIccData:
+      type: object
+      x-examples:
+        Example 1:
+          result: '000'
+          ticket:
+            - content: Ricarica effettuata!
+              font: test
+            - content: 'Importo: 500.00'
+            - content: 'Abbuono: 0.00'
+            - content: 'Saldo tessera: 3510.00'
+          display:
+            - content: Ricarica effettuata!
+              font: test
+            - content: 'Importo: 500.00'
+            - content: 'Abbuono: 0.00'
+            - content: 'Saldo tessera: 3510.00'
+      x-stoplight:
+        id: 5aec8640f98c3
+      title: GenericOutputWithIccData
+      description: Used to model a standard transaction output with icc_data included
+      properties:
+        result:
+          type: string
+        ticket:
+          type: array
+          items:
+            type: object
+            properties:
+              content:
+                type: string
+              font:
+                type: string
+        display:
+          type: array
+          items:
+            type: object
+            properties:
+              content:
+                type: string
+              font:
+                type: string
+        icc_data:
+          type: string
     InfoPosTransactionReversal:
       title: InfoPosTransactionReversal
       x-stoplight:
@@ -1009,116 +1265,80 @@ components:
         articles:
           $ref: '#/components/schemas/Supplies'
           description: articles model of the transaction
-    RechargesReversal:
-      title: RechargesReversal
+    PinDataInput:
+      title: PinDataInput
       x-stoplight:
-        id: zcwnf9vyzktqx
+        id: ncbboazy1xim2
       type: object
       properties:
-        id:
+        crypted_pin:
+          type: string
+          description: The pin encrypted with the session key
+        label_key:
+          type: string
+          description: Label used to recognize which key use on server side
+        random_pin_key:
+          type: string
+          description: Random pin key used to generate the session encryption key
+      required:
+        - crypted_pin
+        - label_key
+        - random_pin_key
+    PendingRewardsOutput:
+      title: PendingRewardsOutput
+      x-stoplight:
+        id: g1ko07ezok0jh
+      type: object
+      description: pending rewards model output
+      properties:
+        reward_request_id:
           type: integer
-          description: id unique
-        date_time:
+        reward_name:
+          type: string
+        datetime:
           type: string
           format: date-time
-          readOnly: true
-        bill:
+        points:
           type: number
-        bonus_credit:
-          type: number
-        update_required:
-          type: boolean
-          description: true if the terminal must update its settings
-        requires_pin:
-          type: boolean
-          description: 'true if the pin mandatory for the next reversal '
-    CampaignRewards:
-      title: CampaignRewards
-      x-stoplight:
-        id: qjbhk1o80xtrn
+    PointsOutput:
       type: object
-      description: A campaign with all its rewards
       properties:
-        id:
+        points:
           type: integer
-          description: ID of the campaign
-        name:
-          type: string
-          description: Name of the campaign
-        type:
-          type: integer
-          description: |-
-            Allowed values are:
-
-            - 1: this is a OIL campaign
-            - 2: this is a NON OIL campaign
-            - 3: this is a mixed campaign
-        rewards:
-          type: array
-          description: Arrray of available rewards
-          items:
-            $ref: '#/components/schemas/Reward'
-      required:
-        - id
-        - name
-        - type
-        - rewards
-    RechargesInput:
-      type: object
       x-examples:
         Example 1:
-          card_track: 70055730001000057=2209009000615800000
-          bill_id: 53
-          pin: 68B4E28A576654D1
-          payment_mode: 2
-          key_label: QT_IFSF
-          random_pin_key: 2C9E11B025F712CA37437D853BD6E7D4
-          transaction_id: ''
+          points: 0
+    PointsReversalInput:
+      title: PointsReversalInput
+      x-stoplight:
+        id: fm33hg9vx8xwq
+      type: object
       properties:
         card_track:
           type: string
-        bill_id:
-          type: integer
-        pin:
-          type: string
-        payment_mode:
-          type: integer
-        key_label:
-          type: string
-        random_pin_key:
-          type: string
+          description: Represent the card track
         transaction_id:
-          type: string
-      required:
-        - card_track
-        - bill_id
-        - pin
-        - key_label
-        - random_pin_key
-        - transaction_id
-    RechargesBills:
-      type: object
-      properties:
-        bills:
+          type: integer
+          description: Represent the transaction identifier
+        supplies:
           type: array
+          description: Represent the all transaction elements to revert
           items:
             type: object
             properties:
               id:
                 type: integer
-              amount:
-                type: integer
-              bonus_credit:
-                type: integer
-        update_required:
-          type: boolean
-      x-examples:
-        Example 1:
-          bills:
-            - id: 15
-              amount: 50
-              bonus_credit: 1
-          update_required: false
+                description: Represent the single element transaction identifier
+              is_oil:
+                type: boolean
+                description: 'Information about single element transaction typology: true if oil, false if not oil'
+            required:
+              - id
+              - is_oil
+      required:
+        - card_track
+        - transaction_id
+        - supplies
     PreauthRequest:
       title: PreauthRequest
       x-stoplight:
@@ -1193,6 +1413,234 @@ components:
         - vehicle_plate
         - icc_data
         - balance_amount
+    Products:
+      title: Products
+      x-stoplight:
+        id: jsu39o0m0p2fq
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Product identifier
+        quantity:
+          type: number
+          description: Product supplied quantity
+        unit_price:
+          type: number
+          description: Product unit price
+        amount:
+          type: number
+          description: Product amount (quantity * unit_price)
+        is_oil:
+          type: boolean
+          description: 'If true, is an oil product, otherwise is a not oil product'
+      required:
+        - id
+        - quantity
+        - unit_price
+        - amount
+        - is_oil
+      description: Represent a single product present in a transaction
+    RechargesInput:
+      type: object
+      x-examples:
+        Example 1:
+          card_track: 70055730001000057=2209009000615800000
+          bill_id: 53
+          pin: 68B4E28A576654D1
+          payment_mode: 2
+          key_label: QT_IFSF
+          random_pin_key: 2C9E11B025F712CA37437D853BD6E7D4
+          transaction_id: ''
+      properties:
+        card_track:
+          type: string
+        bill_id:
+          type: integer
+        pin:
+          type: string
+        payment_mode:
+          type: integer
+        key_label:
+          type: string
+        random_pin_key:
+          type: string
+        transaction_id:
+          type: string
+      required:
+        - card_track
+        - bill_id
+        - pin
+        - key_label
+        - random_pin_key
+        - transaction_id
+    RechargesBills:
+      type: object
+      properties:
+        bills:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              amount:
+                type: integer
+              bonus_credit:
+                type: integer
+        update_required:
+          type: boolean
+      x-examples:
+        Example 1:
+          bills:
+            - id: 15
+              amount: 50
+              bonus_credit: 1
+          update_required: false
+    RechargesReversal:
+      title: RechargesReversal
+      x-stoplight:
+        id: zcwnf9vyzktqx
+      type: object
+      properties:
+        id:
+          type: integer
+          description: id unique
+        date_time:
+          type: string
+          format: date-time
+          readOnly: true
+        bill:
+          type: number
+        bonus_credit:
+          type: number
+        update_required:
+          type: boolean
+          description: true if the terminal must update its settings
+        requires_pin:
+          type: boolean
+          description: 'true if the pin mandatory for the next reversal '
+    RechargesReversalInput:
+      type: object
+      properties:
+        card_track:
+          type: string
+        recharge_id:
+          type: integer
+        pin:
+          type: string
+        key_label:
+          type: string
+        random_pin_key:
+          type: string
+        transaction_id:
+          type: string
+      x-examples:
+        Example 1:
+          card_track: 1234567890=12345678900987654321
+          recharge_id: 531303
+          pin: IFGHERYIGEGTRH
+          key_label: ASDFGHJ
+          random_pin_key: GERGRDHE6HVJYJ TRJFJTYJRTJ
+          transaction_id: '32894987453'
+    RewardMemoRequest:
+      title: RewardRequest
+      x-stoplight:
+        id: 3a6j33tlj7yvy
+      type: object
+      description: reward request
+      properties:
+        campaign_id:
+          type: integer
+          description: campaign id identifier
+        reward_id:
+          type: integer
+          description: reward identifier
+        card_track:
+          type: string
+          description: Card Track
+        transaction_number:
+          type: integer
+          description: 'set autoincrement transaction number '
+        timestamp:
+          type: string
+          format: date-time
+          description: 'Transaction date time '
+      required:
+        - campaign_id
+        - reward_id
+        - card_track
+        - transaction_number
+        - timestamp
+    RewardMemoErrorResponse:
+      title: RewardMemoErrorResponse
+      x-stoplight:
+        id: 4sqnsqugsjbjh
+      type: object
+      properties:
+        code:
+          type: string
+          description: internal code
+        errorDetails:
+          type: string
+          description: error details
+        message:
+          type: string
+          description: type error
+    Reward:
+      title: Reward
+      x-stoplight:
+        id: y5yi4u10nmluk
+      type: object
+      properties:
+        id:
+          type: integer
+          description: id reward
+        name:
+          type: string
+          description: reward name
+        points:
+          type: string
+          description: point reward
+        is_fuelcoupon:
+          type: string
+          description: true if the reward is a fuelcoupon
+      required:
+        - id
+        - name
+        - points
+        - is_fuelcoupon
+    Supplies:
+      title: Supplies
+      x-stoplight:
+        id: 8db3394aaad8f
+      type: array
+      description: Represent a set of supplied articles contained in a single transaction
+      x-internal: false
+      items:
+        type: object
+        properties:
+          article_name:
+            type: string
+            description: name of the article
+          amount:
+            type: number
+            description: amount of the transaction
+          unit_price:
+            type: number
+            description: unit price of the transaction
+          quantity:
+            type: number
+            description: quantity of the transaction
+          is_oil:
+            type: boolean
+            description: 'information about the selled articles: if oil or not'
+          card_id:
+            type: integer
+            description: Card id used for the transaction
+          card_pan:
+            type: string
+            description: Card Pan used for the transaction
     SupplyInput:
       title: SupplyInput
       x-stoplight:
@@ -1309,455 +1757,34 @@ components:
       x-stoplight:
         id: a2e452ceca0f5
       title: ''
-    PointsOutput:
-      type: object
-      properties:
-        points:
-          type: integer
-      x-examples:
-        Example 1:
-          points: 0
-    RechargesReversalInput:
-      type: object
-      properties:
-        card_track:
-          type: string
-        recharge_id:
-          type: integer
-        pin:
-          type: string
-        key_label:
-          type: string
-        random_pin_key:
-          type: string
-        transaction_id:
-          type: string
-      x-examples:
-        Example 1:
-          card_track: 1234567890=12345678900987654321
-          recharge_id: 531303
-          pin: IFGHERYIGEGTRH
-          key_label: ASDFGHJ
-          random_pin_key: GERGRDHE6HVJYJ TRJFJTYJRTJ
-          transaction_id: '32894987453'
-    Output:
+    Supplies-info:
       type: object
       x-examples:
         Example 1:
-          result: '000'
+          customer_data:
+            - 2
+            - 3
+          articles:
+            - 3
+            - 4
+            - 8
+          requires_pin: true
       properties:
-        result:
-          type: string
-        ticket:
-          type: string
-    GenericOutput:
-      type: object
-      properties:
-        result:
-          type: string
-        ticket:
+        customer_data:
           type: array
           items:
-            type: object
-            properties:
-              content:
-                type: string
-              font:
-                type: string
-        display:
-          type: array
-          items:
-            type: object
-            properties:
-              content:
-                type: string
-              font:
-                type: string
-      x-examples:
-        Example 1:
-          result: '000'
-          ticket:
-            - content: Ricarica effettuata!
-              font: test
-            - content: 'Importo: 500.00'
-            - content: 'Abbuono: 0.00'
-            - content: 'Saldo tessera: 3510.00'
-          display:
-            - content: Ricarica effettuata!
-              font: test
-            - content: 'Importo: 500.00'
-            - content: 'Abbuono: 0.00'
-            - content: 'Saldo tessera: 3510.00'
-    GenericOutputWithIccData:
-      type: object
-      x-examples:
-        Example 1:
-          result: '000'
-          ticket:
-            - content: Ricarica effettuata!
-              font: test
-            - content: 'Importo: 500.00'
-            - content: 'Abbuono: 0.00'
-            - content: 'Saldo tessera: 3510.00'
-          display:
-            - content: Ricarica effettuata!
-              font: test
-            - content: 'Importo: 500.00'
-            - content: 'Abbuono: 0.00'
-            - content: 'Saldo tessera: 3510.00'
-      x-stoplight:
-        id: 5aec8640f98c3
-      title: GenericOutputWithIccData
-      description: Used to model a standard transaction output with icc_data included
-      properties:
-        result:
-          type: string
-        ticket:
-          type: array
-          items:
-            type: object
-            properties:
-              content:
-                type: string
-              font:
-                type: string
-        display:
-          type: array
-          items:
-            type: object
-            properties:
-              content:
-                type: string
-              font:
-                type: string
-        icc_data:
-          type: string
-    PendingRewardsOutput:
-      title: PendingRewardsOutput
-      x-stoplight:
-        id: g1ko07ezok0jh
-      type: object
-      description: pending rewards model output
-      properties:
-        reward_request_id:
-          type: integer
-        reward_name:
-          type: string
-        datetime:
-          type: string
-          format: date-time
-        points:
-          type: number
-    Reward:
-      title: Reward
-      x-stoplight:
-        id: y5yi4u10nmluk
-      type: object
-      properties:
-        id:
-          type: integer
-          description: id reward
-        name:
-          type: string
-          description: reward name
-        points:
-          type: string
-          description: point reward
-        is_fuelcoupon:
-          type: string
-          description: true if the reward is a fuelcoupon
-      required:
-        - id
-        - name
-        - points
-        - is_fuelcoupon
-    RewardMemoRequest:
-      title: RewardRequest
-      x-stoplight:
-        id: 3a6j33tlj7yvy
-      type: object
-      description: reward request
-      properties:
-        campaign_id:
-          type: integer
-          description: campaign id identifier
-        reward_id:
-          type: integer
-          description: reward identifier
-        card_track:
-          type: string
-          description: Card Track
-        transaction_number:
-          type: integer
-          description: 'set autoincrement transaction number '
-        timestamp:
-          type: string
-          format: date-time
-          description: 'Transaction date time '
-      required:
-        - campaign_id
-        - reward_id
-        - card_track
-        - transaction_number
-        - timestamp
-    RewardMemoErrorResponse:
-      title: RewardMemoErrorResponse
-      x-stoplight:
-        id: 4sqnsqugsjbjh
-      type: object
-      properties:
-        code:
-          type: string
-          description: internal code
-        errorDetails:
-          type: string
-          description: error details
-        message:
-          type: string
-          description: type error
-    FuelcouponValidationInput:
-      type: object
-      x-examples:
-        Example 1:
-          fuelcoupon_code: '0000000000009906970358268'
-          transaction_id: 53c786b82d124fadb1e8e374
-      properties:
-        fuelcoupon_code:
-          type: string
-        transaction_id:
-          type: string
-          description: Mandatory only if multiple fuelcoupon code are used for transaction
-      required:
-        - fuelcoupon_code
-    FuelcouponValidationOutput:
-      type: object
-      x-examples:
-        Example 1:
-          display:
-            - font: medium
-              message: aa
-          transaction_id: 53c786b82d124fadb1e8e374
-          locked_amount: 10
-      title: FuelcouponValidationOutput
-      properties:
-        display:
-          type: array
-          description: Display data
-          items:
-            type: object
-            properties:
-              font:
-                type: string
-              message:
-                type: string
-            required:
-              - font
-              - message
-        transaction_id:
-          type: string
-          description: 'This identifier is used to relates the fuelcoupons to the same transaction. So for the same transaction, if the user wants to use multiple fuelcoupons, the POS should send everytime the same transaction_id for each call to this API'
-        locked_amount:
-          type: integer
-          description: Available amount for the used fuelcoupon
-      required:
-        - display
-        - transaction_id
-        - locked_amount
-    FuelcouponReversalOutput:
-      type: object
-      properties:
-        ticket:
-          type: array
-          items:
-            type: object
-            properties:
-              content:
-                type: string
-              font:
-                type: string
-        display:
-          type: array
-          items:
-            type: object
-            properties:
-              content:
-                type: string
-              font:
-                type: string
-        transaction_id:
-          type: integer
-      x-stoplight:
-        id: 60d2727931a93
-    GenericOutputError:
-      type: object
-      x-stoplight:
-        id: a0dfc79c3995e
-      properties:
-        ticket:
-          type: array
-          items:
-            type: object
-            properties:
-              content:
-                type: string
-              font:
-                type: string
-        display:
-          type: array
-          items:
-            type: object
-            properties:
-              content:
-                type: string
-              font:
-                type: string
-        result:
-          type: string
-    CardPointsTransactionInput:
-      type: object
-      x-examples:
-        Example 1:
-          gross_amount: 20
-          net_amount: 0
-          quantity: 10.78
-          km: 100
-          unit_price: 1.856
-          notes: asd asd asdf
-          extra_code: 0
-          is_standalone: false
-          item_id: 23
-          pan: '70055740001000049'
-          points: 0
-          transaction_number: 0
-          timestamp: '2023-07-11T16:18:43Z'
-          is_oil: false
-          is_reversal: true
-      properties:
-        card_track:
-          type: string
-          description: Represent the card track
-        transaction_id:
-          type: integer
-          description: Represent the transaction identifier
-        supplies_ov_ids:
-          type: string
-          description: Represent each supply id selected by the user
-        date_time:
-          type: string
-          description: Represent the transaction datetime
-        total_amount:
-          type: number
-          description: Total amount for transaction
-        km:
-          type: integer
-          description: 'Km inserted by the user, if requested during transaction'
-        driver_code:
-          type: integer
-          description: 'Driver code inserted by the user, if requested during transaction'
-        products:
-          type: array
-          items:
-            $ref: '#/components/schemas/Products'
-      examples: []
-    ExternalGtInfo:
-      title: ExternalGtInfo
-      x-stoplight:
-        id: mkvtbtobg0yya
-      type: object
-      description: 'Input model for the information required only for external GTs (eg: DKV)'
-      properties:
-        pos_data_code:
-          type: string
-        function_code:
-          type: string
-        message_reason_code:
-          type: string
-        batch_number:
-          type: string
-        currency_code:
-          type: string
-        service_level:
-          type: string
-        delivery_note_number:
-          type: string
-        default_vat:
-          type: string
-    ChipInfo:
-      title: ChipInfo
-      x-stoplight:
-        id: zvrnbibi21ohj
-      type: object
-      description: Input model for the information required only EMV cards.
-      properties:
-        icc_related_data:
-          type: string
-        unencrypted_id:
-          type: string
-        work_order:
-          type: string
-        vehicle_number:
-          type: string
-        driver_id:
-          type: string
-    Products:
-      title: Products
-      x-stoplight:
-        id: jsu39o0m0p2fq
-      type: object
-      properties:
-        id:
-          type: integer
-          description: Product identifier
-        quantity:
-          type: number
-          description: Product supplied quantity
-        unit_price:
-          type: number
-          description: Product unit price
-        amount:
-          type: number
-          description: Product amount (quantity * unit_price)
-        is_oil:
+            type: integer
+        articles:
+          type: object
+          properties:
+            id:
+              type: integer
+            is_oil:
+              type: boolean
+        requires_pin:
           type: boolean
-          description: 'If true, is an oil product, otherwise is a not oil product'
-      required:
-        - id
-        - quantity
-        - unit_price
-        - amount
-        - is_oil
-      description: Represent a single product present in a transaction
-    PointsReversalInput:
-      title: PointsReversalInput
-      x-stoplight:
-        id: fm33hg9vx8xwq
-      type: object
-      properties:
-        card_track:
-          type: string
-          description: Represent the card track
-        transaction_id:
-          type: integer
-          description: Represent the transaction identifier
-        supplies:
-          type: array
-          description: Represent the all transaction elements to revert
-          items:
-            type: object
-            properties:
-              id:
-                type: integer
-                description: Represent the single element transaction identifier
-              is_oil:
-                type: boolean
-                description: 'Information about single element transaction typology: true if oil, false if not oil'
-            required:
-              - id
-              - is_oil
-      required:
-        - card_track
-        - transaction_id
-        - supplies
+        update_required:
+          type: boolean
     TransactionAckInput:
       title: TransactionAckInput
       x-stoplight:
@@ -1854,6 +1881,32 @@ components:
         - payments
       examples: []
       description: ''
+    TransactionReversalInput:
+      title: TransactionReversalInput
+      x-stoplight:
+        id: hd6ytj9owngj3
+      type: object
+      properties:
+        card_track:
+          type: string
+          description: Card track used for the reversal transaction
+        pin:
+          $ref: '#/components/schemas/PinDataInput'
+          description: 'Pin data, conditional based on card type'
+        transaction_number:
+          type: integer
+          description: 'Transaction number '
+        original_transaction_date_time:
+          type: string
+          description: Transaction date time to reverse
+        original_transaction_number:
+          type: integer
+          description: Transaction number to reverse
+      required:
+        - card_track
+        - transaction_number
+        - original_transaction_date_time
+        - original_transaction_number
   securitySchemes:
     Cognito:
       type: oauth2
