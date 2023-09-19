@@ -193,7 +193,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/InfoPosFuelcouponTransactionReversal'
+                $ref: '#/components/schemas/InfoPosFuelcouponReversalOutput'
         '401':
           description: Unauthorized
         '422':
@@ -651,7 +651,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/InfoPosTransactionReversal'
+                $ref: '#/components/schemas/InfoPosTransactionReversalOutput'
         '401':
           description: Unauthorized
           content:
@@ -1215,10 +1215,10 @@ components:
                 type: string
         icc_data:
           type: string
-    InfoPosTransactionReversal:
-      title: InfoPosTransactionReversal
+    InfoPosTransactionReversalOutput:
+      title: InfoPosTransactionReversalOutput
       x-stoplight:
-        id: 3holszdjt79rb
+        id: 46719292afb87
       type: object
       examples: []
       properties:
@@ -1237,6 +1237,7 @@ components:
         original_transaction_date_time:
           type: string
           description: Reversable transaction date time
+          format: date-time
         supplies:
           $ref: '#/components/schemas/Supplies'
           description: supplies model of the transaction
@@ -1247,24 +1248,55 @@ components:
         - original_transaction_number
         - original_transaction_date_time
         - supplies
-    InfoPosFuelcouponTransactionReversal:
+    InfoPosFuelcouponReversalOutput:
       title: InfoPosTransactionReversal
       type: object
-      examples: []
+      examples:
+        - update_required: true
+          requires_pin: true
+          total_amount: 0
+          original_transaction_number: 0
+          original_transaction_date_time: '2019-08-24T14:15:22Z'
+          supplies:
+            - - article_name: string
+                amount: 0
+                unit_price: 0
+                quantity: 0
+                is_oil: true
+                fuelcoupon_id: 0
+                fuelcoupon_number: string
       x-stoplight:
-        id: 73011bf09c558
+        id: bdba3ad4dad12
       properties:
-        id:
+        update_required:
+          type: boolean
+          description: true if the terminal must update its settings
+        requires_pin:
+          type: boolean
+          description: 'true if the pin mandatory for the next reversal '
+        total_amount:
+          type: number
+          description: 'Transaction total amount, the sum of each article amount'
+        original_transaction_number:
           type: integer
-          description: transaction id unique
-        date_time:
+          description: Reversable transaction number
+        original_transaction_date_time:
           type: string
           format: date-time
-          description: data time of the transaction
+          description: Reversable transaction date time
           readOnly: true
-        articles:
-          $ref: '#/components/schemas/Supplies'
-          description: articles model of the transaction
+        supplies:
+          description: supplies model of the transaction
+          type: array
+          items:
+            $ref: '#/components/schemas/SuppliesFuelcoupon'
+      required:
+        - update_required
+        - requires_pin
+        - total_amount
+        - original_transaction_number
+        - original_transaction_date_time
+        - supplies
     PinDataInput:
       title: PinDataInput
       x-stoplight:
@@ -1615,7 +1647,7 @@ components:
       x-stoplight:
         id: 8db3394aaad8f
       type: array
-      description: Represent a set of supplied articles contained in a single transaction
+      description: Represent a set of supplied articles contained in a single transaction with card
       x-internal: false
       items:
         type: object
@@ -1641,6 +1673,37 @@ components:
           card_pan:
             type: string
             description: Card Pan used for the transaction
+    SuppliesFuelcoupon:
+      title: SuppliesFuelcoupon
+      type: array
+      description: Represent a set of supplied articles contained in a single transaction with fuelcoupon
+      x-internal: false
+      x-stoplight:
+        id: 07fb6cf08a08b
+      items:
+        type: object
+        properties:
+          article_name:
+            type: string
+            description: name of the article
+          amount:
+            type: number
+            description: amount of the transaction
+          unit_price:
+            type: number
+            description: unit price of the transaction
+          quantity:
+            type: number
+            description: quantity of the transaction
+          is_oil:
+            type: boolean
+            description: 'information about the selled articles: if oil or not'
+          fuelcoupon_id:
+            type: integer
+            description: Fuelcoupon id used for the transaction
+          fuelcoupon_number:
+            type: string
+            description: Fuelcoupon number used for the transaction
     SupplyInput:
       title: SupplyInput
       x-stoplight:
