@@ -147,6 +147,32 @@ paths:
                 - guid
                 - is_success
         description: ''
+  /fuelcoupons/abort:
+    delete:
+      summary: Abort fuel coupon transaction
+      operationId: delete-fuelcoupons-abort
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericOutput'
+      description: Used to abort a fuel coupon transaction. It's used if the validation phase is interrupted.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                transaction_id:
+                  type: string
+              required:
+                - transaction_id
+          application/xml:
+            schema:
+              type: object
+              properties: {}
   /fuelcoupons/reversal:
     post:
       summary: Reversal fuelcoupon
