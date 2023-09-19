@@ -938,10 +938,6 @@ components:
       items:
         type: object
         properties:
-          id:
-            type: number
-          date_time:
-            type: string
           article_name:
             type: string
             description: name of the article
@@ -956,6 +952,13 @@ components:
             description: quantity of the transaction
           is_oil:
             type: boolean
+            description: 'information about the selled articles: if oil or not'
+          card_id:
+            type: integer
+            description: Card id used for the transaction
+          card_pan:
+            type: string
+            description: Card Pan used for the transaction
     InfoPosTransactionReversal:
       title: InfoPosTransactionReversal
       x-stoplight:
@@ -972,6 +975,12 @@ components:
         total_amount:
           type: number
           description: 'Transaction total amount, the sum of each article amount'
+        original_transaction_number:
+          type: integer
+          description: Reversable transaction number
+        original_transaction_date_time:
+          type: string
+          description: Reversable transaction date time
         supplies:
           $ref: '#/components/schemas/Supplies'
           description: supplies model of the transaction
@@ -979,6 +988,8 @@ components:
         - update_required
         - requires_pin
         - total_amount
+        - original_transaction_number
+        - original_transaction_date_time
         - supplies
     InfoPosFuelcouponTransactionReversal:
       title: InfoPosTransactionReversal
