@@ -86,6 +86,37 @@ paths:
       operationId: get-cards-track-points
       tags:
         - Rewards
+  '/cards/{track}/residue':
+    parameters:
+      - schema:
+          type: string
+        name: track
+        in: path
+        required: true
+    get:
+      summary: Get card residue
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  residue:
+                    type: number
+                    format: float
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '422':
+          description: Unprocessable Entity (WebDAV)
+        '500':
+          description: Internal Server Error
+      operationId: get-card-residue
+      tags:
+        - Rewards
   /configuration:
     get:
       summary: POS configuration
