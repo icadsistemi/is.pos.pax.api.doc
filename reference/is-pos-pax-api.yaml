@@ -515,12 +515,16 @@ paths:
                     product:
                       type: string
                       description: Product name
+                    measure_unit:
+                      type: string
+                      description: 'The product measure unit display name. Eg: Lt, Kg, h'
                   required:
                     - supply_id
                     - quantity
                     - unit_price
                     - amount
                     - product
+                    - measure_unit
         '401':
           description: Unauthorized
         '422':
