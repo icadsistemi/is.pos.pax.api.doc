@@ -572,6 +572,41 @@ paths:
       tags:
         - Transactions
     parameters: []
+  /transactions/gt:
+    post:
+      summary: Transaction supply for external GT cards
+      operationId: post-transactions-gt
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericOutputTransaction'
+                description: Supply response data
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      description: Used to validate and registered a supply using a payment card.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SupplyInput'
+              description: Oil supply request data
+        description: ''
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: Auth Bearer token
+      tags:
+        - Transactions
+    parameters: []
   /transactions/ack:
     post:
       summary: Transactions ACK
