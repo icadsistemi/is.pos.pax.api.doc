@@ -4,7 +4,13 @@ x-stoplight:
 info:
   title: POS PAX Public API
   version: 0.6.13
-  description: POS PAX API documentation
+  description: |-
+    POS PAX API documentation
+
+    The HTTP status codes returned by the endpoints follow these rules:
+    - If the flow is correct, returns positive response code (even if the transaction fails for example for an handled reason, like incorrect PIN)
+    - If the flow is incorrect, returns negative response code 
+    - If the flow breaks for some reason (DB connection, malformed input, etc..), returns negative response
 servers:
   - url: 'https://mxp-public-pos-api.dev.icadsistemi.com/v1'
     description: development
