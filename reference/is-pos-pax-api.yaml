@@ -562,6 +562,7 @@ paths:
             schema:
               $ref: '#/components/schemas/SupplyInput'
               description: Oil supply request data
+        description: ''
       parameters:
         - schema:
             type: string
@@ -738,6 +739,39 @@ paths:
     parameters: []
 components:
   schemas:
+    Article:
+      title: Article
+      type: object
+      description: Represent a single product present in a transaction
+      x-stoplight:
+        id: 1a83411be6fbd
+      properties:
+        article_id:
+          type: integer
+          description: Article identifier
+        quantity:
+          type: number
+          description: Article supplied quantity
+        unit_price:
+          type: number
+          description: Article unit price
+        amount:
+          type: number
+          description: Article amount (quantity * unit_price)
+        is_oil:
+          type: boolean
+          description: 'If true, is an oil article, otherwise is a not oil article'
+        discount_value:
+          type: number
+          description: Conditional data - Present only if there's a discount applied. Representing the applied discount value on unit price
+        discount_amount:
+          type: number
+          description: Conditional data - Present only if there's a discount applied. Representing the amount with applied discount
+      required:
+        - quantity
+        - unit_price
+        - amount
+        - is_oil
     CampaignRewards:
       title: CampaignRewards
       x-stoplight:
@@ -1193,7 +1227,7 @@ components:
             Representing the operation status:
             - 000: Transaction Ok
             - 001: Disabled Card
-            - 
+            ..
         ticket:
           type: array
           description: 'Representing the ticket data to print '
@@ -1211,6 +1245,7 @@ components:
               - font
         display:
           type: array
+          description: Representing the data to show on display
           items:
             type: object
             properties:
@@ -1225,7 +1260,8 @@ components:
               - font
       required:
         - action_code
-    GenericOutputWithIccData:
+        - display
+    GenericOutputTransaction:
       type: object
       x-examples:
         Example 1:
@@ -1243,32 +1279,56 @@ components:
             - content: 'Abbuono: 0.00'
             - content: 'Saldo tessera: 3510.00'
       x-stoplight:
-        id: 5aec8640f98c3
-      title: GenericOutputWithIccData
-      description: Used to model a standard transaction output with icc_data included
+        id: 397ea325f2d9b
+      title: GenericOutputTransaction
+      description: Used to model a standard transaction output
       properties:
-        result:
+        action_code:
           type: string
-        ticket:
-          type: array
-          items:
-            type: object
-            properties:
-              content:
-                type: string
-              font:
-                type: string
+          description: |-
+            Representing the operation status:
+            - 000: Transaction Ok
+            - 001: Disabled Card
+            ..
+        vehicle_plate:
+          type: string
+          description: Conditional data - Present only if there's a plate associated to the card
+        icc_related_data:
+          type: string
+          description: Conditional data - Present only in chip card cases
         display:
           type: array
+          description: Representing the data to show on display
           items:
             type: object
             properties:
               content:
                 type: string
+                description: The content to show on display
               font:
                 type: string
-        icc_data:
-          type: string
+                description: 'The content font, could be "large" or "medium"'
+            required:
+              - content
+              - font
+        ticket:
+          type: array
+          description: 'Representing the ticket data to print '
+          items:
+            type: object
+            properties:
+              content:
+                type: string
+                description: The content to print
+              font:
+                type: string
+                description: 'The content font, could be "large" or "medium"'
+            required:
+              - content
+              - font
+      required:
+        - action_code
+        - display
     InfoPosTransactionReversalOutput:
       title: InfoPosTransactionReversalOutput
       x-stoplight:
@@ -1830,6 +1890,8 @@ components:
           icc_data: DF2003ABCDEF
       description: Output model for the supplies requests
       examples: []
+      x-stoplight:
+        id: a2e452ceca0f5
       properties:
         ticket:
           type: array
@@ -1871,9 +1933,6 @@ components:
         - ticket
         - display
         - action_code
-      x-stoplight:
-        id: a2e452ceca0f5
-      title: ''
     Supplies-info:
       type: object
       x-examples:
