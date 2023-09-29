@@ -547,7 +547,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SupplyOutput'
+                $ref: '#/components/schemas/GenericOutputTransaction'
                 description: Supply response data
         '400':
           description: Bad Request
@@ -1296,6 +1296,11 @@ components:
         icc_related_data:
           type: string
           description: Conditional data - Present only in chip card cases
+        articles:
+          type: array
+          description: Conditional data - Present only if the transaction passed. Represent the bought articles with informations about eventual discounts applied
+          items:
+            $ref: '#/components/schemas/Article'
         display:
           type: array
           description: Representing the data to show on display
