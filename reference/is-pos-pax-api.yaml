@@ -229,7 +229,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GenericOutputError'
+                $ref: '#/components/schemas/GenericOutput'
       requestBody:
         content:
           application/json:
@@ -443,7 +443,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GenericOutputError'
+                $ref: '#/components/schemas/GenericOutput'
         '500':
           description: Internal Server Error
       description: Reverse a pending reward and restore cards points
@@ -1171,27 +1171,6 @@ components:
         - locked_amount
     GenericOutput:
       type: object
-      properties:
-        result:
-          type: string
-        ticket:
-          type: array
-          items:
-            type: object
-            properties:
-              content:
-                type: string
-              font:
-                type: string
-        display:
-          type: array
-          items:
-            type: object
-            properties:
-              content:
-                type: string
-              font:
-                type: string
       x-examples:
         Example 1:
           result: '000'
@@ -1207,20 +1186,29 @@ components:
             - content: 'Importo: 500.00'
             - content: 'Abbuono: 0.00'
             - content: 'Saldo tessera: 3510.00'
-    GenericOutputError:
-      type: object
-      x-stoplight:
-        id: a0dfc79c3995e
       properties:
+        action_code:
+          type: string
+          description: |-
+            Representing the operation status:
+            - 000: Transaction Ok
+            - 001: Disabled Card
+            - 
         ticket:
           type: array
+          description: 'Representing the ticket data to print '
           items:
             type: object
             properties:
               content:
                 type: string
+                description: The content to print
               font:
                 type: string
+                description: 'The content font, could be "large" or "medium"'
+            required:
+              - content
+              - font
         display:
           type: array
           items:
@@ -1228,10 +1216,15 @@ components:
             properties:
               content:
                 type: string
+                description: The content to show on display
               font:
                 type: string
-        result:
-          type: string
+                description: 'The content font, could be "large" or "medium"'
+            required:
+              - content
+              - font
+      required:
+        - action_code
     GenericOutputWithIccData:
       type: object
       x-examples:
