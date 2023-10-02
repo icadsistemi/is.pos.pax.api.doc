@@ -210,42 +210,6 @@ paths:
             schema:
               type: object
               properties: {}
-  /transactions/fuelcoupons/reversal:
-    post:
-      summary: Reversal fuelcoupon
-      operationId: ''
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/FuelcouponReversalOutput'
-        '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-        '500':
-          description: Internal Server Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GenericOutput'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                transaction_id:
-                  type: string
-      description: Send transactionid for reversal fuelcoupon request
-    parameters: []
   /fuelcoupons/reversal/info:
     get:
       summary: Fuelcoupons Reversal info
@@ -603,11 +567,52 @@ paths:
               $ref: '#/components/schemas/TransactionAckInput'
   /transactions/fuelcoupons:
     post:
-      summary: ''
+      summary: Fuelcoupon transaction
       operationId: post-transactions-fuelcoupons
       responses:
         '200':
           description: OK
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FuelcouponTransactionInput'
+  /transactions/fuelcoupons/reversal:
+    post:
+      summary: Reversal fuelcoupon transaction
+      operationId: ''
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FuelcouponReversalOutput'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericOutput'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                transaction_id:
+                  type: string
+      description: Send transactionid for reversal fuelcoupon request
+    parameters: []
   /transactions/info:
     get:
       summary: Retrieve info to perform an oil or nonoil transaction
