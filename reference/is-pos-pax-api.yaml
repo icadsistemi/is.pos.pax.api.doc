@@ -210,7 +210,7 @@ paths:
             schema:
               type: object
               properties: {}
-  /fuelcoupons/reversal:
+  /transactions/fuelcoupons/reversal:
     post:
       summary: Reversal fuelcoupon
       operationId: ''
@@ -244,7 +244,7 @@ paths:
               properties:
                 transaction_id:
                   type: string
-      description: send transactionid for reversal fuelcoupon request
+      description: Send transactionid for reversal fuelcoupon request
     parameters: []
   /fuelcoupons/reversal/info:
     get:
@@ -601,6 +601,13 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/TransactionAckInput'
+  /transactions/fuelcoupons:
+    post:
+      summary: ''
+      operationId: post-transactions-fuelcoupons
+      responses:
+        '200':
+          description: OK
   /transactions/info:
     get:
       summary: Retrieve info to perform an oil or nonoil transaction
@@ -1196,6 +1203,29 @@ components:
           type: integer
       x-stoplight:
         id: 60d2727931a93
+    FuelcouponTransactionInput:
+      title: FuelcouponTransactionInput
+      x-stoplight:
+        id: cgke55ls3jdn1
+      type: object
+      properties:
+        transaction_id:
+          type: integer
+        transaction_number:
+          type: integer
+        supplies_ov_ids:
+          type: array
+          items:
+            type: integer
+        articles:
+          type: array
+          items:
+            $ref: '#/components/schemas/Products'
+        date_time:
+          type: string
+          format: date-time
+        total_amount:
+          type: number
     FuelcouponValidationInput:
       type: object
       x-examples:
@@ -1487,7 +1517,7 @@ components:
           type: integer
         reward_name:
           type: string
-        datetime:
+        date_time:
           type: string
           format: date-time
         points:
@@ -1550,7 +1580,7 @@ components:
         crypted_pin:
           type: string
           description: The pin encrypted with the session key
-        datetime:
+        date_time:
           type: string
           description: Datetime of the request
           format: date-time
@@ -1565,7 +1595,7 @@ components:
         - random_pin_key
         - label_key
         - crypted_pin
-        - datetime
+        - date_time
         - total_amount
         - tran_id
     PreauthResponse:
@@ -1938,6 +1968,7 @@ components:
       x-stoplight:
         id: ob68ydmp3sy6h
       type: object
+      examples: []
       properties:
         supply_amount:
           type: number
@@ -1969,7 +2000,7 @@ components:
               stan:
                 type: integer
                 description: Incremental number representing the operation number. Each payment represent an operation.
-              datetime:
+              date_time:
                 type: string
                 description: Payment operation timestamp
               customer_data:
@@ -2021,14 +2052,12 @@ components:
               - name
               - amount
               - stan
-              - datetime
+              - date_time
               - purchased_product
       required:
         - supply_amount
         - supply_receipt_number
         - payments
-      examples: []
-      description: ''
     TransactionReversalInput:
       title: TransactionReversalInput
       x-stoplight:
