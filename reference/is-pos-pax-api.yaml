@@ -1649,22 +1649,15 @@ components:
           type: string
         bill_id:
           type: integer
-        pin:
-          type: string
         payment_mode:
           type: integer
-        key_label:
-          type: string
-        random_pin_key:
-          type: string
         transaction_id:
           type: string
+        pin:
+          $ref: '#/components/schemas/PinDataInput'
       required:
         - card_track
         - bill_id
-        - pin
-        - key_label
-        - random_pin_key
         - transaction_id
     RechargesBills:
       type: object
@@ -1714,19 +1707,6 @@ components:
           description: 'true if the pin mandatory for the next reversal '
     RechargesReversalInput:
       type: object
-      properties:
-        card_track:
-          type: string
-        recharge_id:
-          type: integer
-        pin:
-          type: string
-        key_label:
-          type: string
-        random_pin_key:
-          type: string
-        transaction_id:
-          type: string
       x-examples:
         Example 1:
           card_track: 1234567890=12345678900987654321
@@ -1735,6 +1715,15 @@ components:
           key_label: ASDFGHJ
           random_pin_key: GERGRDHE6HVJYJ TRJFJTYJRTJ
           transaction_id: '32894987453'
+      properties:
+        card_track:
+          type: string
+        recharge_id:
+          type: integer
+        pin:
+          $ref: '#/components/schemas/PinDataInput'
+        transaction_id:
+          type: string
     RewardMemoRequest:
       title: RewardRequest
       x-stoplight:
@@ -1890,15 +1879,6 @@ components:
             If present, "supplies_ov_ids" shouldn't be present
           items:
             $ref: '#/components/schemas/Products'
-        random_pin_key:
-          type: string
-          description: Random pin key used to generate the session encryption key
-        label_key:
-          type: string
-          description: Label used to recognize which key use on server side
-        crypted_pin:
-          type: string
-          description: The pin encrypted with the session key
         date_time:
           type: string
           description: 'Request date time '
@@ -1918,12 +1898,11 @@ components:
         chip_info:
           $ref: '#/components/schemas/ChipInfo'
           description: 'Contains the information related to the chip '
+        pin:
+          $ref: '#/components/schemas/PinDataInput'
       required:
         - card_track
         - tran_id
-        - random_pin_key
-        - label_key
-        - crypted_pin
         - date_time
         - total_amount
     Supplies-info:
