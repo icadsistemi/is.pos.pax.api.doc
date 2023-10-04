@@ -1955,6 +1955,10 @@ components:
       properties:
         customer_data:
           type: array
+          description: |-
+            Indicates the additional data required to perform a transaction. Each integer value represent a required customer data:
+            1 - Km is required
+            2 - Driver code is required
           items:
             type: integer
         articles:
