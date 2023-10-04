@@ -202,10 +202,10 @@ paths:
             schema:
               type: object
               properties:
-                transaction_id:
+                transaction_code:
                   type: string
               required:
-                - transaction_id
+                - transaction_code
           application/xml:
             schema:
               type: object
@@ -609,8 +609,9 @@ paths:
             schema:
               type: object
               properties:
-                transaction_id:
+                transaction_code:
                   type: string
+        description: ''
       description: Send transactionid for reversal fuelcoupon request
     parameters: []
   /transactions/info:
@@ -875,11 +876,12 @@ components:
           timestamp: '2023-07-11T16:18:43Z'
           is_oil: false
           is_reversal: true
+      examples: []
       properties:
         card_track:
           type: string
           description: Represent the card track
-        transaction_id:
+        transaction_number:
           type: integer
           description: Represent the transaction identifier
         supplies_ov_ids:
@@ -901,7 +903,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Products'
-      examples: []
     Card-info:
       type: object
       x-examples:
@@ -1214,10 +1215,10 @@ components:
         id: cgke55ls3jdn1
       type: object
       properties:
-        transaction_id:
-          type: integer
         transaction_number:
           type: integer
+        transaction_code:
+          type: string
         supplies_ov_ids:
           type: array
           items:
@@ -1240,7 +1241,7 @@ components:
       properties:
         fuelcoupon_code:
           type: string
-        transaction_id:
+        transaction_code:
           type: string
           description: Mandatory only if multiple fuelcoupon code are used for transaction
       required:
@@ -1544,7 +1545,7 @@ components:
         card_track:
           type: string
           description: Represent the card track
-        transaction_id:
+        transaction_number:
           type: integer
           description: Represent the transaction identifier
         supplies:
@@ -1564,7 +1565,7 @@ components:
               - is_oil
       required:
         - card_track
-        - transaction_id
+        - transaction_number
         - supplies
     PreauthRequest:
       title: PreauthRequest
@@ -1592,7 +1593,7 @@ components:
         total_amount:
           type: number
           description: Amount requested to be authorized
-        tran_id:
+        transaction_number:
           type: integer
           description: Transaction id
       required:
@@ -1602,7 +1603,7 @@ components:
         - crypted_pin
         - date_time
         - total_amount
-        - tran_id
+        - transaction_number
     PreauthResponse:
       title: PreauthResponse
       x-stoplight:
@@ -1679,6 +1680,7 @@ components:
           key_label: QT_IFSF
           random_pin_key: 2C9E11B025F712CA37437D853BD6E7D4
           transaction_id: ''
+      examples: []
       properties:
         card_track:
           type: string
@@ -1686,14 +1688,14 @@ components:
           type: integer
         payment_mode:
           type: integer
-        transaction_id:
-          type: string
+        transaction_number:
+          type: integer
         pin:
           $ref: '#/components/schemas/PinDataInput'
       required:
         - card_track
         - bill_id
-        - transaction_id
+        - transaction_number
     RechargesBills:
       type: object
       properties:
@@ -1757,8 +1759,8 @@ components:
           type: integer
         pin:
           $ref: '#/components/schemas/PinDataInput'
-        transaction_id:
-          type: string
+        transaction_number:
+          type: integer
     RewardMemoRequest:
       title: RewardRequest
       x-stoplight:
@@ -1898,7 +1900,7 @@ components:
         card_track:
           type: string
           description: 'Track of the used card. Example: 70055730001000057=2209009000615800000'
-        tran_id:
+        transaction_number:
           type: integer
           description: Transaction id
         supplies_ov_ids:
@@ -1937,7 +1939,7 @@ components:
           $ref: '#/components/schemas/PinDataInput'
       required:
         - card_track
-        - tran_id
+        - transaction_number
         - date_time
         - total_amount
     Supplies-info:
