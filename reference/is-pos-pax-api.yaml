@@ -1238,6 +1238,23 @@ components:
           format: date-time
         total_amount:
           type: number
+    FuelcouponTransactionReversalInput:
+      type: object
+      properties:
+        transaction_number:
+          type: integer
+        original_transaction_code:
+          type: string
+        original_transaction_date_time:
+          type: string
+        reversal_transaction_date_time:
+          type: string
+      x-examples:
+        Example 1:
+          transaction_number: 2
+          original_transaction_code: 9aa1e62c5b30ec5abc81e471
+          original_transaction_date_time: '2023-10-04T14:36:59.816Z'
+          reversal_transaction_date_time: '2023-10-04T15:36:59.816Z'
     FuelcouponValidationInput:
       type: object
       x-examples:
@@ -2097,28 +2114,16 @@ components:
         original_transaction_number:
           type: integer
           description: Transaction number to reverse
+        date_time:
+          type: string
+          format: date-time
+          description: 'Reversal transaction date time '
       required:
         - card_track
         - transaction_number
         - original_transaction_date_time
         - original_transaction_number
-    FuelcouponTransactionReversalInput:
-      type: object
-      properties:
-        transaction_number:
-          type: integer
-        original_transaction_code:
-          type: string
-        original_transaction_date_time:
-          type: string
-        reversal_transaction_date_time:
-          type: string
-      x-examples:
-        Example 1:
-          transaction_number: 2
-          original_transaction_code: 9aa1e62c5b30ec5abc81e471
-          original_transaction_date_time: '2023-10-04T14:36:59.816Z'
-          reversal_transaction_date_time: '2023-10-04T15:36:59.816Z'
+        - date_time
   securitySchemes:
     Cognito:
       type: oauth2
