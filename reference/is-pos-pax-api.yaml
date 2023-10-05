@@ -1270,7 +1270,7 @@ components:
             required:
               - font
               - message
-        transaction_id:
+        transaction_code:
           type: string
           description: 'This identifier is used to relates the fuelcoupons to the same transaction. So for the same transaction, if the user wants to use multiple fuelcoupons, the POS should send everytime the same transaction_id for each call to this API'
         locked_amount:
@@ -1278,8 +1278,9 @@ components:
           description: Available amount for the used fuelcoupon
       required:
         - display
-        - transaction_id
+        - transaction_code
         - locked_amount
+      examples: []
     GenericOutput:
       type: object
       x-examples:
