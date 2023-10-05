@@ -1176,20 +1176,17 @@ components:
       properties:
         pos_data_code:
           type: string
-        function_code:
-          type: string
+          description: Representing pos informations using a specific encoding. Refer to IFSF documentation
         message_reason_code:
           type: string
+          description: Representing the reason why the request is done. Refer to IFSF documentation
         batch_number:
           type: string
-        currency_code:
-          type: string
-        service_level:
-          type: string
-        delivery_note_number:
-          type: string
-        default_vat:
-          type: string
+          description: Hardcoded to 1.
+      required:
+        - pos_data_code
+        - message_reason_code
+        - batch_number
     FuelcouponReversalOutput:
       type: object
       properties:
