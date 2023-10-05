@@ -210,10 +210,13 @@ paths:
             schema:
               type: object
               properties: {}
+      tags:
+        - Fuelcoupons
   /fuelcoupons/reversal/info:
     get:
       summary: Fuelcoupons Reversal info
-      tags: []
+      tags:
+        - Fuelcoupons
       responses:
         '200':
           description: OK
@@ -250,6 +253,8 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/FuelcouponValidationInput'
+      tags:
+        - Fuelcoupons
   /recharges:
     post:
       summary: Recharge card
@@ -577,6 +582,8 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/FuelcouponTransactionInput'
+      tags:
+        - Fuelcoupons
   /transactions/fuelcoupons/reversal:
     post:
       summary: Reversal fuelcoupon transaction
@@ -607,12 +614,11 @@ paths:
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                transaction_code:
-                  type: string
+              $ref: '#/components/schemas/FuelcouponTransactionReversalInput'
         description: ''
       description: Send transactionid for reversal fuelcoupon request
+      tags:
+        - Fuelcoupons
     parameters: []
   /transactions/info:
     get:
@@ -2096,6 +2102,23 @@ components:
         - transaction_number
         - original_transaction_date_time
         - original_transaction_number
+    FuelcouponTransactionReversalInput:
+      type: object
+      properties:
+        transaction_number:
+          type: integer
+        original_transaction_code:
+          type: string
+        original_transaction_date_time:
+          type: string
+        reversal_transaction_date_time:
+          type: string
+      x-examples:
+        Example 1:
+          transaction_number: 2
+          original_transaction_code: 9aa1e62c5b30ec5abc81e471
+          original_transaction_date_time: '2023-10-04T14:36:59.816Z'
+          reversal_transaction_date_time: '2023-10-04T15:36:59.816Z'
   securitySchemes:
     Cognito:
       type: oauth2
