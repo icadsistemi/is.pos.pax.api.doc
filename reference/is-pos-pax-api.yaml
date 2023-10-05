@@ -123,6 +123,25 @@ paths:
       operationId: get-card-residue
       tags:
         - Rewards
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                crypted_pin:
+                  type: string
+                label_key:
+                  type: string
+                random_pin_key:
+                  type: string
+                source:
+                  type: string
+              required:
+                - crypted_pin
+                - label_key
+                - random_pin_key
+                - source
   /configuration:
     get:
       summary: POS configuration
