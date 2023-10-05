@@ -1972,10 +1972,12 @@ components:
           type: string
         gt_info:
           $ref: '#/components/schemas/ExternalGtInfo'
-          description: Contains the information related to an external gt
+          description: 'Conditional field: should be valorized only if the transaction is done with external Card Circuit'
         chip_info:
           $ref: '#/components/schemas/ChipInfo'
-          description: 'Contains the information related to the chip '
+          description: |-
+            Conditional Field: should be valorized only in case of chip card. 
+            Contains the chip information
         pin:
           $ref: '#/components/schemas/PinDataInput'
       required:
@@ -2135,6 +2137,14 @@ components:
           type: string
           format: date-time
           description: 'Reversal transaction date time '
+        gt_info:
+          $ref: '#/components/schemas/ExternalGtInfo'
+          description: 'Conditional field: should be valorized only if the transaction is done with external Card Circuit'
+        chip_info:
+          $ref: '#/components/schemas/ChipInfo'
+          description: |-
+            Conditional Field: should be valorized only in case of chip card. 
+            Contains the chip information
       required:
         - card_track
         - transaction_number
