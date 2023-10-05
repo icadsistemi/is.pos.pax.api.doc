@@ -2049,7 +2049,7 @@ components:
                 type: string
                 description: 'Card track for the used one. It is a conditional field, present only if the payment mode require it. Eg: is not present for fuelcoupons or credit card'
               fuelcoupon_code:
-                type: integer
+                type: string
                 description: 'Fuelcoupon code for the used one. It is a conditional field, present only if the payment mode require it. Eg: is not present for card transactions or credit card'
               stan:
                 type: integer
