@@ -99,7 +99,7 @@ paths:
         name: track
         in: path
         required: true
-    get:
+    post:
       summary: Get card residue
       responses:
         '200':
@@ -1961,9 +1961,7 @@ components:
         products:
           type:
             - array
-          description: |-
-            List of products bought.
-            If present, "supplies_ov_ids" shouldn't be present
+          description: List of products bought.
           items:
             $ref: '#/components/schemas/Products'
         date_time:
@@ -1976,6 +1974,11 @@ components:
           type: integer
           description: Vehicle's kilometers
         driver_code:
+          type: integer
+          description: |-
+            If this attribute is <= 6 digits, it is the driver code.
+            If it is 8 digits, the first 4 digits are the driver code, the others 4 digits are the driver pin.
+        driver_pin:
           type: integer
         vehicle_code:
           type: string
