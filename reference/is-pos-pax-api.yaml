@@ -792,6 +792,23 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/TransactionReversalInput'
+  /transactions/reversal/gt:
+    post:
+      summary: Transaction Reversal Gt
+      operationId: post-transactions-reversal-gt
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericOutput'
+      description: The endpoint is used to reverse a GT transaction.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransactionReversalInput'
   /transactions/reversal/info:
     get:
       summary: Transaction reversal info
@@ -1266,6 +1283,12 @@ components:
           type: number
     FuelcouponTransactionReversalInput:
       type: object
+      x-examples:
+        Example 1:
+          transaction_number: 2
+          original_transaction_code: 9aa1e62c5b30ec5abc81e471
+          original_transaction_date_time: '2023-10-04T14:36:59.816Z'
+          reversal_transaction_date_time: '2023-10-04T15:36:59.816Z'
       properties:
         transaction_number:
           type: integer
@@ -1275,12 +1298,11 @@ components:
           type: string
         reversal_transaction_date_time:
           type: string
-      x-examples:
-        Example 1:
-          transaction_number: 2
-          original_transaction_code: 9aa1e62c5b30ec5abc81e471
-          original_transaction_date_time: '2023-10-04T14:36:59.816Z'
-          reversal_transaction_date_time: '2023-10-04T15:36:59.816Z'
+        ov_supplies_id:
+          type: array
+          description: Conditional Data. Echoed "ov_id" attribute returned by getInfoFuelcouponReversal in the supplies.
+          items:
+            type: integer
     FuelcouponValidationInput:
       type: object
       x-examples:
@@ -1385,6 +1407,9 @@ components:
             required:
               - content
               - font
+        icc_related_data:
+          type: string
+          description: 'Conditional attribute, present only in case of chip Card. Represent the Chip Data '
       required:
         - action_code
         - display
@@ -1909,6 +1934,9 @@ components:
           card_pan:
             type: string
             description: Card Pan used for the transaction
+          ov_id:
+            type: integer
+            description: 'Conditional attribute. Present only if the reverted transaction is selected using data collection '
     SuppliesFuelcoupon:
       title: SuppliesFuelcoupon
       type: array
@@ -1940,6 +1968,9 @@ components:
           fuelcoupon_number:
             type: string
             description: Fuelcoupon number used for the transaction
+          ov_id:
+            type: integer
+            description: 'Conditional attribute. Present only if the reverted transaction is selected using data collection '
     SupplyInput:
       title: SupplyInput
       x-stoplight:
@@ -1955,7 +1986,7 @@ components:
           description: Transaction id
         supplies_ov_ids:
           type: array
-          description: 'List of supplies ids retrieved by datacollection. If present, "products" shouldn''t be present'
+          description: List of supplies ids retrieved by datacollection.
           items:
             type: integer
         products:
@@ -1975,11 +2006,7 @@ components:
           description: Vehicle's kilometers
         driver_code:
           type: integer
-          description: |-
-            If this attribute is <= 6 digits, it is the driver code.
-            If it is 8 digits, the first 4 digits are the driver code, the others 4 digits are the driver pin.
-        driver_pin:
-          type: integer
+          description: Driver code. Max 6 digits
         vehicle_code:
           type: string
         gt_info:
@@ -1990,8 +2017,12 @@ components:
           description: |-
             Conditional Field: should be valorized only in case of chip card. 
             Contains the chip information
-        pin:
+        card_pin:
           $ref: '#/components/schemas/PinDataInput'
+          description: Card pin data
+        driver_pin:
+          $ref: '#/components/schemas/PinDataInput'
+          description: Driver Pin data
       required:
         - card_track
         - transaction_number
@@ -2164,6 +2195,11 @@ components:
           type: string
           format: date-time
           description: 'Reversal transaction date time '
+        ov_supplies_ids:
+          type: array
+          description: Conditional Data. Echoed "ov_id" attribute returned by getInfoReversal in the supplies.
+          items:
+            type: integer
         gt_info:
           $ref: '#/components/schemas/ExternalGtInfo'
           description: 'Conditional field: should be valorized only if the transaction is done with external Card Circuit'
