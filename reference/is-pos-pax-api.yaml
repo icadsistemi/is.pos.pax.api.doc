@@ -497,6 +497,9 @@ paths:
                     supply_id:
                       type: integer
                       description: ID of the supply. This will be send to the server to purchase it and perform a transaction.
+                    article_id:
+                      type: integer
+                      description: Supplied article id
                     quantity:
                       type: number
                       description: Supplied quantity of the product
@@ -514,6 +517,7 @@ paths:
                       description: 'The product measure unit display name. Eg: Lt, Kg, h'
                   required:
                     - supply_id
+                    - article_id
                     - quantity
                     - unit_price
                     - amount
@@ -531,6 +535,11 @@ paths:
           in: query
           name: pump
           description: Number of the pump
+        - schema:
+            type: string
+          in: query
+          name: card_track
+          description: Transacted card track
   /transactions:
     post:
       summary: Transaction supply
