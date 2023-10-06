@@ -1652,15 +1652,6 @@ components:
         card_track:
           type: string
           description: 'Track of the used card. Example: 70055730001000057=2209009000615800000'
-        random_pin_key:
-          type: string
-          description: Random pin key used to generate the session encryption key
-        label_key:
-          type: string
-          description: Label used to recognize which key use on server side
-        crypted_pin:
-          type: string
-          description: The pin encrypted with the session key
         date_time:
           type: string
           description: Datetime of the request
@@ -1671,11 +1662,10 @@ components:
         transaction_number:
           type: integer
           description: Transaction id
+        card_pin:
+          $ref: '#/components/schemas/PinDataInput'
       required:
         - card_track
-        - random_pin_key
-        - label_key
-        - crypted_pin
         - date_time
         - total_amount
         - transaction_number
@@ -1765,7 +1755,7 @@ components:
           type: integer
         transaction_number:
           type: integer
-        pin:
+        card_pin:
           $ref: '#/components/schemas/PinDataInput'
       required:
         - card_track
@@ -1832,7 +1822,7 @@ components:
           type: string
         recharge_id:
           type: integer
-        pin:
+        card_pin:
           $ref: '#/components/schemas/PinDataInput'
         transaction_number:
           type: integer
@@ -2179,7 +2169,7 @@ components:
         card_track:
           type: string
           description: Card track used for the reversal transaction
-        pin:
+        card_pin:
           $ref: '#/components/schemas/PinDataInput'
           description: 'Pin data, conditional based on card type'
         transaction_number:
