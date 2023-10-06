@@ -2006,6 +2006,7 @@ components:
             - 4
             - 8
           requires_pin: true
+      examples: []
       properties:
         customer_data:
           type: array
@@ -2017,15 +2018,29 @@ components:
             type: integer
         articles:
           type: object
+          description: The list of available products for the transacted card
           properties:
             id:
               type: integer
             is_oil:
               type: boolean
-        requires_pin:
-          type: boolean
         update_required:
           type: boolean
+          description: Indicates if the terminal requires an update
+        requires_pin:
+          type: boolean
+          description: Indicates if the card requires a pin for the transaction
+        requires_driver_pin:
+          type: boolean
+          description: Indicates if the card requires a driver pin for the transaction
+        requires_check_km:
+          type: boolean
+          description: Indicates if the POS need to compare the inserted km with the 'last_km' received. If km < last_km the POS should show a warning before proceed with the transaction
+        last_km:
+          type: integer
+          description: Indicates the Km of last transaction
+      required:
+        - articles
     TransactionAckInput:
       title: TransactionAckInput
       x-stoplight:
