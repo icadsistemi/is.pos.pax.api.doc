@@ -1196,7 +1196,7 @@ components:
                 type: object
                 properties:
                   id:
-                    type: string
+                    type: integer
                   name:
                     type: string
             data_collection:
@@ -1205,7 +1205,7 @@ components:
                 type: object
                 properties:
                   id:
-                    type: string
+                    type: integer
                   name:
                     type: string
       required:
