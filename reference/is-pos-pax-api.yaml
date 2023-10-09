@@ -2054,7 +2054,7 @@ components:
         update_required:
           type: boolean
           description: Indicates if the terminal requires an update
-        requires_pin:
+        requires_card_pin:
           type: boolean
           description: Indicates if the card requires a pin for the transaction
         requires_driver_pin:
