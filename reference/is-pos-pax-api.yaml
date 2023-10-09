@@ -2013,6 +2013,9 @@ components:
         driver_pin:
           $ref: '#/components/schemas/PinDataInput'
           description: Driver Pin data
+        check_driver:
+          type: boolean
+          description: 'If True, the driver_code will be checked on backend. Otherwise, there are no controls on driver_code value.'
       required:
         - card_track
         - transaction_number
