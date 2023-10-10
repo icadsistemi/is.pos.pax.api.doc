@@ -2118,7 +2118,7 @@ components:
                   driver_code:
                     type: integer
                     description: Represent the driver code inserted by the user
-              purchased_product:
+              purchased_products:
                 type: array
                 description: Bought product list with that payment mode
                 items:
@@ -2158,7 +2158,7 @@ components:
               - amount
               - stan
               - date_time
-              - purchased_product
+              - purchased_products
       required:
         - supply_amount
         - supply_receipt_number
