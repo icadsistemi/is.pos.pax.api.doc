@@ -1326,10 +1326,6 @@ components:
           type: integer
         transaction_code:
           type: string
-        supplies_ov_ids:
-          type: array
-          items:
-            type: integer
         articles:
           type: array
           items:
@@ -1769,6 +1765,7 @@ components:
       x-stoplight:
         id: jsu39o0m0p2fq
       type: object
+      description: Represent a single product present in a transaction
       properties:
         id:
           type: integer
@@ -1785,13 +1782,15 @@ components:
         is_oil:
           type: boolean
           description: 'If true, is an oil product, otherwise is a not oil product'
+        ov_supply_id:
+          type: integer
+          description: 'Conditional data, present only if the product is selected using DC'
       required:
         - id
         - quantity
         - unit_price
         - amount
         - is_oil
-      description: Represent a single product present in a transaction
     RechargesInput:
       type: object
       x-examples:
@@ -2032,11 +2031,6 @@ components:
         transaction_number:
           type: integer
           description: Transaction id
-        supplies_ov_ids:
-          type: array
-          description: List of supplies ids retrieved by datacollection.
-          items:
-            type: integer
         products:
           type:
             - array
