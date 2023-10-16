@@ -142,6 +142,53 @@ paths:
                 - label_key
                 - random_pin_key
                 - source
+  /closures:
+    get:
+      summary: Used to obtain closure terminal data
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericOutput'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '422':
+          description: Unprocessable Entity (WebDAV)
+      operationId: get-closures
+      description: |-
+        It can be used to get closure data of the current period or for a previous closure.
+        In the second case, it receives a datetime as input to determine the range of the requested closure.
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: closure_datetime
+          description: 'Optional. If set, the endpoint will look for an old closure that include the requested datetime. The format for this timestamp is UNIX time (example: 1697455690)'
+  /closures/reset:
+    post:
+      summary: ''
+      operationId: post-closures-reset
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericOutput'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+      description: |-
+        After the terminal has printed its closure receipt, it can call this endpoint to close the closure process and reset all the counts.
+        So, the next closure, will start from the moment when this closure has been reset.
   /configuration:
     get:
       summary: POS configuration
