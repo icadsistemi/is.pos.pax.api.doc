@@ -168,7 +168,7 @@ paths:
             type: string
           in: query
           name: closure_datetime
-          description: 'Optional. If set, the endpoint will look for an old closure that include the requested datetime. The format for this timestamp is UNIX time in ms (example: 1697444252000)'
+          description: 'Optional. If set, the endpoint will look for an old closure that include the requested datetime. The format for this timestamp is UNIX time in s (example: 1697444252)'
   /closures/reset:
     post:
       summary: ''
