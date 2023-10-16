@@ -671,6 +671,17 @@ paths:
             type: string
           in: query
           name: card_track
+          required: true
+        - schema:
+            type: string
+          in: query
+          name: df42
+          description: Represents the vehicle plate in hex (only for chip cards)
+        - schema:
+            type: string
+          in: query
+          name: df30
+          description: Represents the customer data required for transaction (only for chip cards)
       tags:
         - Transactions
     parameters: []
@@ -2041,6 +2052,10 @@ components:
             Indicates the additional data required to perform a transaction. Each integer value represent a required customer data:
             1 - Km is required
             2 - Driver code is required
+            3 - Vehicle plate is required
+            4 - Unencrypted id is required
+            5 - Work order\PO number is required
+            6 - Vehicle number is required
           items:
             type: integer
         articles:
@@ -2066,6 +2081,9 @@ components:
         last_km:
           type: integer
           description: Indicates the Km of last transaction
+        vehicle_plate:
+          type: string
+          description: Decoded vehicle plate from chip data (df42 decoded)
       required:
         - articles
     TransactionAckInput:
