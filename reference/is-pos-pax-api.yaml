@@ -930,6 +930,9 @@ components:
         discount_amount:
           type: number
           description: Conditional data - Present only if there's a discount applied. Representing the amount with applied discount
+        ov_supply_id:
+          type: integer
+          description: Conditional data - Present only if the transaction is selected with DC
       required:
         - quantity
         - unit_price
