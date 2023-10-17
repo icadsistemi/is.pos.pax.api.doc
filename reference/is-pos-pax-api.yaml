@@ -1047,6 +1047,9 @@ components:
           type: string
         driver_id:
           type: string
+        is_offline:
+          type: boolean
+          description: True if the transaction with EMV chip is performed offline
     Configuration:
       type: object
       x-examples:
