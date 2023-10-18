@@ -2216,6 +2216,12 @@ components:
                     amount:
                       type: number
                       description: 'Bought product amount '
+                    discount_value:
+                      type: number
+                      description: Conditional data - Present only if there's a discount applied. Representing the applied discount value on unit price
+                    discount_amount:
+                      type: number
+                      description: Conditional data - Present only if there's a discount applied. Representing the amount with applied discount
                   required:
                     - id
                     - name
