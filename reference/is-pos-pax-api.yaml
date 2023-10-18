@@ -343,7 +343,15 @@ paths:
                 fuelcoupon_codes:
                   type: array
                   items:
-                    type: string              
+                    type: string
+              x-examples:
+                Example 1:
+                  fuelcoupon_codes:
+                    - '0000000000009961511269694'
+                    - '0000000000009922799362682'
+                    - '0000000000009940137197369'
+                    - '0000000000009979607505144'
+                    - '0000000000009956422989229'
       description: ''
     parameters: []
   /recharges:
@@ -1246,7 +1254,7 @@ components:
                     type: string
         card_types_operations:
           type: object
-          description: "This object shows the possible operations for each card type.\nThe keys represents the card type id.\n\nAvailable operations are:\n\tT  --> transaction\n\tS  --> transaction reversal\n\tR  --> recharge\n\tSR --> recharge reversal\n\tRG --> card daily residue\n\tSP --> balance point\n\tPR --> reward request\n\tRP --> reward delivery\n\tLP --> available rewards list and pending rewards list\n\tSPR --> reward request reversal"
+          description: "This object shows the possible operations for each card type.\nThe keys represents the card type id.\n\nAvailable operations are:\n\tT  --> transaction\n\tS  --> transaction reversal\n\tR  --> recharge\n\tSR --> recharge reversal\n\tRG --> card daily residue\n\tSP --> balance point\n\tPR --> reward request\n\tRP --> reward delivery\n\tLP --> available rewards list and pending rewards list\n\tSPR --> reward request reversal\n\tAB --> Activate fuelcoupons"
           properties:
             '1':
               type: array
@@ -2241,12 +2249,6 @@ components:
                     amount:
                       type: number
                       description: 'Bought product amount '
-                    discount_value:
-                      type: number
-                      description: Conditional data - Present only if there's a discount applied. Representing the applied discount value on unit price
-                    discount_amount:
-                      type: number
-                      description: Conditional data - Present only if there's a discount applied. Representing the amount with applied discount
                   required:
                     - id
                     - name
@@ -2261,17 +2263,6 @@ components:
               - stan
               - date_time
               - purchased_products
-        loyalties:
-          type: array
-          description: List of loyalties cards used in transaction
-          items:
-            type: object
-            properties:
-              card_track:
-                type: string
-                description: Card track for the used one
-            required:
-              - card_track
       required:
         - supply_amount
         - supply_receipt_number
