@@ -1808,6 +1808,7 @@ components:
       x-stoplight:
         id: jsu39o0m0p2fq
       type: object
+      description: Represent a single product present in a transaction
       properties:
         id:
           type: integer
@@ -1824,13 +1825,18 @@ components:
         is_oil:
           type: boolean
           description: 'If true, is an oil product, otherwise is a not oil product'
+        discount_value:
+          type: number
+          description: Conditional data - Present only if there's a discount applied. Representing the applied discount value on unit price
+        discount_amount:
+          type: number
+          description: Conditional data - Present only if there's a discount applied. Representing the amount with applied discount
       required:
         - id
         - quantity
         - unit_price
         - amount
         - is_oil
-      description: Represent a single product present in a transaction
     RechargesInput:
       type: object
       x-examples:
@@ -2249,6 +2255,12 @@ components:
                     amount:
                       type: number
                       description: 'Bought product amount '
+                    discount_value:
+                      type: number
+                      description: Conditional data - Present only if there's a discount applied. Representing the applied discount value on unit price
+                    discount_amount:
+                      type: number
+                      description: Conditional data - Present only if there's a discount applied. Representing the amount with applied discount
                   required:
                     - id
                     - name
@@ -2263,6 +2275,17 @@ components:
               - stan
               - date_time
               - purchased_products
+        loyalties:
+          type: array
+          description: List of loyalties cards used in transaction
+          items:
+            type: object
+            properties:
+              card_track:
+                type: string
+                description: Card track for the used one
+            required:
+              - card_track
       required:
         - supply_amount
         - supply_receipt_number
