@@ -2230,6 +2230,17 @@ components:
               - stan
               - date_time
               - purchased_products
+        loyalties:
+          type: array
+          description: List of loyalties cards used in transaction
+          items:
+            type: object
+            properties:
+              card_track:
+                type: string
+                description: Card track for the used one
+            required:
+              - card_track
       required:
         - supply_amount
         - supply_receipt_number
