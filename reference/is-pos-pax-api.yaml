@@ -321,6 +321,31 @@ paths:
               $ref: '#/components/schemas/FuelcouponValidationInput'
       tags:
         - Fuelcoupons
+  /fuelcoupons/activate:
+    post:
+      summary: Activate fuelcoupons
+      operationId: activate-fuelcoupons
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericOutput'
+      tags:
+        - Fuelcoupons
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                fuelcoupon_codes:
+                  type: array
+                  items:
+                    type: string              
+      description: ''
+    parameters: []
   /recharges:
     post:
       summary: Recharge card
