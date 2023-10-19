@@ -2255,6 +2255,9 @@ components:
                     amount:
                       type: number
                       description: 'Bought product amount '
+                    is_oil:
+                      type: boolean
+                      description: 'If true, is an oil product, otherwise is a not oil product'
                     discount_value:
                       type: number
                       description: Conditional data - Present only if there's a discount applied. Representing the applied discount value on unit price
@@ -2268,6 +2271,7 @@ components:
                     - unit_price
                     - measure_unit
                     - amount
+                    - is_oil
             required:
               - id
               - name
