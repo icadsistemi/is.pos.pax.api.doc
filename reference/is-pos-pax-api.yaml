@@ -261,7 +261,7 @@ paths:
       summary: Get configuration keys for GT issuer
       tags: []
       responses: {}
-      operationId: get-configuration-gt-issuer-keys
+      operationId: get-configuration-gt-isuer-keys
       description: |-
         Available issuers:
         - DKV
@@ -276,7 +276,7 @@ paths:
       summary: Get configuration params for GT issuer
       tags: []
       responses: {}
-      operationId: get-configuration-gt-issuer-keys
+      operationId: get-configuration-gt-issuer-params
       description: |-
         Available issuers:
         - DKV
