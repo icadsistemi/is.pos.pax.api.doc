@@ -250,6 +250,36 @@ paths:
                 - guid
                 - is_success
         description: ''
+  '/configuration/gt/{issuer}/keys':
+    parameters:
+      - schema:
+          type: string
+        name: issuer
+        in: path
+        required: true
+    get:
+      summary: Get configuration keys for GT issuer
+      tags: []
+      responses: {}
+      operationId: get-configuration-gt-issuer-keys
+      description: |-
+        Available issuers:
+        - DKV
+  '/configuration/gt/{issuer}/params':
+    parameters:
+      - schema:
+          type: string
+        name: issuer
+        in: path
+        required: true
+    get:
+      summary: Get configuration params for GT issuer
+      tags: []
+      responses: {}
+      operationId: get-configuration-gt-issuer-keys
+      description: |-
+        Available issuers:
+        - DKV
   /fuelcoupons/abort:
     delete:
       summary: Abort fuel coupon transaction
