@@ -137,6 +137,9 @@ paths:
                   type: string
                 source:
                   type: string
+                is_ticket_residue:
+                  type: string
+                  description: 'If true, return ticket card residue. If false, return transaction card residue.'
               required:
                 - crypted_pin
                 - label_key
