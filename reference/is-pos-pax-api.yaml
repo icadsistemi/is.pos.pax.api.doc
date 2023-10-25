@@ -4,13 +4,41 @@ x-stoplight:
 info:
   title: POS PAX Public API
   version: 0.6.21
-  description: |-
-    POS PAX API documentation
+  description: |
+    # POS PAX API documentation
 
     The HTTP status codes returned by the endpoints follow these rules:
     - If the flow is correct, returns positive response code (even if the transaction fails for example for an handled reason, like incorrect PIN)
     - If the flow is incorrect, returns negative response code 
     - If the flow breaks for some reason (DB connection, malformed input, etc..), returns negative response
+
+    # Action Codes
+
+    Description about returned action codes
+
+    | Code | Description                                         | Display message |
+    | ---- | --------------------------------------------------- | --------------- |
+    | 000  | Transaction Ok                                      |            | 
+    | 001  | Card disabled                                       | Carta disabilitata |
+    | 002  | Card not found                                      | Carta non trovata |
+    | 003  | Card maximal is not enough                          | Massimale non sufficiente |
+    | 004  | Card credit exhausted                               | Credito esaurito |
+    | 005  | Card expired                                        | Carta scaduta |
+    | 006  | Card type not found                                 | Tipo tessera non valido | 
+    | 007  | Products not availables                             | Prodotti non disponibili |
+    | 008  | Card credit is not enough                           | Credito insufficiente |
+    | 009  | Customer disabled                                   | Cliente disabilitato |
+    | 010  | Customer credit exhausted                           | Credito esaurito |
+    | 011  | Card not enabled for indoor operations              | Carta disabilitata su POS |
+    | 012  | Customer not enabled on current fuel station        | Cliente disabilitato sul punto vendita |
+    | 013  | Card circuit non enabled on on current fuel station | Circuito non valido sul punto vendita |
+    | 014  | Incorrect card PIN                                  | PIN errato |
+    | 015  | Request not available                               | Errore transazione |
+    | 016  | Fuel station not found                              | Punto vendita non trovato |
+    | 400  | Reversal transaction Ok                             | |
+    | 401  | Reversal transaction already done                   | Storno già eseguito |
+    | 402  | Original transaction not found                      | Transazione originale non trovata |
+    | 904  | Format error / Missing input                        | Errore transazione |
 servers:
   - url: 'https://mxp-public-pos-api.dev.icadsistemi.com/v1'
     description: development
