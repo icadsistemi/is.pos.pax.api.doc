@@ -746,6 +746,10 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericOutputTransaction'
       requestBody:
         content:
           application/json:
@@ -1006,6 +1010,9 @@ components:
         article_id:
           type: integer
           description: Article identifier
+        name:
+          type: string
+          description: Article name
         quantity:
           type: number
           description: Article supplied quantity
@@ -1027,11 +1034,16 @@ components:
         ov_supply_id:
           type: integer
           description: Conditional data - Present only if the transaction is selected with DC
+        measure_unit:
+          type: string
+          description: Article's measure unit
       required:
+        - name
         - quantity
         - unit_price
         - amount
         - is_oil
+        - measure_unit
     CampaignRewards:
       title: CampaignRewards
       x-stoplight:
