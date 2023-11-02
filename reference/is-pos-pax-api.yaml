@@ -1115,7 +1115,7 @@ components:
           type: integer
           description: 'Km inserted by the user, if requested during transaction'
         driver_code:
-          type: integer
+          type: string
           description: 'Driver code inserted by the user, if requested during transaction'
         products:
           type: array
@@ -2171,7 +2171,7 @@ components:
           type: integer
           description: Vehicle's kilometers
         driver_code:
-          type: integer
+          type: string
           description: Driver code. Max 6 digits
         vehicle_code:
           type: string
@@ -2299,7 +2299,7 @@ components:
                     type: integer
                     description: Represent the Km inserted by the user
                   driver_code:
-                    type: integer
+                    type: string
                     description: Represent the driver code inserted by the user
               purchased_products:
                 type: array
