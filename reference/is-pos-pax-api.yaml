@@ -2103,6 +2103,12 @@ components:
           ov_id:
             type: integer
             description: 'Conditional attribute. Present only if the reverted transaction is selected using data collection '
+          measure_unit:
+            type: string
+            description: Unit of measure involved in this transaction
+          precision:
+            type: integer
+            description: Number of decimals of the unit price
     SuppliesFuelcoupon:
       title: SuppliesFuelcoupon
       type: array
