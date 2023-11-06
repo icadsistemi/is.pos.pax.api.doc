@@ -242,6 +242,15 @@ paths:
       tags:
         - Configuration
     parameters: []
+    post:
+      summary: Save POS configuration
+      operationId: post-configuration
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+      description: Save POS configuration as JSON
   /configuration/ack:
     parameters: []
     post:
