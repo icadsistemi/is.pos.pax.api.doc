@@ -1336,7 +1336,7 @@ components:
                     type: string
         card_types_operations:
           type: object
-          description: "This object shows the possible operations for each card type.\nThe keys represents the card type id.\n\nAvailable operations are:\n\tT  --> transaction\n\tS  --> transaction reversal\n\tR  --> recharge\n\tSR --> recharge reversal\n\tRG --> card daily residue\n\tSP --> balance point\n\tPR --> reward request\n\tRP --> reward delivery\n\tLP --> available rewards list and pending rewards list\n\tSPR --> reward request reversal\n\tAB --> Activate fuelcoupons"
+          description: "This object shows the possible operations for each card type.\nThe keys represents the card type id.\n\nAvailable operations are:\n\tT  --> transaction\n\tS  --> transaction reversal\n\tR  --> recharge\n\tSR --> recharge reversal\n\tRG --> card daily residue\n\tSP --> balance point\n\tPR --> reward request\n\tRP --> reward delivery\n\tLP --> available rewards list \n\tLPP --> pending rewards list\n\tSPR --> reward request reversal\n\tAB --> Activate fuelcoupons"
           properties:
             '1':
               type: array
