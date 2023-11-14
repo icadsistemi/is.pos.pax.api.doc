@@ -1735,6 +1735,9 @@ components:
           format: date-time
           description: Reversable transaction date time
           readOnly: true
+        original_transaction_code:
+          type: string
+          description: Code used when performing the actual revesal request
         supplies:
           description: supplies model of the transaction
           type: array
@@ -1746,6 +1749,7 @@ components:
         - total_amount
         - original_transaction_number
         - original_transaction_date_time
+        - original_transaction_code
         - supplies
     PinDataInput:
       title: PinDataInput
