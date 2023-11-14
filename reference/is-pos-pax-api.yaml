@@ -3,7 +3,7 @@ x-stoplight:
   id: tgvfiv56rre5x
 info:
   title: POS PAX Public API
-  version: 0.6.25
+  version: 0.6.26
   description: |
     # POS PAX API documentation
 
@@ -2159,6 +2159,10 @@ components:
           ov_id:
             type: integer
             description: 'Conditional attribute. Present only if the reverted transaction is selected using data collection '
+          precision:
+            type: integer
+          measure_unit:
+            type: string
     SupplyInput:
       title: SupplyInput
       x-stoplight:
