@@ -348,6 +348,39 @@ paths:
               properties: {}
       tags:
         - Fuelcoupons
+  /fuelcoupons/activate:
+    post:
+      summary: Activate fuelcoupons
+      operationId: activate-fuelcoupons
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericOutput'
+      tags:
+        - Fuelcoupons
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                fuelcoupon_codes:
+                  type: array
+                  items:
+                    type: string
+              x-examples:
+                Example 1:
+                  fuelcoupon_codes:
+                    - '0000000000009961511269694'
+                    - '0000000000009922799362682'
+                    - '0000000000009940137197369'
+                    - '0000000000009979607505144'
+                    - '0000000000009956422989229'
+      description: ''
+    parameters: []
   /fuelcoupons/reversal/info:
     get:
       summary: Fuelcoupons Reversal info
@@ -391,39 +424,6 @@ paths:
               $ref: '#/components/schemas/FuelcouponValidationInput'
       tags:
         - Fuelcoupons
-  /fuelcoupons/activate:
-    post:
-      summary: Activate fuelcoupons
-      operationId: activate-fuelcoupons
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GenericOutput'
-      tags:
-        - Fuelcoupons
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                fuelcoupon_codes:
-                  type: array
-                  items:
-                    type: string
-              x-examples:
-                Example 1:
-                  fuelcoupon_codes:
-                    - '0000000000009961511269694'
-                    - '0000000000009922799362682'
-                    - '0000000000009940137197369'
-                    - '0000000000009979607505144'
-                    - '0000000000009956422989229'
-      description: ''
-    parameters: []
   /recharges:
     post:
       summary: Recharge card
@@ -1506,6 +1506,7 @@ components:
           transaction_id: 53c786b82d124fadb1e8e374
           locked_amount: 10
       title: FuelcouponValidationOutput
+      examples: []
       properties:
         display:
           type: array
@@ -1526,11 +1527,13 @@ components:
         locked_amount:
           type: integer
           description: Available amount for the used fuelcoupon
+        fuel_coupon_number:
+          type: integer
       required:
         - display
         - transaction_code
         - locked_amount
-      examples: []
+        - fuel_coupon_number
     GenericOutput:
       type: object
       x-examples:
