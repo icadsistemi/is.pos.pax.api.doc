@@ -3,7 +3,7 @@ x-stoplight:
   id: tgvfiv56rre5x
 info:
   title: POS PAX Public API
-  version: 0.6.26
+  version: 0.6.27
   description: |
     # POS PAX API documentation
 
@@ -406,10 +406,30 @@ paths:
           in: query
           name: fuelcoupon_code
           description: Fuelcoupon full code
-  /fuelcoupons/validate:
+  /fuelcoupons/reversal/validate:
     post:
       summary: Validate fuelcoupon
       operationId: post-fuelcoupons-validate
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FuelcouponValidationOutput'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FuelcouponValidationInput'
+      tags:
+        - Fuelcoupons
+      description: Used to validate a fuel ccoupon before a reversal operation.
+    parameters: []
+  /fuelcoupons/validate:
+    post:
+      summary: Validate fuelcoupon
+      operationId: post-fuelcoupons-reversal-validate
       responses:
         '200':
           description: OK
