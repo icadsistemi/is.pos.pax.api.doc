@@ -3,7 +3,7 @@ x-stoplight:
   id: tgvfiv56rre5x
 info:
   title: POS PAX Public API
-  version: 0.6.27
+  version: 0.6.28
   description: |
     # POS PAX API documentation
 
@@ -2347,57 +2347,58 @@ components:
                   driver_code:
                     type: integer
                     description: Represent the driver code inserted by the user
-              purchased_products:
-                type: array
-                description: Bought product list with that payment mode
-                items:
-                  type: object
-                  properties:
-                    id:
-                      type: integer
-                      description: Product identifier
-                    supply_id:
-                      type: number
-                      description: 'Conditional field, representing the supply identifier selected by the user. It is present only if data-collection is enabled on fuelstation'
-                    name:
-                      type: string
-                      description: Product name to print on receipt
-                    quantity:
-                      type: number
-                      description: Bought product quantity
-                    unit_price:
-                      type: number
-                      description: 'Bought product unit price '
-                    measure_unit:
-                      type: string
-                      description: Bought product measure unit
-                    amount:
-                      type: number
-                      description: 'Bought product amount '
-                    is_oil:
-                      type: boolean
-                      description: 'If true, is an oil product, otherwise is a not oil product'
-                    discount_value:
-                      type: number
-                      description: Conditional data - Present only if there's a discount applied. Representing the applied discount value on unit price
-                    discount_amount:
-                      type: number
-                      description: Conditional data - Present only if there's a discount applied. Representing the amount with applied discount
-                  required:
-                    - id
-                    - name
-                    - quantity
-                    - unit_price
-                    - measure_unit
-                    - amount
-                    - is_oil
             required:
               - id
               - name
               - amount
               - stan
               - date_time
-              - purchased_products
+        articles:
+          type: array
+          description: Bought product list with that payment mode
+          items:
+            type: object
+            x-stoplight:
+              id: ujaxxovxjvmsw
+            properties:
+              id:
+                type: integer
+                description: Product identifier
+              supply_id:
+                type: number
+                description: 'Conditional field, representing the supply identifier selected by the user. It is present only if data-collection is enabled on fuelstation'
+              name:
+                type: string
+                description: Product name to print on receipt
+              quantity:
+                type: number
+                description: Bought product quantity
+              unit_price:
+                type: number
+                description: 'Bought product unit price '
+              measure_unit:
+                type: string
+                description: Bought product measure unit
+              amount:
+                type: number
+                description: 'Bought product amount '
+              is_oil:
+                type: boolean
+                description: 'If true, is an oil product, otherwise is a not oil product'
+              discount_value:
+                type: number
+                description: Conditional data - Present only if there's a discount applied. Representing the applied discount value on unit price
+              discount_amount:
+                type: number
+                description: Conditional data - Present only if there's a discount applied. Representing the amount with applied discount
+            required:
+              - id
+              - name
+              - quantity
+              - unit_price
+              - measure_unit
+              - amount
+              - is_oil
         loyalties:
           type: array
           description: List of loyalties cards used in transaction
@@ -2413,6 +2414,7 @@ components:
         - supply_amount
         - supply_receipt_number
         - payments
+        - articles
     TransactionReversalInput:
       title: TransactionReversalInput
       x-stoplight:
