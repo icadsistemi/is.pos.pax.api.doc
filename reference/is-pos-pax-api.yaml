@@ -2314,83 +2314,103 @@ components:
           type: string
           x-stoplight:
             id: o6jo66qv2l3q7
+          description: Payment mode name to print on receipt
         card_track:
           type: string
           x-stoplight:
             id: o5q2moae9t8on
+          description: 'Card track for the used one. It is a conditional field, present only if the payment mode require it. Eg: is not present for fuelcoupons or credit card'
         fuelcoupon_code:
           type: string
           x-stoplight:
             id: 1mh8u4if75f1h
+          description: 'Fuelcoupon code for the used one. It is a conditional field, present only if the payment mode require it. Eg: is not present for card transactions or credit card'
         fuelcoupon_number:
           type: number
           x-stoplight:
             id: gcasf18sp3kgf
+          description: Fuelcoupon number
         stan:
           type: integer
           x-stoplight:
             id: 9udaizd9fdymm
+          description: Incremental number representing the operation number. Each payment represent an operation
         customer_data:
           type: object
           x-stoplight:
             id: 8kvgolh20xxhg
+          description: 'Contains all the customer data like km, driver code and all the data inserted by the user during card transaction'
           properties:
             driver_code:
               type: integer
               x-stoplight:
                 id: bhx952q2rx765
+              description: Represent the driver code inserted by the user
             km:
               type: integer
               x-stoplight:
                 id: rxz9xcjjbbsq7
+              description: Represent the Km inserted by the user
         discounted_amount:
           type: number
           x-stoplight:
             id: 02xe8i8rxdzt0
+          description: Conditional data - Present only if there's a discount applied. Representing the amount with applied discount
         discounted_value:
           type: number
           x-stoplight:
             id: 4t9fsasop62r5
+          description: Conditional data - Present only if there's a discount applied. Representing the applied discount value on unit price
         amount:
           type: number
           x-stoplight:
             id: rzr6fbb4vsss6
+          description: Payment amount
         date_time:
           type: string
           x-stoplight:
             id: qkpip82wxvqc0
+          description: Payment operation timestamp
         progressive_number:
           type: integer
           x-stoplight:
             id: v8nc54h8ryl8l
+          description: Progressive number of product
         article_id:
           type: integer
           x-stoplight:
             id: 2dichijko916p
+          description: Product identifier
         supply_id:
           type: number
           x-stoplight:
             id: sgbezun1te44a
+          description: 'Conditional field, representing the supply identifier selected by the user. It is present only if data-collection is enabled on fuelstation'
         article_name:
           type: string
           x-stoplight:
             id: pvhfl96x6h1zn
+          description: Product name to print on receipt
         unit_price:
           type: number
           x-stoplight:
             id: x0wj39f79511t
+          description: Bought product unit price
         measure_unit:
           type: string
           x-stoplight:
             id: 48p9c7wc6l2oi
+          description: Bought product measure unit
         is_oil:
           type: boolean
           x-stoplight:
             id: oqghd25go7gkc
+          description: 'If true, is an oil product, otherwise is a not oil product'
         quantity:
           type: number
           x-stoplight:
             id: 6lpgx33hs95m3
+          description: Bought product quantity
         loyalties:
           type: array
           description: List of loyalties cards used in transaction
