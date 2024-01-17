@@ -756,6 +756,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GenericOutput'
+          headers:
+            header-0:
+              schema:
+                type: string
         '422':
           description: |-
             Unprocessable Entity (WebDAV)
@@ -768,6 +772,7 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/TransactionAckInput'
+        description: ''
   /transactions/fuelcoupons:
     post:
       summary: Fuelcoupon transaction
@@ -2302,103 +2307,90 @@ components:
       type: object
       examples: []
       properties:
-        supply_amount:
-          type: number
-          description: Total amount for the entire transaction
         supply_receipt_number:
           type: integer
           description: Receipt number to print on it
-        payments:
-          type: array
-          description: List of payments and related products bought
-          items:
-            type: object
-            properties:
-              id:
-                type: integer
-                description: 'Payment mode identifier '
-              name:
-                type: string
-                description: Payment mode name to print on receipt
-              amount:
-                type: number
-                description: Amount payed with the payment mode
-              card_track:
-                type: string
-                description: 'Card track for the used one. It is a conditional field, present only if the payment mode require it. Eg: is not present for fuelcoupons or credit card'
-              fuelcoupon_code:
-                type: string
-                description: 'Fuelcoupon code for the used one. It is a conditional field, present only if the payment mode require it. Eg: is not present for card transactions or credit card'
-              fuelcoupon_number:
-                type: number
-              stan:
-                type: integer
-                description: Incremental number representing the operation number. Each payment represent an operation.
-              date_time:
-                type: string
-                description: Payment operation timestamp
-              customer_data:
-                type: object
-                description: 'Contains all the customer data like km, driver code and all the data inserted by the user during card transaction'
-                properties:
-                  km:
-                    type: integer
-                    description: Represent the Km inserted by the user
-                  driver_code:
-                    type: integer
-                    description: Represent the driver code inserted by the user
-            required:
-              - id
-              - name
-              - amount
-              - stan
-              - date_time
-        articles:
-          type: array
-          description: Bought product list with that payment mode
-          items:
-            type: object
-            x-stoplight:
-              id: ujaxxovxjvmsw
-            properties:
-              id:
-                type: integer
-                description: Product identifier
-              supply_id:
-                type: number
-                description: 'Conditional field, representing the supply identifier selected by the user. It is present only if data-collection is enabled on fuelstation'
-              name:
-                type: string
-                description: Product name to print on receipt
-              quantity:
-                type: number
-                description: Bought product quantity
-              unit_price:
-                type: number
-                description: 'Bought product unit price '
-              measure_unit:
-                type: string
-                description: Bought product measure unit
-              amount:
-                type: number
-                description: 'Bought product amount '
-              is_oil:
-                type: boolean
-                description: 'If true, is an oil product, otherwise is a not oil product'
-              discount_value:
-                type: number
-                description: Conditional data - Present only if there's a discount applied. Representing the applied discount value on unit price
-              discount_amount:
-                type: number
-                description: Conditional data - Present only if there's a discount applied. Representing the amount with applied discount
-            required:
-              - id
-              - name
-              - quantity
-              - unit_price
-              - measure_unit
-              - amount
-              - is_oil
+        payment_name:
+          type: string
+          x-stoplight:
+            id: o6jo66qv2l3q7
+        card_track:
+          type: string
+          x-stoplight:
+            id: o5q2moae9t8on
+        fuelcoupon_code:
+          type: string
+          x-stoplight:
+            id: 1mh8u4if75f1h
+        fuelcoupon_number:
+          type: number
+          x-stoplight:
+            id: gcasf18sp3kgf
+        stan:
+          type: integer
+          x-stoplight:
+            id: 9udaizd9fdymm
+        customer_data:
+          type: object
+          x-stoplight:
+            id: 8kvgolh20xxhg
+          properties:
+            driver_code:
+              type: integer
+              x-stoplight:
+                id: bhx952q2rx765
+            km:
+              type: integer
+              x-stoplight:
+                id: rxz9xcjjbbsq7
+        discounted_amount:
+          type: number
+          x-stoplight:
+            id: 02xe8i8rxdzt0
+        discounted_value:
+          type: number
+          x-stoplight:
+            id: 4t9fsasop62r5
+        amount:
+          type: number
+          x-stoplight:
+            id: rzr6fbb4vsss6
+        date_time:
+          type: string
+          x-stoplight:
+            id: qkpip82wxvqc0
+        progressive_number:
+          type: integer
+          x-stoplight:
+            id: v8nc54h8ryl8l
+        article_id:
+          type: integer
+          x-stoplight:
+            id: 2dichijko916p
+        supply_id:
+          type: number
+          x-stoplight:
+            id: sgbezun1te44a
+        article_name:
+          type: string
+          x-stoplight:
+            id: pvhfl96x6h1zn
+        unit_price:
+          type: number
+          x-stoplight:
+            id: x0wj39f79511t
+        measure_unit:
+          type: string
+          x-stoplight:
+            id: 48p9c7wc6l2oi
+        is_oil:
+          type: boolean
+          x-stoplight:
+            id: oqghd25go7gkc
+        quantity:
+          type: number
+          x-stoplight:
+            id: 6lpgx33hs95m3
         loyalties:
           type: array
           description: List of loyalties cards used in transaction
@@ -2411,10 +2403,7 @@ components:
             required:
               - card_track
       required:
-        - supply_amount
         - supply_receipt_number
-        - payments
-        - articles
     TransactionReversalInput:
       title: TransactionReversalInput
       x-stoplight:
