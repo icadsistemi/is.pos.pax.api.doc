@@ -1972,10 +1972,20 @@ components:
           type: integer
         card_pin:
           $ref: '#/components/schemas/PinDataInput'
+        custom_recharge_amount:
+          type: integer
+          x-stoplight:
+            id: oq1otosjd7mkq
+          description: 'Custom recharge bill, mutually exclusive with bill IDfield'
+        custom_recharge_rebate:
+          type: number
+          x-stoplight:
+            id: xq8j3cbabht41
       required:
         - card_track
-        - bill_id
+        - payment_mode
         - transaction_number
+        - card_pin
     RechargesBills:
       type: object
       properties:
