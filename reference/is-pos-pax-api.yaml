@@ -3,7 +3,7 @@ x-stoplight:
   id: tgvfiv56rre5x
 info:
   title: POS PAX Public API
-  version: 0.6.31
+  version: 0.6.32
   description: |
     # POS PAX API documentation
 
@@ -1412,6 +1412,19 @@ components:
                     type: integer
                   name:
                     type: string
+        passwords:
+          type: object
+          x-stoplight:
+            id: tg18q1p77pom6
+          properties:
+            password_manager:
+              x-stoplight:
+                id: pjfitwzu5cul7
+              type: string
+            password_installer:
+              type: string
+              x-stoplight:
+                id: 26omqwwwgtqi3
       required:
         - card_types_operations
         - data_collection
