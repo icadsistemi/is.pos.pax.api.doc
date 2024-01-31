@@ -3,7 +3,7 @@ x-stoplight:
   id: tgvfiv56rre5x
 info:
   title: POS PAX Public API
-  version: 0.6.33
+  version: 0.6.34
   description: |
     # POS PAX API documentation
 
@@ -2302,6 +2302,13 @@ components:
         - card_pin
     RechargesBills:
       type: object
+      x-examples:
+        Example 1:
+          bills:
+            - id: 15
+              amount: 50
+              bonus_credit: 1
+          update_required: false
       properties:
         bills:
           type: array
@@ -2314,15 +2321,13 @@ components:
                 type: integer
               bonus_credit:
                 type: integer
+              ecommerce:
+                type: boolean
+                x-stoplight:
+                  id: 6b3xcemxcayth
+                description: True if the bill is available ONLY for ecommerce
         update_required:
           type: boolean
-      x-examples:
-        Example 1:
-          bills:
-            - id: 15
-              amount: 50
-              bonus_credit: 1
-          update_required: false
     RechargesReversal:
       title: RechargesReversal
       x-stoplight:
