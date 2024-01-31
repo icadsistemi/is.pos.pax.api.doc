@@ -3,7 +3,7 @@ x-stoplight:
   id: tgvfiv56rre5x
 info:
   title: POS PAX Public API
-  version: 0.6.34
+  version: 0.6.35
   description: |
     # POS PAX API documentation
 
@@ -571,6 +571,8 @@ paths:
                     bonus_credit: 20
                     update_required: false
                     requires_pin: true
+        '204':
+          description: 'No Content: it''s returned if no reversable recharges are found'
         '400':
           description: Bad Request
         '401':
