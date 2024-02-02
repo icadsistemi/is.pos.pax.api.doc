@@ -1755,6 +1755,8 @@ components:
         - batch_number
     FuelcouponReversalOutput:
       type: object
+      x-stoplight:
+        id: 60d2727931a93
       properties:
         ticket:
           type: array
@@ -1774,10 +1776,6 @@ components:
                 type: string
               font:
                 type: string
-        transaction_id:
-          type: integer
-      x-stoplight:
-        id: 60d2727931a93
     FuelcouponTransactionInput:
       title: FuelcouponTransactionInput
       x-stoplight:
@@ -1810,17 +1808,14 @@ components:
       properties:
         transaction_number:
           type: integer
-        original_transaction_code:
+        transaction_code:
           type: string
+          x-stoplight:
+            id: ytnmkaaxkrml5
         original_transaction_date_time:
           type: string
         reversal_transaction_date_time:
           type: string
-        ov_supplies_id:
-          type: array
-          description: Conditional Data. Echoed "ov_id" attribute returned by getInfoFuelcouponReversal in the supplies.
-          items:
-            type: integer
     FuelcouponValidationInput:
       type: object
       x-examples:
@@ -1922,7 +1917,7 @@ components:
               - message
         transaction_code:
           type: string
-          description: 'This identifier is used to relates the fuelcoupons to the same transaction. So for the same transaction, if the user wants to use multiple fuelcoupons, the POS should send everytime the same transaction_id for each call to this API'
+          description: This identifier is used to relates the fuelcoupons to the same transaction. The identifier returned here must be used for further validations (if needed) and for the final supply operation.
         err_fuel_coupon_number:
           type: integer
           x-stoplight:
@@ -2575,6 +2570,10 @@ components:
             type: integer
           measure_unit:
             type: string
+          ' fuelcoupon_code':
+            type: string
+            x-stoplight:
+              id: eqgv64iog038q
     SupplyInput:
       title: SupplyInput
       x-stoplight:
