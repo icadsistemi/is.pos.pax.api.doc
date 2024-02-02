@@ -476,12 +476,12 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FuelcouponValidationOutput'
+                $ref: '#/components/schemas/FuelcouponReversalValidationOutput'
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/FuelcouponValidationInput'
+              $ref: '#/components/schemas/FuelcouponReversalValidationInput'
       tags:
         - Fuelcoupons
       description: Used to validate a fuel ccoupon before a reversal operation.
@@ -1835,6 +1835,26 @@ components:
           description: Mandatory only if multiple fuelcoupon code are used for transaction
       required:
         - fuelcoupon_code
+    FuelcouponReversalValidationInput:
+      type: object
+      x-stoplight:
+        id: q3mlfck95rfz7
+      x-examples:
+        Example 1:
+          fuelcoupon_code: '0000000000009906970358268'
+          transaction_id: 53c786b82d124fadb1e8e374
+      properties:
+        fuelcoupons_codes:
+          type: array
+          x-stoplight:
+            id: 6yutc921pmq0u
+          items:
+            x-stoplight:
+              id: hoijxeyzqjw5l
+            type: string
+      required:
+        - fuelcoupons_codes
+      title: ''
     FuelcouponValidationOutput:
       type: object
       x-examples:
@@ -1873,6 +1893,44 @@ components:
         - transaction_code
         - locked_amount
         - fuel_coupon_number
+    FuelcouponReversalValidationOutput:
+      type: object
+      x-stoplight:
+        id: lrzn5uvqw0ycl
+      x-examples:
+        Example 1:
+          display:
+            - font: medium
+              message: aa
+          transaction_id: 53c786b82d124fadb1e8e374
+          locked_amount: 10
+      title: FuelcouponReversalValidationOutput
+      examples: []
+      properties:
+        display:
+          type: array
+          description: Display data
+          items:
+            type: object
+            properties:
+              font:
+                type: string
+              message:
+                type: string
+            required:
+              - font
+              - message
+        transaction_code:
+          type: string
+          description: 'This identifier is used to relates the fuelcoupons to the same transaction. So for the same transaction, if the user wants to use multiple fuelcoupons, the POS should send everytime the same transaction_id for each call to this API'
+        err_fuel_coupon_number:
+          type: integer
+          x-stoplight:
+            id: ytt7ap5o70w6d
+          description: Number of the first fuel coupon that threw a validation error (if any)
+      required:
+        - display
+        - transaction_code
     GenericOutput:
       type: object
       x-examples:
