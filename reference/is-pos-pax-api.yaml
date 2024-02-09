@@ -3,7 +3,7 @@ x-stoplight:
   id: tgvfiv56rre5x
 info:
   title: POS PAX Public API
-  version: 0.6.36
+  version: 0.6.37
   description: |
     # POS PAX API documentation
 
@@ -1096,8 +1096,8 @@ paths:
     parameters: []
 components:
   schemas:
-    Article:
-      title: Article
+    TransactionsData:
+      title: TransactionsData
       type: object
       description: Represent a single product present in a transaction
       x-stoplight:
@@ -1106,9 +1106,11 @@ components:
         article_id:
           type: integer
           description: Article identifier
-        name:
+        article_name:
           type: string
           description: Article name
+          x-stoplight:
+            id: wojafr92gkdcx
         quantity:
           type: number
           description: Article supplied quantity
@@ -1121,25 +1123,75 @@ components:
         is_oil:
           type: boolean
           description: 'If true, is an oil article, otherwise is a not oil article'
-        discount_value:
+        discounted_value:
           type: number
           description: Conditional data - Present only if there's a discount applied. Representing the applied discount value on unit price
-        discount_amount:
+          x-stoplight:
+            id: e0ij4xxdym0xp
+        discounted_amount:
           type: number
           description: Conditional data - Present only if there's a discount applied. Representing the amount with applied discount
+          x-stoplight:
+            id: wv3rn9q3gmojx
         ov_supply_id:
           type: integer
           description: Conditional data - Present only if the transaction is selected with DC
         measure_unit:
           type: string
           description: Article's measure unit
+        payment_name:
+          type: string
+          x-stoplight:
+            id: qzkm0jx9biorb
+        card_track:
+          type: string
+          x-stoplight:
+            id: 7rk28ugbjgpp4
+        fuelcoupon_code:
+          type: integer
+          x-stoplight:
+            id: smanys77n2o0y
+        fuelcoupon_number:
+          type: string
+          x-stoplight:
+            id: eci9zcq4tglgl
+        stan:
+          type: number
+          x-stoplight:
+            id: qsuw3i1szwxfv
+        customer_data:
+          type: object
+          x-stoplight:
+            id: uod9cquo71niz
+          properties:
+            km:
+              type: number
+              x-stoplight:
+                id: 6u9p0j1ngyfcs
+            driver_code:
+              type: number
+              x-stoplight:
+                id: 7aixy7rtus66k
+        date_time:
+          type: string
+          x-stoplight:
+            id: 09uv2j9r305yd
+          format: date-time
+        progressive_number:
+          type: integer
+          x-stoplight:
+            id: fw773lk5d6bjn
       required:
-        - name
+        - article_name
         - quantity
         - unit_price
         - amount
         - is_oil
         - measure_unit
+        - payment_name
+        - stan
+        - date_time
+        - progressive_number
     CampaignRewards:
       title: CampaignRewards
       x-stoplight:
@@ -2022,11 +2074,13 @@ components:
         icc_related_data:
           type: string
           description: Conditional data - Present only in chip card cases
-        articles:
+        transactions:
           type: array
           description: Conditional data - Present only if the transaction passed. Represent the bought articles with informations about eventual discounts applied
           items:
-            $ref: '#/components/schemas/Article'
+            $ref: '#/components/schemas/TransactionsData'
+            x-stoplight:
+              id: 0jgpse19ixsp5
         display:
           type: array
           description: Representing the data to show on display
