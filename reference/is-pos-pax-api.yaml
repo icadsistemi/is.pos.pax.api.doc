@@ -3,7 +3,7 @@ x-stoplight:
   id: tgvfiv56rre5x
 info:
   title: POS PAX Public API
-  version: 0.6.37
+  version: 0.6.38
   description: |
     # POS PAX API documentation
 
@@ -1860,6 +1860,10 @@ components:
       properties:
         transaction_number:
           type: integer
+        receipt_number:
+          type: integer
+          x-stoplight:
+            id: y5v305bssxehw
         transaction_code:
           type: string
           x-stoplight:
@@ -1868,6 +1872,9 @@ components:
           type: string
         reversal_transaction_date_time:
           type: string
+      required:
+        - transaction_number
+        - receipt_number
     FuelcouponValidationInput:
       type: object
       x-examples:
@@ -2789,6 +2796,10 @@ components:
         transaction_number:
           type: integer
           description: 'Transaction number '
+        receipt_number:
+          type: integer
+          x-stoplight:
+            id: omfqrrswqgr4u
         original_transaction_date_time:
           type: string
           description: Transaction date time to reverse
