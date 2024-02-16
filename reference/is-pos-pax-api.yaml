@@ -2941,6 +2941,11 @@ components:
           x-stoplight:
             id: rj7csmtw05rk8
           description: Bought product quantity
+        auth_code:
+          type: string
+          x-stoplight:
+            id: qml1eb01074rh
+          description: Six digits authorization code
   securitySchemes:
     Cognito:
       type: oauth2
