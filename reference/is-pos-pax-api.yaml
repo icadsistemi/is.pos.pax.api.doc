@@ -3,7 +3,7 @@ x-stoplight:
   id: tgvfiv56rre5x
 info:
   title: POS PAX Public API
-  version: 0.6.38
+  version: 0.6.39
   description: |
     # POS PAX API documentation
 
@@ -2081,6 +2081,11 @@ components:
         icc_related_data:
           type: string
           description: Conditional data - Present only in chip card cases
+        auth_code:
+          type: string
+          x-stoplight:
+            id: uylf0d4jl7acq
+          description: 6 digits authorization code
         transactions:
           type: array
           description: Conditional data - Present only if the transaction passed. Represent the bought articles with informations about eventual discounts applied
