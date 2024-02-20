@@ -3,7 +3,7 @@ x-stoplight:
   id: tgvfiv56rre5x
 info:
   title: POS PAX Public API
-  version: 0.6.39
+  version: 0.6.40
   description: |
     # POS PAX API documentation
 
@@ -1429,6 +1429,11 @@ components:
                 type: string
               code:
                 type: integer
+              is_gt:
+                type: boolean
+                x-stoplight:
+                  id: 3fqor74n42fdf
+                description: True if this is an external gt cards
         measure_units:
           type: array
           items:
