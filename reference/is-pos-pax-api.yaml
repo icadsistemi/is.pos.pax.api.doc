@@ -1044,7 +1044,7 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/TransactionReversalInput'
-  /transactions/reversal/gt:
+  /transactions/gt/reversal:
     post:
       summary: Transaction Reversal Gt
       operationId: post-transactions-reversal-gt
@@ -1061,6 +1061,7 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/TransactionReversalInput'
+    parameters: []
   /transactions/reversal/info:
     get:
       summary: Transaction reversal info
