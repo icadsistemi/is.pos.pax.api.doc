@@ -1874,13 +1874,20 @@ components:
           type: string
           x-stoplight:
             id: ytnmkaaxkrml5
-        original_transaction_date_time:
+        original_transaction_code:
           type: string
+          x-stoplight:
+            id: ytnmkaaxkrml5
         reversal_transaction_date_time:
           type: string
+          x-stoplight:
+            id: m30g6qibyqom1
       required:
         - transaction_number
         - receipt_number
+        - transaction_code
+        - original_transaction_code
+        - reversal_transaction_date_time
     FuelcouponValidationInput:
       type: object
       x-examples:
