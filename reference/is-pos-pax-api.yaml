@@ -3,7 +3,7 @@ x-stoplight:
   id: tgvfiv56rre5x
 info:
   title: POS PAX Public API
-  version: 0.6.42
+  version: 0.6.43
   description: |
     # POS PAX API documentation
 
@@ -140,6 +140,10 @@ paths:
                   residue:
                     type: number
                     format: float
+                  action_code:
+                    type: string
+                    x-stoplight:
+                      id: oicjpk62evv4s
         '400':
           description: Bad Request
         '401':
