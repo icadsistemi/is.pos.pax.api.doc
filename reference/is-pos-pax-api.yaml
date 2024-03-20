@@ -3,7 +3,7 @@ x-stoplight:
   id: tgvfiv56rre5x
 info:
   title: POS PAX Public API
-  version: 0.6.43
+  version: 0.6.44
   description: |
     # POS PAX API documentation
 
@@ -1549,6 +1549,27 @@ components:
               type: string
               x-stoplight:
                 id: 26omqwwwgtqi3
+            '':
+              type: string
+              x-stoplight:
+                id: 4abf745vun4t1
+        circuits:
+          type: object
+          x-stoplight:
+            id: 61u9rib1sbz16
+          properties:
+            fuel_cards:
+              type: boolean
+              x-stoplight:
+                id: j2ixiewi1masa
+            fuelcoupons:
+              type: boolean
+              x-stoplight:
+                id: 5x0ttgv6robli
+            credit_cards:
+              type: boolean
+              x-stoplight:
+                id: 4zm8henvrfhgs
       required:
         - card_types_operations
         - data_collection
