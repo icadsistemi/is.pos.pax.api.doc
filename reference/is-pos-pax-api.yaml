@@ -1980,11 +1980,25 @@ components:
           description: Available amount for the used fuelcoupon
         fuel_coupon_number:
           type: integer
+        fuel_coupon_welfare:
+          type: boolean
+          x-stoplight:
+            id: 3g3rfbtstemj3
+        fuel_coupon_vat:
+          type: number
+          x-stoplight:
+            id: 5nnkfvnd2i2ua
+          example: '22.0'
+          description: VAT applied when the coupon was bought.
+          minimum: 0
+          maximum: 100
       required:
         - display
         - transaction_code
         - locked_amount
         - fuel_coupon_number
+        - fuel_coupon_welfare
+        - fuel_coupon_vat
     FuelcouponReversalValidationOutput:
       type: object
       x-stoplight:
