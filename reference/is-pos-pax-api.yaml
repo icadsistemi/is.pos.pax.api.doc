@@ -1833,6 +1833,11 @@ components:
         batch_number:
           type: string
           description: Hardcoded to 1.
+        delivery_note_number:
+          type: string
+          x-stoplight:
+            id: q8gu907qxkas4
+          description: Receipt number for this transaction
       required:
         - pos_data_code
         - batch_number
