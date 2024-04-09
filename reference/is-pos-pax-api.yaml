@@ -256,8 +256,10 @@ paths:
           description: Bad Request
       description: Save POS configuration as JSON
   /configuration/print:
-    get:
+    parameters: []
+    post:
       summary: POS configuration print
+      operationId: post-configuration-print
       responses:
         '200':
           description: OK
@@ -265,22 +267,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GenericOutput'
-              examples:
-                Example 1:
-                  value:
-                    action_code: '000'
-                    ticket:
-                      - content: '        STAMPA DI PROVA'
-                        font: large
-                    display:
-                      - content: 'TERMINALE:                   003'
-                        font: medium
-                      - content: 'ISCODE:                 is316002'
-                        font: medium
-                      - content: 'RETE:             ICAD Sis PROVA'
-                        font: medium
-                      - content: 'SERIAL NUMBER:            XXYY01'
-                        font: medium
         '400':
           description: Bad Request
         '401':
@@ -289,32 +275,83 @@ paths:
           description: Unprocessable Entity (WebDAV)
         '500':
           description: Internal Server Error
-      operationId: get-configuration-print
       description: 'returns POS configuration data as a receipt rerady to be printed '
-      x-internal: false
-      tags:
-        - Configuration
-      parameters:
-        - schema:
-            type: string
-          in: query
-          name: serial_number
-          description: serial number
-          required: true
-        - schema:
-            type: string
-          in: query
-          name: sw_version
-          description: software version
-          required: true
-        - schema:
-            type: string
-          in: query
-          name: api_url
-          description: 'api url for environment '
       requestBody:
-        content: {}
-    parameters: []
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                serial_number:
+                  type: string
+                  x-stoplight:
+                    id: mtv5kfu1m0wnc
+                sw_version:
+                  type: string
+                  x-stoplight:
+                    id: zyz027590n3z6
+                api_url:
+                  type: string
+                  x-stoplight:
+                    id: dtpu2prlk6ibg
+                articles:
+                  type: array
+                  x-stoplight:
+                    id: kj9a7rt6d43gp
+                  items:
+                    x-stoplight:
+                      id: i2ztqyx5dtock
+                    type: string
+            examples:
+              Example 1:
+                value:
+                  action_code: '000'
+                  ticket:
+                    - content: ' STAMPA DI PROVA'
+                      font: large
+                    - content: 'TERMINALE: XXXXXXX'
+                      font: medium
+                    - content: 'ISCODE: XXXXX'
+                      font: medium
+                    - content: 'RETE: AAAAAA'
+                      font: medium
+                    - content: 'SN: AAAAXXXX'
+                      font: medium
+                    - content: 'SW VERSION: 0.1'
+                      font: medium
+                    - content: 'API: https://localhost'
+                      font: medium
+                    - content: ' ARTICOLI'
+                      font: medium
+                    - content: ' DIESEL'
+                      font: medium
+                    - content: ' VERDE'
+                      font: medium
+                    - content: ' METANO'
+                      font: medium
+                  display:
+                    - content: ' STAMPA DI PROVA'
+                      font: large
+                    - content: 'TERMINALE: AAAAAAAA'
+                      font: medium
+                    - content: 'ISCODE: ISAAAAAAA'
+                      font: medium
+                    - content: 'RETE: AAAAA'
+                      font: medium
+                    - content: 'SN: XXTRSD2002'
+                      font: medium
+                    - content: 'SW VERSION: 0.1'
+                      font: medium
+                    - content: 'API: https://localhost'
+                      font: medium
+                    - content: ' ARTICOLI'
+                      font: medium
+                    - content: ' DIESEL'
+                      font: medium
+                    - content: ' VERDE'
+                      font: medium
+                    - content: ' METANO'
+                      font: medium
   /configuration/ack:
     parameters: []
     post:
@@ -1993,7 +2030,7 @@ components:
           type: number
           x-stoplight:
             id: 5nnkfvnd2i2ua
-          example: '22.0'
+          example: 22
           description: VAT applied when the coupon was bought.
           minimum: 0
           maximum: 100
