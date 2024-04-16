@@ -3,7 +3,7 @@ x-stoplight:
   id: tgvfiv56rre5x
 info:
   title: POS PAX Public API
-  version: 0.6.46
+  version: 0.6.47
   description: |
     # POS PAX API documentation
 
@@ -238,6 +238,8 @@ paths:
           description: Bad Request
         '401':
           description: Unauthorized
+        '403':
+          description: Forbidden
         '500':
           description: Internal Server Error
       operationId: get-configuration
@@ -245,6 +247,12 @@ paths:
       x-internal: false
       tags:
         - Configuration
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Terminal-Serial-Number
+          description: S/N of the PAX POS
     parameters: []
     post:
       summary: Save POS configuration
