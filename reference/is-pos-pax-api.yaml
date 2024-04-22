@@ -3,7 +3,7 @@ x-stoplight:
   id: tgvfiv56rre5x
 info:
   title: POS PAX Public API
-  version: 0.6.47
+  version: 0.6.48
   description: |
     # POS PAX API documentation
 
@@ -905,7 +905,7 @@ paths:
   /transactions/fuelcoupons/reversal:
     post:
       summary: Reversal fuelcoupon transaction
-      operationId: ''
+      operationId: fc-reversal
       responses:
         '200':
           description: OK
@@ -935,6 +935,60 @@ paths:
               $ref: '#/components/schemas/FuelcouponTransactionReversalInput'
         description: ''
       description: Send transactionid for reversal fuelcoupon request
+      tags:
+        - Fuelcoupons
+    parameters: []
+  /transactions/fuelcoupons/reversal/auto:
+    post:
+      summary: Automatic reversal fuelcoupon transaction
+      operationId: post-automatic-fc-reversal
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericOutput'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericOutput'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                receipt_number:
+                  type: integer
+                  x-stoplight:
+                    id: z2nid09q5g78l
+                original_transaction_code:
+                  type: string
+                  x-stoplight:
+                    id: ujtkxtp2g0q7y
+                original_transaction_date_time:
+                  type: string
+                  x-stoplight:
+                    id: 92owmd0jsu0do
+                  format: date-time
+              required:
+                - receipt_number
+                - original_transaction_code
+                - original_transaction_date_time
+        description: ''
+      description: The endpoint is used to automatically reverse a fuel coupon transaction.
       tags:
         - Fuelcoupons
     parameters: []
@@ -1093,6 +1147,25 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/TransactionReversalInput'
+  /transactions/reversal/auto:
+    post:
+      summary: Transaction Reversal
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericOutput'
+      operationId: post-auto-transactions-reversal
+      description: The endpoint is used to automatically reverse a transaction.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransactionReversalInput'
+    parameters: []
   /transactions/gt/reversal:
     post:
       summary: Transaction Reversal Gt
@@ -1105,6 +1178,24 @@ paths:
               schema:
                 $ref: '#/components/schemas/GenericOutput'
       description: The endpoint is used to reverse a GT transaction.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransactionReversalInput'
+    parameters: []
+  /transactions/gt/reversal/auto:
+    post:
+      summary: Automatic transaction reversal Gt
+      operationId: post-auto-transactions-reversal-gt
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericOutputTransaction'
+      description: The endpoint is used to automatically reverse a GT transaction.
       requestBody:
         content:
           application/json:
