@@ -1595,8 +1595,10 @@ components:
           items:
             type: object
             properties:
-              id:
-                type: integer
+              code:
+                type: string
+                x-stoplight:
+                  id: stxxd0rjthhac
               name:
                 type: string
               is_oil:
