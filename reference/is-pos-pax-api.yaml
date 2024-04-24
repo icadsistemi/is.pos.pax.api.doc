@@ -3,7 +3,7 @@ x-stoplight:
   id: tgvfiv56rre5x
 info:
   title: POS PAX Public API
-  version: 0.6.49
+  version: 0.6.50
   description: |
     # POS PAX API documentation
 
@@ -1152,7 +1152,7 @@ paths:
               $ref: '#/components/schemas/TransactionReversalInput'
   /transactions/reversal/auto:
     post:
-      summary: Transaction Reversal
+      summary: Automatic transaction Reversal
       tags: []
       responses:
         '200':
