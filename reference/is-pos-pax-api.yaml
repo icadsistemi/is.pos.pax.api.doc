@@ -3,7 +3,7 @@ x-stoplight:
   id: tgvfiv56rre5x
 info:
   title: POS PAX Public API
-  version: 0.6.48
+  version: 0.6.49
   description: |
     # POS PAX API documentation
 
@@ -974,15 +974,18 @@ paths:
                   type: integer
                   x-stoplight:
                     id: z2nid09q5g78l
+                  description: Receipt number
                 original_transaction_code:
                   type: string
                   x-stoplight:
                     id: ujtkxtp2g0q7y
+                  description: Code of the transaction to be reversed
                 original_transaction_date_time:
                   type: string
                   x-stoplight:
                     id: 92owmd0jsu0do
                   format: date-time
+                  description: Datetime of the transaction to be reversed
               required:
                 - receipt_number
                 - original_transaction_code
@@ -1164,7 +1167,34 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TransactionReversalInput'
+              type: object
+              properties:
+                card_track:
+                  type: string
+                  x-stoplight:
+                    id: syj5a2a0qjeiy
+                  description: Track2 of the evolved card
+                original_transaction_date_time:
+                  type: string
+                  x-stoplight:
+                    id: s6hndsl6sagjn
+                  format: date-time
+                  description: Datetime of the transaction to be reversed
+                original_transaction_number:
+                  type: integer
+                  x-stoplight:
+                    id: w9j0j1jsgtxnj
+                  description: Number of the transaction to be reversed
+                receipt_number:
+                  type: integer
+                  x-stoplight:
+                    id: mq9q14rd3y5qn
+                  description: Receipt number
+              required:
+                - card_track
+                - original_transaction_date_time
+                - original_transaction_number
+                - receipt_number
     parameters: []
   /transactions/gt/reversal:
     post:
@@ -1200,7 +1230,61 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TransactionReversalInput'
+              type: object
+              properties:
+                gt_info:
+                  type: object
+                  x-stoplight:
+                    id: 6pudt0z1km1t2
+                  required:
+                    - batch_number
+                    - message_reason_code
+                    - pos_data_code
+                  description: Hardcoded to 1.
+                  properties:
+                    batch_number:
+                      type: string
+                      x-stoplight:
+                        id: 4gwbnnc6t7h3p
+                    message_reason_code:
+                      type: string
+                      x-stoplight:
+                        id: 922vbu35hhiag
+                      description: |-
+                        Representing the reason why the request is done. Refer to IFSF documentation.
+                        Conditional attribute: present only in reversal messages.
+                    pos_data_code:
+                      type: string
+                      x-stoplight:
+                        id: 4kjsxk8jhv8at
+                      description: Representing pos informations using a specific encoding. Refer to IFSF documentation
+                card_track:
+                  type: string
+                  x-stoplight:
+                    id: 76vpge9j4y7yf
+                  description: Card track used for the reversal transaction
+                original_transaction_date_time:
+                  type: string
+                  x-stoplight:
+                    id: c4xi4bidojntt
+                  format: date-time
+                  description: Transaction date time to reverse
+                original_transaction_number:
+                  type: integer
+                  x-stoplight:
+                    id: 68y0rsbnkdj0w
+                  description: Transaction number to reverse
+                receipt_number:
+                  type: integer
+                  x-stoplight:
+                    id: motkjuu3albo1
+                  description: Receipt number
+              required:
+                - gt_info
+                - card_track
+                - original_transaction_date_time
+                - original_transaction_number
+                - receipt_number
     parameters: []
   /transactions/reversal/info:
     get:
