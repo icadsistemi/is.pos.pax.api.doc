@@ -3,7 +3,7 @@ x-stoplight:
   id: tgvfiv56rre5x
 info:
   title: POS PAX Public API
-  version: 0.6.50
+  version: 0.6.51
   description: |
     # POS PAX API documentation
 
@@ -2636,9 +2636,11 @@ components:
       type: object
       description: Represent a single product present in a transaction
       properties:
-        id:
-          type: integer
-          description: Product identifier
+        code:
+          type: string
+          description: Product code
+          x-stoplight:
+            id: wx029mw2h2ajh
         quantity:
           type: number
           description: Product supplied quantity
@@ -2658,7 +2660,7 @@ components:
           type: number
           description: Conditional data - Present only if there's a discount applied. Representing the amount with applied discount
       required:
-        - id
+        - code
         - quantity
         - unit_price
         - amount
@@ -3185,11 +3187,11 @@ components:
           x-stoplight:
             id: 1x9l93fotm4qm
           description: Progressive number of product
-        article_id:
-          type: integer
+        article_code:
+          type: string
           x-stoplight:
             id: 7lhmke4a83hsu
-          description: Product identifier
+          description: Product code
         ov_supply_id:
           type: number
           x-stoplight:
