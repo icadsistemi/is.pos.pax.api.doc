@@ -3,7 +3,7 @@ x-stoplight:
   id: tgvfiv56rre5x
 info:
   title: POS PAX Public API
-  version: 0.6.51
+  version: 0.6.52
   description: |
     # POS PAX API documentation
 
@@ -3022,8 +3022,10 @@ components:
           type: object
           description: The list of available products for the transacted card
           properties:
-            id:
-              type: integer
+            code:
+              type: string
+              x-stoplight:
+                id: bg42llt1x0etj
             is_oil:
               type: boolean
         update_required:
