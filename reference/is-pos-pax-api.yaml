@@ -778,9 +778,11 @@ paths:
                     supply_id:
                       type: integer
                       description: ID of the supply. This will be send to the server to purchase it and perform a transaction.
-                    article_id:
-                      type: integer
+                    article_code:
+                      type: string
                       description: Supplied article id
+                      x-stoplight:
+                        id: 3nvb8tnpwpyvi
                     quantity:
                       type: number
                       description: Supplied quantity of the product
@@ -798,7 +800,7 @@ paths:
                       description: 'The product measure unit display name. Eg: Lt, Kg, h'
                   required:
                     - supply_id
-                    - article_id
+                    - article_code
                     - quantity
                     - unit_price
                     - amount
