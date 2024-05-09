@@ -1333,6 +1333,10 @@ components:
         article_id:
           type: integer
           description: Article identifier
+        article_code:
+          type: string
+          x-stoplight:
+            id: aud6qitxpxlj3
         article_name:
           type: string
           description: Article name
@@ -1408,7 +1412,12 @@ components:
           type: integer
           x-stoplight:
             id: fw773lk5d6bjn
+        '':
+          type: string
+          x-stoplight:
+            id: qyr6wqya7yugb
       required:
+        - article_code
         - article_name
         - quantity
         - unit_price
