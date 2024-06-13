@@ -1192,11 +1192,16 @@ paths:
                   x-stoplight:
                     id: mq9q14rd3y5qn
                   description: Receipt number
+                stan:
+                  type: integer
+                  x-stoplight:
+                    id: imycfbydc32om
               required:
                 - card_track
                 - original_transaction_date_time
                 - original_transaction_number
                 - receipt_number
+                - stan
     parameters: []
   /transactions/gt/reversal:
     post:
@@ -1238,11 +1243,11 @@ paths:
                   type: object
                   x-stoplight:
                     id: 6pudt0z1km1t2
+                  description: Hardcoded to 1.
                   required:
                     - batch_number
                     - message_reason_code
                     - pos_data_code
-                  description: Hardcoded to 1.
                   properties:
                     batch_number:
                       type: string
@@ -1281,12 +1286,17 @@ paths:
                   x-stoplight:
                     id: motkjuu3albo1
                   description: Receipt number
+                stan:
+                  type: number
+                  x-stoplight:
+                    id: w0g54fh41y0zm
               required:
                 - gt_info
                 - card_track
                 - original_transaction_date_time
                 - original_transaction_number
                 - receipt_number
+                - stan
     parameters: []
   /transactions/reversal/info:
     get:
@@ -2118,6 +2128,10 @@ components:
         date_time:
           type: string
           format: date-time
+        stan:
+          type: integer
+          x-stoplight:
+            id: g9kylqx21fs83
     FuelcouponTransactionReversalInput:
       type: object
       x-examples:
@@ -2708,11 +2722,16 @@ components:
           type: number
           x-stoplight:
             id: xq8j3cbabht41
+        stan:
+          type: integer
+          x-stoplight:
+            id: axljvnqx9fckh
       required:
         - card_track
         - payment_mode
         - transaction_number
         - card_pin
+        - stan
     RechargesBills:
       type: object
       x-examples:
@@ -2783,6 +2802,16 @@ components:
           $ref: '#/components/schemas/PinDataInput'
         transaction_number:
           type: integer
+        stan:
+          type: integer
+          x-stoplight:
+            id: snrc9mum9hy6q
+      required:
+        - card_track
+        - recharge_id
+        - card_pin
+        - transaction_number
+        - stan
     RewardMemoErrorResponse:
       title: RewardMemoErrorResponse
       x-stoplight:
@@ -2987,11 +3016,16 @@ components:
         check_driver:
           type: boolean
           description: 'If True, the driver_code will be checked on backend. Otherwise, there are no controls on driver_code value.'
+        stan:
+          type: integer
+          x-stoplight:
+            id: a0c41uaho8awd
       required:
         - card_track
         - transaction_number
         - date_time
         - total_amount
+        - stan
     Supplies-info:
       type: object
       x-examples:
@@ -3122,12 +3156,17 @@ components:
           description: |-
             Conditional Field: should be valorized only in case of chip card. 
             Contains the chip information
+        stan:
+          type: integer
+          x-stoplight:
+            id: rupulaa6686o9
       required:
         - card_track
         - transaction_number
         - original_transaction_date_time
         - original_transaction_number
         - date_time
+        - stan
     Transaction:
       title: Transaction
       x-stoplight:
