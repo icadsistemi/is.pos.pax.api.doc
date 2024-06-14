@@ -3,7 +3,7 @@ x-stoplight:
   id: tgvfiv56rre5x
 info:
   title: POS PAX Public API
-  version: 0.6.52
+  version: 0.6.53
   description: |
     # POS PAX API documentation
 
@@ -988,10 +988,15 @@ paths:
                     id: 92owmd0jsu0do
                   format: date-time
                   description: Datetime of the transaction to be reversed
+                stan:
+                  type: number
+                  x-stoplight:
+                    id: cxdxuby7bdns8
               required:
                 - receipt_number
                 - original_transaction_code
                 - original_transaction_date_time
+                - stan
         description: ''
       description: The endpoint is used to automatically reverse a fuel coupon transaction.
       tags:
@@ -2143,7 +2148,7 @@ components:
       properties:
         transaction_number:
           type: integer
-        receipt_number:
+        stan:
           type: integer
           x-stoplight:
             id: y5v305bssxehw
@@ -2161,7 +2166,7 @@ components:
             id: m30g6qibyqom1
       required:
         - transaction_number
-        - receipt_number
+        - stan
         - transaction_code
         - original_transaction_code
         - reversal_transaction_date_time
