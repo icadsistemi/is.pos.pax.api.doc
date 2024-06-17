@@ -3,7 +3,7 @@ x-stoplight:
   id: tgvfiv56rre5x
 info:
   title: POS PAX Public API
-  version: 0.6.53
+  version: 0.6.54
   description: |
     # POS PAX API documentation
 
@@ -475,11 +475,6 @@ paths:
           application/json:
             schema:
               type: object
-              properties:
-                fuelcoupon_codes:
-                  type: array
-                  items:
-                    type: string
               x-examples:
                 Example 1:
                   fuelcoupon_codes:
@@ -488,6 +483,15 @@ paths:
                     - '0000000000009940137197369'
                     - '0000000000009979607505144'
                     - '0000000000009956422989229'
+              properties:
+                fuelcoupon_codes:
+                  type: array
+                  items:
+                    type: string
+                stan:
+                  type: integer
+                  x-stoplight:
+                    id: ktygn5kkxjsdy
       description: ''
     parameters: []
   /fuelcoupons/reversal/info:
