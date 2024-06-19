@@ -3,7 +3,7 @@ x-stoplight:
   id: tgvfiv56rre5x
 info:
   title: POS PAX Public API
-  version: 0.6.54
+  version: 0.6.55
   description: |
     # POS PAX API documentation
 
@@ -1539,6 +1539,10 @@ components:
           type: integer
         update_required:
           type: boolean
+        multi_product:
+          type: boolean
+          x-stoplight:
+            id: t3wmm9tr3fwk7
     ChipInfo:
       title: ChipInfo
       x-stoplight:
