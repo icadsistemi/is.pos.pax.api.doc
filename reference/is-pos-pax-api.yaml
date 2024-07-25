@@ -3,7 +3,7 @@ x-stoplight:
   id: tgvfiv56rre5x
 info:
   title: POS PAX Public API
-  version: 0.6.55
+  version: 0.6.56
   description: |
     # POS PAX API documentation
 
@@ -35,6 +35,7 @@ info:
     | 014  | Incorrect card PIN                                  | PIN errato |
     | 015  | Request not available                               | Errore transazione |
     | 016  | Fuel station not found                              | Punto vendita non trovato |
+    | 017  | Allowable PIN tries exceeded                        | Limite inserimento PIN raggiunto |
     | 400  | Reversal transaction Ok                             | |
     | 401  | Reversal transaction already done                   | Storno già eseguito |
     | 402  | Original transaction not found                      | Transazione originale non trovata |
