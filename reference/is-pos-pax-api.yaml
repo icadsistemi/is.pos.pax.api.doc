@@ -3,7 +3,7 @@ x-stoplight:
   id: tgvfiv56rre5x
 info:
   title: POS PAX Public API
-  version: 0.6.56
+  version: 0.6.57
   description: |
     # POS PAX API documentation
 
@@ -2542,13 +2542,9 @@ components:
         label_key:
           type: string
           description: Label used to recognize which key use on server side
-        random_pin_key:
-          type: string
-          description: Random pin key used to generate the session encryption key
       required:
         - crypted_pin
         - label_key
-        - random_pin_key
     PendingRewardsOutput:
       title: PendingRewardsOutput
       x-stoplight:
