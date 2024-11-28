@@ -1013,19 +1013,8 @@ ul.nav-tabs {
       "type" : "string"
     },
     "supplier_id" : {
-      "type" : "integer"
-    },
-    "card_types" : {
-      "type" : "array",
-      "items" : {
-        "$ref" : "#/components/schemas/Configuration_card_types_inner"
-      }
-    },
-    "measure_units" : {
-      "type" : "array",
-      "items" : {
-        "$ref" : "#/components/schemas/Configuration_measure_units_inner"
-      }
+      "type" : "integer",
+      "description" : "To be deprecated"
     },
     "enabled_card_types" : {
       "type" : "array",
@@ -1033,33 +1022,51 @@ ul.nav-tabs {
         "type" : "integer"
       }
     },
+    "guid" : {
+      "type" : "string",
+      "description" : "Represent the dll unique identifier "
+    },
     "articles" : {
       "type" : "array",
       "items" : {
         "$ref" : "#/components/schemas/Configuration_articles_inner"
       }
     },
-    "ticket" : {
-      "$ref" : "#/components/schemas/Configuration_ticket"
+    "card_types" : {
+      "type" : "array",
+      "items" : {
+        "$ref" : "#/components/schemas/Configuration_card_types_inner"
+      }
     },
     "card_types_operations" : {
       "$ref" : "#/components/schemas/Configuration_card_types_operations"
     },
+    "circuits" : {
+      "$ref" : "#/components/schemas/Configuration_circuits"
+    },
     "data_collection" : {
       "$ref" : "#/components/schemas/Configuration_data_collection"
     },
-    "guid" : {
-      "type" : "string",
-      "description" : "Represent the dll unique identifier "
+    "fuel_station" : {
+      "$ref" : "#/components/schemas/Configuration_fuel_station"
     },
-    "payment_modes" : {
-      "$ref" : "#/components/schemas/Configuration_payment_modes"
+    "measure_units" : {
+      "type" : "array",
+      "items" : {
+        "$ref" : "#/components/schemas/Configuration_measure_units_inner"
+      }
     },
     "passwords" : {
       "$ref" : "#/components/schemas/Configuration_passwords"
     },
-    "circuits" : {
-      "$ref" : "#/components/schemas/Configuration_circuits"
+    "payment_modes" : {
+      "$ref" : "#/components/schemas/Configuration_payment_modes"
+    },
+    "supplier" : {
+      "$ref" : "#/components/schemas/Configuration_supplier"
+    },
+    "ticket" : {
+      "$ref" : "#/components/schemas/Configuration_ticket"
     }
   },
   "description" : "First/Forced dll",
@@ -1299,6 +1306,31 @@ ul.nav-tabs {
   },
   "description" : "Details about data collection of the fuelstationof the terminal"
 };
+    defs["Configuration_fuel_station"] = {
+  "properties" : {
+    "is_code" : {
+      "type" : "string",
+      "x-stoplight" : {
+        "id" : "n4fve9s1ihk3h"
+      }
+    },
+    "merchant_code" : {
+      "type" : "string",
+      "x-stoplight" : {
+        "id" : "iw37rfninl1em"
+      }
+    },
+    "can:_recharge" : {
+      "type" : "boolean",
+      "x-stoplight" : {
+        "id" : "b0bp3e05pf6y7"
+      }
+    }
+  },
+  "x-stoplight" : {
+    "id" : "ilt1j95qfmkk6"
+  }
+};
     defs["Configuration_measure_units_inner"] = {
   "properties" : {
     "id" : {
@@ -1324,12 +1356,6 @@ ul.nav-tabs {
       "type" : "string",
       "x-stoplight" : {
         "id" : "26omqwwwgtqi3"
-      }
-    },
-    "" : {
-      "type" : "string",
-      "x-stoplight" : {
-        "id" : "4abf745vun4t1"
       }
     }
   },
@@ -1397,7 +1423,7 @@ ul.nav-tabs {
       }
     },
     "ticket" : {
-      "$ref" : "#/components/schemas/Configuration_ticket"
+      "$ref" : "#/components/schemas/ConfigurationPrint_ticket"
     },
     "card_types_operations" : {
       "$ref" : "#/components/schemas/Configuration_card_types_operations"
@@ -1413,7 +1439,7 @@ ul.nav-tabs {
       "$ref" : "#/components/schemas/Configuration_payment_modes"
     },
     "passwords" : {
-      "$ref" : "#/components/schemas/ConfigurationPrint_passwords"
+      "$ref" : "#/components/schemas/Configuration_passwords"
     }
   },
   "description" : "configuration print model",
@@ -1584,23 +1610,33 @@ ul.nav-tabs {
     }
   }
 };
-    defs["ConfigurationPrint_passwords"] = {
+    defs["ConfigurationPrint_ticket"] = {
   "properties" : {
-    "password_manager" : {
+    "header" : {
+      "type" : "array",
+      "items" : {
+        "$ref" : "#/components/schemas/Configuration_ticket_header_inner"
+      }
+    }
+  }
+};
+    defs["Configuration_supplier"] = {
+  "properties" : {
+    "id" : {
       "type" : "string",
       "x-stoplight" : {
-        "id" : "pjfitwzu5cul7"
+        "id" : "zy50w5xpnuxd0"
       }
     },
-    "password_installer" : {
-      "type" : "string",
+    "max_amount" : {
+      "type" : "number",
       "x-stoplight" : {
-        "id" : "26omqwwwgtqi3"
+        "id" : "37c92ei92gpm8"
       }
     }
   },
   "x-stoplight" : {
-    "id" : "tg18q1p77pom6"
+    "id" : "3g04gtt0z5bvz"
   }
 };
     defs["Configuration_ticket"] = {
@@ -1610,7 +1646,29 @@ ul.nav-tabs {
       "items" : {
         "$ref" : "#/components/schemas/Configuration_ticket_header_inner"
       }
+    },
+    "footer" : {
+      "$ref" : "#/components/schemas/Configuration_ticket_footer"
     }
+  }
+};
+    defs["Configuration_ticket_footer"] = {
+  "properties" : {
+    "content" : {
+      "type" : "string",
+      "x-stoplight" : {
+        "id" : "hhycdbumjeebm"
+      }
+    },
+    "font" : {
+      "type" : "string",
+      "x-stoplight" : {
+        "id" : "i6i1ptzxaydhc"
+      }
+    }
+  },
+  "x-stoplight" : {
+    "id" : "i3ou3wpdano45"
   }
 };
     defs["Configuration_ticket_header_inner"] = {
@@ -3631,7 +3689,7 @@ ul.nav-tabs {
         <div id="header">
           <div id="api-_">
             <h2 id="welcome-to-apidoc">API and SDK Documentation</h2>
-              <div class="app-desc">Version: 0.6.57</div>
+              <div class="app-desc">Version: 0.6.58</div>
             <hr>
             <div id="app-description" class="app-desc">
                 <h1>POS PAX API documentation</h1>
