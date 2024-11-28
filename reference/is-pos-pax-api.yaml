@@ -3,7 +3,7 @@ x-stoplight:
   id: tgvfiv56rre5x
 info:
   title: POS PAX Public API
-  version: 0.6.57
+  version: 0.6.58
   description: |
     # POS PAX API documentation
 
@@ -133,7 +133,6 @@ info:
         <td>Errore transazione</td>
     </tr>
     </table>
-
 servers:
   - url: 'https://mxp-public-pos-api.dev.icadsistemi.com/v1'
     description: development
@@ -1772,37 +1771,14 @@ components:
           type: string
         supplier_id:
           type: integer
-        card_types:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: integer
-              name:
-                type: string
-              code:
-                type: integer
-              is_gt:
-                type: boolean
-                x-stoplight:
-                  id: 3fqor74n42fdf
-                description: True if this is an external gt cards
-        measure_units:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: integer
-              name:
-                type: string
-              measure_unit:
-                type: string
+          description: To be deprecated
         enabled_card_types:
           type: array
           items:
             type: integer
+        guid:
+          type: string
+          description: 'Represent the dll unique identifier '
         articles:
           type: array
           items:
@@ -1822,18 +1798,22 @@ components:
                 type: integer
               precision:
                 type: integer
-        ticket:
-          type: object
-          properties:
-            header:
-              type: array
-              items:
-                type: object
-                properties:
-                  content:
-                    type: string
-                  font:
-                    type: string
+        card_types:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+              code:
+                type: integer
+              is_gt:
+                type: boolean
+                x-stoplight:
+                  id: 3fqor74n42fdf
+                description: True if this is an external gt cards
         card_types_operations:
           type: object
           description: "This object shows the possible operations for each card type.\nThe keys represents the card type id.\n\nAvailable operations are:\n\tT  --> transaction\n\tS  --> transaction reversal\n\tR  --> recharge\n\tSR --> recharge reversal\n\tRG --> card daily residue\n\tSP --> balance point\n\tPR --> reward request\n\tRP --> reward delivery\n\tLP --> available rewards list \n\tLPP --> pending rewards list\n\tSPR --> reward request reversal\n\tAB --> Activate fuelcoupons"
@@ -1850,6 +1830,23 @@ components:
               type: array
               items:
                 type: string
+        circuits:
+          type: object
+          x-stoplight:
+            id: 61u9rib1sbz16
+          properties:
+            fuel_cards:
+              type: boolean
+              x-stoplight:
+                id: j2ixiewi1masa
+            fuelcoupons:
+              type: boolean
+              x-stoplight:
+                id: 5x0ttgv6robli
+            credit_cards:
+              type: boolean
+              x-stoplight:
+                id: 4zm8henvrfhgs
         data_collection:
           type: object
           description: Details about data collection of the fuelstationof the terminal
@@ -1863,9 +1860,47 @@ components:
             pumps:
               type: integer
               description: Number of the pumps in the fuel station
-        guid:
-          type: string
-          description: 'Represent the dll unique identifier '
+        fuel_station:
+          type: object
+          x-stoplight:
+            id: ilt1j95qfmkk6
+          properties:
+            is_code:
+              type: string
+              x-stoplight:
+                id: n4fve9s1ihk3h
+            merchant_code:
+              type: string
+              x-stoplight:
+                id: iw37rfninl1em
+            'can:_recharge':
+              type: boolean
+              x-stoplight:
+                id: b0bp3e05pf6y7
+        measure_units:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+              measure_unit:
+                type: string
+        passwords:
+          type: object
+          x-stoplight:
+            id: tg18q1p77pom6
+          properties:
+            password_manager:
+              x-stoplight:
+                id: pjfitwzu5cul7
+              type: string
+            password_installer:
+              type: string
+              x-stoplight:
+                id: 26omqwwwgtqi3
         payment_modes:
           type: object
           properties:
@@ -1887,44 +1922,48 @@ components:
                     type: integer
                   name:
                     type: string
-        passwords:
+        supplier:
           type: object
           x-stoplight:
-            id: tg18q1p77pom6
+            id: 3g04gtt0z5bvz
           properties:
-            password_manager:
-              x-stoplight:
-                id: pjfitwzu5cul7
-              type: string
-            password_installer:
+            id:
               type: string
               x-stoplight:
-                id: 26omqwwwgtqi3
-            '':
-              type: string
+                id: zy50w5xpnuxd0
+            max_amount:
+              type: number
               x-stoplight:
-                id: 4abf745vun4t1
-        circuits:
+                id: 37c92ei92gpm8
+        ticket:
           type: object
-          x-stoplight:
-            id: 61u9rib1sbz16
           properties:
-            fuel_cards:
-              type: boolean
+            header:
+              type: array
+              items:
+                type: object
+                properties:
+                  content:
+                    type: string
+                  font:
+                    type: string
+            footer:
+              type: object
               x-stoplight:
-                id: j2ixiewi1masa
-            fuelcoupons:
-              type: boolean
-              x-stoplight:
-                id: 5x0ttgv6robli
-            credit_cards:
-              type: boolean
-              x-stoplight:
-                id: 4zm8henvrfhgs
+                id: i3ou3wpdano45
+              properties:
+                content:
+                  type: string
+                  x-stoplight:
+                    id: hhycdbumjeebm
+                font:
+                  type: string
+                  x-stoplight:
+                    id: i6i1ptzxaydhc
       required:
+        - guid
         - card_types_operations
         - data_collection
-        - guid
     ConfigurationPrint:
       type: object
       x-stoplight:
