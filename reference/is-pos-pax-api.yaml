@@ -3,7 +3,7 @@ x-stoplight:
   id: tgvfiv56rre5x
 info:
   title: POS PAX Public API
-  version: 0.6.58
+  version: 0.6.59
   description: |
     # POS PAX API documentation
 
@@ -1814,6 +1814,11 @@ components:
                 x-stoplight:
                   id: 3fqor74n42fdf
                 description: True if this is an external gt cards
+              is_payment_card:
+                type: boolean
+                x-stoplight:
+                  id: crj2qyov9z9xc
+                description: True if the card can be used as a payment card
         card_types_operations:
           type: object
           description: "This object shows the possible operations for each card type.\nThe keys represents the card type id.\n\nAvailable operations are:\n\tT  --> transaction\n\tS  --> transaction reversal\n\tR  --> recharge\n\tSR --> recharge reversal\n\tRG --> card daily residue\n\tSP --> balance point\n\tPR --> reward request\n\tRP --> reward delivery\n\tLP --> available rewards list \n\tLPP --> pending rewards list\n\tSPR --> reward request reversal\n\tAB --> Activate fuelcoupons"
