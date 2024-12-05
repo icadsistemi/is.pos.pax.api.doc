@@ -3,7 +3,7 @@ x-stoplight:
   id: tgvfiv56rre5x
 info:
   title: POS PAX Public API
-  version: 0.6.59
+  version: 0.6.60
   description: |
     # POS PAX API documentation
 
@@ -1893,6 +1893,28 @@ components:
                 type: string
               measure_unit:
                 type: string
+        network:
+          type: object
+          x-stoplight:
+            id: 20papmawh2924
+          properties:
+            wifi:
+              type: array
+              x-stoplight:
+                id: 11ifeasljrk16
+              items:
+                x-stoplight:
+                  id: g4csc9f4c2ygz
+                type: object
+                properties:
+                  ssid:
+                    type: string
+                    x-stoplight:
+                      id: 9fve7mcw7eddf
+                  password:
+                    type: string
+                    x-stoplight:
+                      id: ui6e36eorbwa4
         passwords:
           type: object
           x-stoplight:
