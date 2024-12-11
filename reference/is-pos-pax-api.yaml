@@ -3220,6 +3220,10 @@ components:
             4 - Unencrypted id is required
             5 - Work order\PO number is required
             6 - Vehicle number is required
+            7 - Vehicle Code is required
+            8 - Driver code is required
+            9 - Personal data 1 is required
+            10 - Personal data 2 is required
           items:
             type: integer
         articles:
