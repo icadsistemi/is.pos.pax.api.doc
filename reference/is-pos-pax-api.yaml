@@ -3,7 +3,7 @@ x-stoplight:
   id: tgvfiv56rre5x
 info:
   title: POS PAX Public API
-  version: 0.6.57
+  version: 0.6.60
   description: |
     # POS PAX API documentation
 
@@ -16,30 +16,123 @@ info:
 
     Description about returned action codes
 
-    | Code | Description                                         | Display message |
-    | ---- | --------------------------------------------------- | --------------- |
-    | 000  | Transaction Ok                                      |            | 
-    | 001  | Card disabled                                       | Carta disabilitata |
-    | 002  | Card not found                                      | Carta non trovata |
-    | 003  | Card maximal is not enough                          | Massimale non sufficiente |
-    | 004  | Card credit exhausted                               | Credito esaurito |
-    | 005  | Card expired                                        | Carta scaduta |
-    | 006  | Card type not found                                 | Tipo tessera non valido | 
-    | 007  | Products not availables                             | Prodotti non disponibili |
-    | 008  | Card credit is not enough                           | Credito insufficiente |
-    | 009  | Customer disabled                                   | Cliente disabilitato |
-    | 010  | Customer credit exhausted                           | Credito esaurito |
-    | 011  | Card not enabled for indoor operations              | Carta disabilitata su POS |
-    | 012  | Customer not enabled on current fuel station        | Cliente disabilitato sul punto vendita |
-    | 013  | Card circuit non enabled on on current fuel station | Circuito non valido sul punto vendita |
-    | 014  | Incorrect card PIN                                  | PIN errato |
-    | 015  | Request not available                               | Errore transazione |
-    | 016  | Fuel station not found                              | Punto vendita non trovato |
-    | 017  | Allowable PIN tries exceeded                        | Limite inserimento PIN raggiunto |
-    | 400  | Reversal transaction Ok                             | |
-    | 401  | Reversal transaction already done                   | Storno già eseguito |
-    | 402  | Original transaction not found                      | Transazione originale non trovata |
-    | 904  | Format error / Missing input                        | Errore transazione |
+    <table>
+    <tr>
+        <td>Code</td>
+        <td>Description</td>
+        <td>Display message</td>
+    </tr>
+    <tr>
+        <td>000</td>
+        <td>Transaction Ok</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>001</td>
+        <td>Card disabled</td>
+        <td>Carta disabilitata</td>
+    </tr>
+    <tr>
+        <td>002</td>
+        <td>Card not found</td>
+        <td>Carta non trovata</td>
+    </tr>
+    <tr>
+        <td>003</td>
+        <td>Card maximal is not enough</td>
+        <td>Massimale non sufficiente</td>
+    </tr>
+    <tr>
+        <td>004</td>
+        <td>Card credit exhausted</td>
+        <td>Credito esaurito</td>
+    </tr>
+    <tr>
+        <td>005</td>
+        <td>Card expired</td>
+        <td>Carta scaduta</td>
+    </tr>
+    <tr>
+        <td>006</td>
+        <td>Card type not found</td>
+        <td>Tipo tessera non valido</td>
+    </tr>
+    <tr>
+        <td>007</td>
+        <td>Products not availables</td>
+        <td>Prodotti non disponibili</td>
+    </tr>
+    <tr>
+        <td>008</td>
+        <td>Card credit is not enough</td>
+        <td>Credito insufficiente</td>
+    </tr>
+    <tr>
+        <td>009</td>
+        <td>Customer disabled</td>
+        <td>Cliente disabilitato</td>
+    </tr>
+    <tr>
+        <td>010</td>
+        <td>Customer credit exhausted</td>
+        <td>Credito esaurito</td>
+    </tr>
+    <tr>
+        <td>011</td>
+        <td>Card not enabled for indoor operations</td>
+        <td>Carta disabilitata su POS</td>
+    </tr>
+    <tr>
+        <td>012</td>
+        <td>Customer not enabled on current fuel station</td>
+        <td>Cliente disabilitato sul punto vendita</td>
+    </tr>
+    <tr>
+        <td>013</td>
+        <td>Card circuit non enabled on on current fuel station</td>
+        <td>Circuito non valido sul punto vendita</td>
+    </tr>
+    <tr>
+        <td>014</td>
+        <td>Incorrect card PIN</td>
+        <td>PIN errato</td>
+    </tr>
+    <tr>
+        <td>015</td>
+        <td>Request not available</td>
+        <td>Errore transazione</td>
+    </tr>
+    <tr>
+        <td>016</td>
+        <td>Fuel station not found</td>
+        <td>Punto vendita non trovato</td>
+    </tr>
+    <tr>
+        <td>017</td>
+        <td>Allowable PIN tries exceeded</td>
+        <td>Limite inserimento PIN raggiunto</td>
+    </tr>
+    <tr>
+        <td>400</td>
+        <td>Reversal transaction Ok</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>401</td>
+        <td>Reversal transaction already done</td>
+        <td>Storno già eseguito</td>
+    </tr>
+    <tr>
+        <td>402</td>
+        <td>Original transaction not found</td>
+        <td>Transazione originale non trovata</td>
+    </tr>
+    <tr>
+        <td>904</td>
+        <td>Format error / Missing input</td>
+        <td>Errore transazione</td>
+    </tr>
+    </table>
 servers:
   - url: 'https://mxp-public-pos-api.dev.icadsistemi.com/v1'
     description: development
@@ -1678,37 +1771,14 @@ components:
           type: string
         supplier_id:
           type: integer
-        card_types:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: integer
-              name:
-                type: string
-              code:
-                type: integer
-              is_gt:
-                type: boolean
-                x-stoplight:
-                  id: 3fqor74n42fdf
-                description: True if this is an external gt cards
-        measure_units:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: integer
-              name:
-                type: string
-              measure_unit:
-                type: string
+          description: To be deprecated
         enabled_card_types:
           type: array
           items:
             type: integer
+        guid:
+          type: string
+          description: 'Represent the dll unique identifier '
         articles:
           type: array
           items:
@@ -1728,18 +1798,27 @@ components:
                 type: integer
               precision:
                 type: integer
-        ticket:
-          type: object
-          properties:
-            header:
-              type: array
-              items:
-                type: object
-                properties:
-                  content:
-                    type: string
-                  font:
-                    type: string
+        card_types:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+              code:
+                type: integer
+              is_gt:
+                type: boolean
+                x-stoplight:
+                  id: 3fqor74n42fdf
+                description: True if this is an external gt cards
+              is_payment_card:
+                type: boolean
+                x-stoplight:
+                  id: crj2qyov9z9xc
+                description: True if the card can be used as a payment card
         card_types_operations:
           type: object
           description: "This object shows the possible operations for each card type.\nThe keys represents the card type id.\n\nAvailable operations are:\n\tT  --> transaction\n\tS  --> transaction reversal\n\tR  --> recharge\n\tSR --> recharge reversal\n\tRG --> card daily residue\n\tSP --> balance point\n\tPR --> reward request\n\tRP --> reward delivery\n\tLP --> available rewards list \n\tLPP --> pending rewards list\n\tSPR --> reward request reversal\n\tAB --> Activate fuelcoupons"
@@ -1756,6 +1835,23 @@ components:
               type: array
               items:
                 type: string
+        circuits:
+          type: object
+          x-stoplight:
+            id: 61u9rib1sbz16
+          properties:
+            fuel_cards:
+              type: boolean
+              x-stoplight:
+                id: j2ixiewi1masa
+            fuelcoupons:
+              type: boolean
+              x-stoplight:
+                id: 5x0ttgv6robli
+            credit_cards:
+              type: boolean
+              x-stoplight:
+                id: 4zm8henvrfhgs
         data_collection:
           type: object
           description: Details about data collection of the fuelstationof the terminal
@@ -1769,9 +1865,69 @@ components:
             pumps:
               type: integer
               description: Number of the pumps in the fuel station
-        guid:
-          type: string
-          description: 'Represent the dll unique identifier '
+        fuel_station:
+          type: object
+          x-stoplight:
+            id: ilt1j95qfmkk6
+          properties:
+            is_code:
+              type: string
+              x-stoplight:
+                id: n4fve9s1ihk3h
+            merchant_code:
+              type: string
+              x-stoplight:
+                id: iw37rfninl1em
+            'can:_recharge':
+              type: boolean
+              x-stoplight:
+                id: b0bp3e05pf6y7
+        measure_units:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+              measure_unit:
+                type: string
+        network:
+          type: object
+          x-stoplight:
+            id: 20papmawh2924
+          properties:
+            wifi:
+              type: array
+              x-stoplight:
+                id: 11ifeasljrk16
+              items:
+                x-stoplight:
+                  id: g4csc9f4c2ygz
+                type: object
+                properties:
+                  ssid:
+                    type: string
+                    x-stoplight:
+                      id: 9fve7mcw7eddf
+                  password:
+                    type: string
+                    x-stoplight:
+                      id: ui6e36eorbwa4
+        passwords:
+          type: object
+          x-stoplight:
+            id: tg18q1p77pom6
+          properties:
+            password_manager:
+              x-stoplight:
+                id: pjfitwzu5cul7
+              type: string
+            password_installer:
+              type: string
+              x-stoplight:
+                id: 26omqwwwgtqi3
         payment_modes:
           type: object
           properties:
@@ -1793,44 +1949,48 @@ components:
                     type: integer
                   name:
                     type: string
-        passwords:
+        supplier:
           type: object
           x-stoplight:
-            id: tg18q1p77pom6
+            id: 3g04gtt0z5bvz
           properties:
-            password_manager:
-              x-stoplight:
-                id: pjfitwzu5cul7
-              type: string
-            password_installer:
+            id:
               type: string
               x-stoplight:
-                id: 26omqwwwgtqi3
-            '':
-              type: string
+                id: zy50w5xpnuxd0
+            max_amount:
+              type: number
               x-stoplight:
-                id: 4abf745vun4t1
-        circuits:
+                id: 37c92ei92gpm8
+        ticket:
           type: object
-          x-stoplight:
-            id: 61u9rib1sbz16
           properties:
-            fuel_cards:
-              type: boolean
+            header:
+              type: array
+              items:
+                type: object
+                properties:
+                  content:
+                    type: string
+                  font:
+                    type: string
+            footer:
+              type: object
               x-stoplight:
-                id: j2ixiewi1masa
-            fuelcoupons:
-              type: boolean
-              x-stoplight:
-                id: 5x0ttgv6robli
-            credit_cards:
-              type: boolean
-              x-stoplight:
-                id: 4zm8henvrfhgs
+                id: i3ou3wpdano45
+              properties:
+                content:
+                  type: string
+                  x-stoplight:
+                    id: hhycdbumjeebm
+                font:
+                  type: string
+                  x-stoplight:
+                    id: i6i1ptzxaydhc
       required:
+        - guid
         - card_types_operations
         - data_collection
-        - guid
     ConfigurationPrint:
       type: object
       x-stoplight:
@@ -3060,6 +3220,10 @@ components:
             4 - Unencrypted id is required
             5 - Work order\PO number is required
             6 - Vehicle number is required
+            7 - Vehicle Code is required
+            8 - Driver code is required
+            9 - Personal data 1 is required
+            10 - Personal data 2 is required
           items:
             type: integer
         articles:
