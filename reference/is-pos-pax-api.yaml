@@ -3,7 +3,7 @@ x-stoplight:
   id: tgvfiv56rre5x
 info:
   title: POS PAX Public API
-  version: 0.6.63
+  version: 0.6.64
   description: |
     # POS PAX API documentation
 
@@ -1032,6 +1032,25 @@ paths:
       description: Used to store data about bank transactions
       tags:
         - Transactions
+  /transactions/external/reversal:
+    post:
+      summary: ''
+      operationId: post-transactions-external-reversal
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericOutput'
+      tags:
+        - Reversal
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExternalTransactionInput'
+      description: Used to perform a bank transaction reversal
   /transactions/fuelcoupons:
     post:
       summary: Fuelcoupon transaction
@@ -1220,6 +1239,26 @@ paths:
       tags:
         - Transactions
     parameters: []
+  /transactions/gt/reversal:
+    post:
+      summary: Transaction Reversal Gt
+      operationId: post-transactions-reversal-gt
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericOutput'
+      description: The endpoint is used to reverse a GT transaction.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransactionReversalInput'
+      tags:
+        - Reversal
+    parameters: []
   /transactions/preauth:
     post:
       summary: Preauth request
@@ -1359,26 +1398,6 @@ paths:
                 - original_transaction_number
                 - receipt_number
                 - stan
-    parameters: []
-  /transactions/gt/reversal:
-    post:
-      summary: Transaction Reversal Gt
-      operationId: post-transactions-reversal-gt
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GenericOutput'
-      description: The endpoint is used to reverse a GT transaction.
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/TransactionReversalInput'
-      tags:
-        - Reversal
     parameters: []
   /transactions/gt/reversal/auto:
     post:
