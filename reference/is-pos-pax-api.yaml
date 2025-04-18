@@ -3,7 +3,7 @@ x-stoplight:
   id: tgvfiv56rre5x
 info:
   title: POS PAX Public API
-  version: 0.6.61
+  version: 0.6.62
   description: |
     # POS PAX API documentation
 
@@ -213,7 +213,7 @@ paths:
           description: Internal Server Error
       operationId: get-cards-track-points
       tags:
-        - Rewards
+        - Cards
   '/cards/{track}/residue':
     parameters:
       - schema:
@@ -247,8 +247,6 @@ paths:
         '500':
           description: Internal Server Error
       operationId: get-card-residue
-      tags:
-        - Rewards
       requestBody:
         content:
           application/json:
@@ -271,10 +269,13 @@ paths:
                 - label_key
                 - random_pin_key
                 - source
+      tags:
+        - Cards
   /closures:
     get:
       summary: Used to obtain closure terminal data
-      tags: []
+      tags:
+        - Closures
       responses:
         '200':
           description: OK
@@ -318,6 +319,8 @@ paths:
       description: |-
         After the terminal has printed its closure receipt, it can call this endpoint to close the closure process and reset all the counts.
         So, the next closure, will start from the moment when this closure has been reset.
+      tags:
+        - Closures
   /configuration:
     get:
       summary: POS configuration
@@ -454,6 +457,8 @@ paths:
                       font: medium
                     - content: ' METANO'
                       font: medium
+      tags:
+        - Configuration
   /configuration/ack:
     parameters: []
     post:
@@ -493,6 +498,8 @@ paths:
                 - guid
                 - is_success
         description: ''
+      tags:
+        - Configuration
   '/configuration/gt/{issuer}/keys':
     parameters:
       - schema:
@@ -502,7 +509,8 @@ paths:
         required: true
     get:
       summary: Get configuration keys for GT issuer
-      tags: []
+      tags:
+        - Configuration
       responses: {}
       operationId: get-configuration-gt-isuer-keys
       description: |-
@@ -517,7 +525,8 @@ paths:
         required: true
     get:
       summary: Get configuration params for GT issuer
-      tags: []
+      tags:
+        - Configuration
       responses: {}
       operationId: get-configuration-gt-issuer-params
       description: |-
@@ -699,6 +708,8 @@ paths:
             schema:
               $ref: '#/components/schemas/RechargesReversalInput'
       description: ''
+      tags:
+        - Recharges
   /recharges/reversal/info:
     get:
       summary: Retrieve recharge info for reversal
@@ -739,8 +750,6 @@ paths:
     parameters: []
     get:
       summary: Available rewards
-      tags:
-        - Available Rewards
       responses:
         '200':
           description: OK
@@ -764,6 +773,8 @@ paths:
             type: string
           in: query
           name: card_track
+      tags:
+        - Rewards
   '/rewards/deliveries/{id}':
     parameters:
       - schema:
@@ -782,10 +793,13 @@ paths:
         '401':
           description: Unauthorized
       description: ''
+      tags:
+        - Rewards
   /rewards/pending:
     get:
       summary: Pending Reward
-      tags: []
+      tags:
+        - Rewards
       responses:
         '200':
           description: OK
@@ -836,6 +850,8 @@ paths:
                 - reward_request_id
                 - card_track
         description: ''
+      tags:
+        - Rewards
   /rewards/request:
     post:
       summary: Reward request
@@ -859,10 +875,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/RewardMemoErrorResponse'
       description: Used for reward request and for reversal of an existing reward request
+      tags:
+        - Rewards
   /supplies/datacollection:
     get:
       summary: Retrieve last supplies from a pump
-      tags: []
+      tags:
+        - Supplies
       responses:
         '200':
           description: OK
@@ -984,6 +1003,8 @@ paths:
             schema:
               $ref: '#/components/schemas/TransactionAckInput'
         description: ''
+      tags:
+        - Transactions
   /transactions/external:
     post:
       summary: ''
@@ -1007,6 +1028,8 @@ paths:
             schema:
               $ref: '#/components/schemas/ExternalTransactionInput'
       description: Used to store data about bank transactions
+      tags:
+        - Transactions
   /transactions/fuelcoupons:
     post:
       summary: Fuelcoupon transaction
@@ -1240,6 +1263,8 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/CardPointsTransactionInput'
+      tags:
+        - Transactions
   /transactions/points/reversal:
     post:
       summary: Reversal transaction points
@@ -1259,11 +1284,12 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/PointsReversalInput'
+      tags:
+        - Transactions
     parameters: []
   /transactions/reversal:
     post:
       summary: Transaction Reversal
-      tags: []
       responses:
         '200':
           description: OK
@@ -1278,10 +1304,13 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/TransactionReversalInput'
+      tags:
+        - Reversal
   /transactions/reversal/auto:
     post:
       summary: Automatic transaction Reversal
-      tags: []
+      tags:
+        - Reversal
       responses:
         '200':
           description: OK
@@ -1346,6 +1375,8 @@ paths:
           application/json:
             schema:
               $ref: '#/components/schemas/TransactionReversalInput'
+      tags:
+        - Reversal
     parameters: []
   /transactions/gt/reversal/auto:
     post:
@@ -1423,6 +1454,8 @@ paths:
                 - original_transaction_number
                 - receipt_number
                 - stan
+      tags:
+        - Reversal
     parameters: []
   /transactions/reversal/info:
     get:
@@ -1453,9 +1486,9 @@ paths:
             type: string
           in: query
           name: card_track
-      tags:
-        - Transactions
       description: The endpoint is used to return the last reversable transaction related to that card and terminal.
+      tags:
+        - Reversal
     parameters: []
 components:
   schemas:
