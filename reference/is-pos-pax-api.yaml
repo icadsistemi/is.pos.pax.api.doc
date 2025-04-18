@@ -3,7 +3,7 @@ x-stoplight:
   id: tgvfiv56rre5x
 info:
   title: POS PAX Public API
-  version: 0.6.60
+  version: 0.6.61
   description: |
     # POS PAX API documentation
 
@@ -984,6 +984,29 @@ paths:
             schema:
               $ref: '#/components/schemas/TransactionAckInput'
         description: ''
+  /transactions/external:
+    post:
+      summary: ''
+      operationId: post-transactions-external
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericOutputTransaction'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExternalTransactionInput'
+      description: Used to store data about bank transactions
   /transactions/fuelcoupons:
     post:
       summary: Fuelcoupon transaction
@@ -1436,111 +1459,6 @@ paths:
     parameters: []
 components:
   schemas:
-    TransactionsData:
-      title: TransactionsData
-      type: object
-      description: Represent a single product present in a transaction
-      x-stoplight:
-        id: 1a83411be6fbd
-      properties:
-        article_id:
-          type: integer
-          description: Article identifier
-        article_code:
-          type: string
-          x-stoplight:
-            id: aud6qitxpxlj3
-        article_name:
-          type: string
-          description: Article name
-          x-stoplight:
-            id: wojafr92gkdcx
-        quantity:
-          type: number
-          description: Article supplied quantity
-        unit_price:
-          type: number
-          description: Article unit price
-        amount:
-          type: number
-          description: Article amount (quantity * unit_price)
-        is_oil:
-          type: boolean
-          description: 'If true, is an oil article, otherwise is a not oil article'
-        discounted_value:
-          type: number
-          description: Conditional data - Present only if there's a discount applied. Representing the applied discount value on unit price
-          x-stoplight:
-            id: e0ij4xxdym0xp
-        discounted_amount:
-          type: number
-          description: Conditional data - Present only if there's a discount applied. Representing the amount with applied discount
-          x-stoplight:
-            id: wv3rn9q3gmojx
-        ov_supply_id:
-          type: integer
-          description: Conditional data - Present only if the transaction is selected with DC
-        measure_unit:
-          type: string
-          description: Article's measure unit
-        payment_name:
-          type: string
-          x-stoplight:
-            id: qzkm0jx9biorb
-        card_track:
-          type: string
-          x-stoplight:
-            id: 7rk28ugbjgpp4
-        fuelcoupon_code:
-          type: integer
-          x-stoplight:
-            id: smanys77n2o0y
-        fuelcoupon_number:
-          type: string
-          x-stoplight:
-            id: eci9zcq4tglgl
-        stan:
-          type: number
-          x-stoplight:
-            id: qsuw3i1szwxfv
-        customer_data:
-          type: object
-          x-stoplight:
-            id: uod9cquo71niz
-          properties:
-            km:
-              type: number
-              x-stoplight:
-                id: 6u9p0j1ngyfcs
-            driver_code:
-              type: number
-              x-stoplight:
-                id: 7aixy7rtus66k
-        date_time:
-          type: string
-          x-stoplight:
-            id: 09uv2j9r305yd
-          format: date-time
-        progressive_number:
-          type: integer
-          x-stoplight:
-            id: fw773lk5d6bjn
-        '':
-          type: string
-          x-stoplight:
-            id: qyr6wqya7yugb
-      required:
-        - article_code
-        - article_name
-        - quantity
-        - unit_price
-        - amount
-        - is_oil
-        - measure_unit
-        - payment_name
-        - stan
-        - date_time
-        - progressive_number
     CampaignRewards:
       title: CampaignRewards
       x-stoplight:
@@ -1572,6 +1490,25 @@ components:
         - name
         - type
         - rewards
+    Card-info:
+      type: object
+      x-examples:
+        Example 1:
+          id: 0
+          is_enabled: true
+          type_id: 0
+      description: Card type and status informations
+      properties:
+        is_enabled:
+          type: boolean
+        type_id:
+          type: integer
+        update_required:
+          type: boolean
+        multi_product:
+          type: boolean
+          x-stoplight:
+            id: t3wmm9tr3fwk7
     CardPointsTransactionInput:
       type: object
       x-examples:
@@ -1618,25 +1555,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Products'
-    Card-info:
-      type: object
-      x-examples:
-        Example 1:
-          id: 0
-          is_enabled: true
-          type_id: 0
-      description: Card type and status informations
-      properties:
-        is_enabled:
-          type: boolean
-        type_id:
-          type: integer
-        update_required:
-          type: boolean
-        multi_product:
-          type: boolean
-          x-stoplight:
-            id: t3wmm9tr3fwk7
     ChipInfo:
       title: ChipInfo
       x-stoplight:
@@ -2258,6 +2176,70 @@ components:
       required:
         - pos_data_code
         - batch_number
+    ExternalTransactionInput:
+      title: ExternalTransactionInput
+      x-stoplight:
+        id: ii4hg431bbp24
+      type: object
+      properties:
+        transaction_number:
+          type: integer
+          x-stoplight:
+            id: 8d0k8t8wy8nge
+        stan:
+          type: integer
+          x-stoplight:
+            id: cy4oxgmiodrwx
+        supplies_ov_ids:
+          type: array
+          x-stoplight:
+            id: glvm8zmuac2jr
+          items:
+            x-stoplight:
+              id: 63pb2xeced9wr
+            type: integer
+        products:
+          type: array
+          x-stoplight:
+            id: hx85nx73ee5k5
+          items:
+            $ref: '#/components/schemas/Products'
+            x-stoplight:
+              id: umf6z7fnrskru
+        date_time:
+          type: string
+          x-stoplight:
+            id: v3lm0g00zw4gr
+          format: date-time
+        auth_code:
+          type: string
+          x-stoplight:
+            id: vmtol6eulqfx2
+        total_amount:
+          type: number
+          x-stoplight:
+            id: jrglk10jk7ert
+        card_info:
+          type: object
+          x-stoplight:
+            id: hn6ylkuwygzvw
+          properties:
+            masked_pan:
+              type: string
+              x-stoplight:
+                id: oteva69ptooyj
+            circuit_name:
+              type: string
+              x-stoplight:
+                id: o7qczkkrsxfsk
+      required:
+        - transaction_number
+        - stan
+        - products
+        - date_time
+        - auth_code
+        - total_amount
+        - card_info
     FuelcouponReversalOutput:
       type: object
       x-stoplight:
@@ -2721,14 +2703,6 @@ components:
           format: date-time
         points:
           type: number
-    PointsOutput:
-      type: object
-      properties:
-        points:
-          type: integer
-      x-examples:
-        Example 1:
-          points: 0
     PointsReversalInput:
       title: PointsReversalInput
       x-stoplight:
@@ -2760,6 +2734,14 @@ components:
         - card_track
         - transaction_number
         - supplies
+    PointsOutput:
+      type: object
+      properties:
+        points:
+          type: integer
+      x-examples:
+        Example 1:
+          points: 0
     PreauthRequest:
       title: PreauthRequest
       x-stoplight:
@@ -2854,6 +2836,14 @@ components:
         discounted_amount:
           type: number
           description: Conditional data - Present only if there's a discount applied. Representing the amount with applied discount
+        ov_supply_id:
+          type: integer
+          x-stoplight:
+            id: yuk4spiqxjwxb
+        measure_unit:
+          type: string
+          x-stoplight:
+            id: g5e4pdd70dus0
       required:
         - code
         - quantity
@@ -3288,6 +3278,111 @@ components:
       required:
         - supply_receipt_number
         - transactions
+    TransactionsData:
+      title: TransactionsData
+      type: object
+      description: Represent a single product present in a transaction
+      x-stoplight:
+        id: 1a83411be6fbd
+      properties:
+        article_id:
+          type: integer
+          description: Article identifier
+        article_code:
+          type: string
+          x-stoplight:
+            id: aud6qitxpxlj3
+        article_name:
+          type: string
+          description: Article name
+          x-stoplight:
+            id: wojafr92gkdcx
+        quantity:
+          type: number
+          description: Article supplied quantity
+        unit_price:
+          type: number
+          description: Article unit price
+        amount:
+          type: number
+          description: Article amount (quantity * unit_price)
+        is_oil:
+          type: boolean
+          description: 'If true, is an oil article, otherwise is a not oil article'
+        discounted_value:
+          type: number
+          description: Conditional data - Present only if there's a discount applied. Representing the applied discount value on unit price
+          x-stoplight:
+            id: e0ij4xxdym0xp
+        discounted_amount:
+          type: number
+          description: Conditional data - Present only if there's a discount applied. Representing the amount with applied discount
+          x-stoplight:
+            id: wv3rn9q3gmojx
+        ov_supply_id:
+          type: integer
+          description: Conditional data - Present only if the transaction is selected with DC
+        measure_unit:
+          type: string
+          description: Article's measure unit
+        payment_name:
+          type: string
+          x-stoplight:
+            id: qzkm0jx9biorb
+        card_track:
+          type: string
+          x-stoplight:
+            id: 7rk28ugbjgpp4
+        fuelcoupon_code:
+          type: integer
+          x-stoplight:
+            id: smanys77n2o0y
+        fuelcoupon_number:
+          type: string
+          x-stoplight:
+            id: eci9zcq4tglgl
+        stan:
+          type: number
+          x-stoplight:
+            id: qsuw3i1szwxfv
+        customer_data:
+          type: object
+          x-stoplight:
+            id: uod9cquo71niz
+          properties:
+            km:
+              type: number
+              x-stoplight:
+                id: 6u9p0j1ngyfcs
+            driver_code:
+              type: number
+              x-stoplight:
+                id: 7aixy7rtus66k
+        date_time:
+          type: string
+          x-stoplight:
+            id: 09uv2j9r305yd
+          format: date-time
+        progressive_number:
+          type: integer
+          x-stoplight:
+            id: fw773lk5d6bjn
+        '':
+          type: string
+          x-stoplight:
+            id: qyr6wqya7yugb
+      required:
+        - article_code
+        - article_name
+        - quantity
+        - unit_price
+        - amount
+        - is_oil
+        - measure_unit
+        - payment_name
+        - stan
+        - date_time
+        - progressive_number
     TransactionReversalInput:
       title: TransactionReversalInput
       x-stoplight:
