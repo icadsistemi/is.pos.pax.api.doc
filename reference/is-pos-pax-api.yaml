@@ -134,26 +134,26 @@ info:
     </tr>
     </table>
 servers:
-  - url: 'https://mxp-public-pos-api.dev.icadsistemi.com/v1'
+  - url: "https://mxp-public-pos-api.dev.icadsistemi.com/v1"
     description: development
-  - url: 'https://mxp-public-pos-api.prod.icadsistemi.com/v1'
+  - url: "https://mxp-public-pos-api.prod.icadsistemi.com/v1"
     description: production
 paths:
-  '/cards/{track}':
+  "/cards/{track}":
     get:
       summary: Card info
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Card-info'
-        '400':
+                $ref: "#/components/schemas/Card-info"
+        "400":
           description: Bad Request
-        '401':
+        "401":
           description: Unauthorized
-        '500':
+        "500":
           description: Internal Server Error
       operationId: get-cards
       tags:
@@ -164,7 +164,7 @@ paths:
         name: track
         in: path
         required: true
-  '/cards/{track}/recharges/bills':
+  "/cards/{track}/recharges/bills":
     parameters:
       - schema:
           type: string
@@ -174,22 +174,22 @@ paths:
     get:
       summary: Get recharges bills
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RechargesBills'
-        '400':
+                $ref: "#/components/schemas/RechargesBills"
+        "400":
           description: Bad Request
-        '401':
+        "401":
           description: Unauthorized
-        '500':
+        "500":
           description: Internal Server Error
       operationId: get-cards-track-recharges-bills
       tags:
         - Recharges
-  '/cards/{track}/points':
+  "/cards/{track}/points":
     parameters:
       - schema:
           type: string
@@ -199,22 +199,22 @@ paths:
     get:
       summary: Get card point balance
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PointsOutput'
-        '400':
+                $ref: "#/components/schemas/PointsOutput"
+        "400":
           description: Bad Request
-        '401':
+        "401":
           description: Unauthorized
-        '500':
+        "500":
           description: Internal Server Error
       operationId: get-cards-track-points
       tags:
         - Cards
-  '/cards/{track}/residue':
+  "/cards/{track}/residue":
     parameters:
       - schema:
           type: string
@@ -224,7 +224,7 @@ paths:
     post:
       summary: Get card residue
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
@@ -238,13 +238,13 @@ paths:
                     type: string
                     x-stoplight:
                       id: oicjpk62evv4s
-        '400':
+        "400":
           description: Bad Request
-        '401':
+        "401":
           description: Unauthorized
-        '422':
+        "422":
           description: Unprocessable Entity (WebDAV)
-        '500':
+        "500":
           description: Internal Server Error
       operationId: get-card-residue
       requestBody:
@@ -263,7 +263,7 @@ paths:
                   type: string
                 is_ticket_residue:
                   type: string
-                  description: 'If true, return ticket card residue. If false, return transaction card residue.'
+                  description: "If true, return ticket card residue. If false, return transaction card residue."
               required:
                 - crypted_pin
                 - label_key
@@ -277,17 +277,17 @@ paths:
       tags:
         - Closures
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GenericOutput'
-        '401':
+                $ref: "#/components/schemas/GenericOutput"
+        "401":
           description: Unauthorized
-        '403':
+        "403":
           description: Forbidden
-        '422':
+        "422":
           description: Unprocessable Entity (WebDAV)
       operationId: get-closures
       description: |-
@@ -298,23 +298,23 @@ paths:
             type: string
           in: query
           name: closure_datetime
-          description: 'Optional. If set, the endpoint will look for an old closure that include the requested datetime. The format for this timestamp is UNIX time in s (example: 1697444252)'
+          description: "Optional. If set, the endpoint will look for an old closure that include the requested datetime. The format for this timestamp is UNIX time in s (example: 1697444252)"
   /closures/reset:
     post:
-      summary: ''
+      summary: ""
       operationId: post-closures-reset
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GenericOutput'
-        '400':
+                $ref: "#/components/schemas/GenericOutput"
+        "400":
           description: Bad Request
-        '401':
+        "401":
           description: Unauthorized
-        '403':
+        "403":
           description: Forbidden
       description: |-
         After the terminal has printed its closure receipt, it can call this endpoint to close the closure process and reset all the counts.
@@ -325,22 +325,22 @@ paths:
     get:
       summary: POS configuration
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Configuration'
-        '400':
+                $ref: "#/components/schemas/Configuration"
+        "400":
           description: Bad Request
-        '401':
+        "401":
           description: Unauthorized
-        '403':
+        "403":
           description: Forbidden
-        '500':
+        "500":
           description: Internal Server Error
       operationId: get-configuration
-      description: 'First endpoint to be called after login, returns POS configuration.'
+      description: "First endpoint to be called after login, returns POS configuration."
       x-internal: false
       tags:
         - Configuration
@@ -355,9 +355,9 @@ paths:
       summary: Save POS configuration
       operationId: post-configuration
       responses:
-        '200':
+        "200":
           description: OK
-        '400':
+        "400":
           description: Bad Request
       description: Save POS configuration as JSON
       tags:
@@ -368,21 +368,21 @@ paths:
       summary: POS configuration print
       operationId: post-configuration-print
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GenericOutput'
-        '400':
+                $ref: "#/components/schemas/GenericOutput"
+        "400":
           description: Bad Request
-        '401':
+        "401":
           description: Unauthorized
-        '422':
+        "422":
           description: Unprocessable Entity (WebDAV)
-        '500':
+        "500":
           description: Internal Server Error
-      description: 'returns POS configuration data as a receipt rerady to be printed '
+      description: "returns POS configuration data as a receipt rerady to be printed "
       requestBody:
         content:
           application/json:
@@ -412,70 +412,70 @@ paths:
             examples:
               Example 1:
                 value:
-                  action_code: '000'
+                  action_code: "000"
                   ticket:
-                    - content: ' STAMPA DI PROVA'
+                    - content: " STAMPA DI PROVA"
                       font: large
-                    - content: 'TERMINALE: XXXXXXX'
+                    - content: "TERMINALE: XXXXXXX"
                       font: medium
-                    - content: 'ISCODE: XXXXX'
+                    - content: "ISCODE: XXXXX"
                       font: medium
-                    - content: 'RETE: AAAAAA'
+                    - content: "RETE: AAAAAA"
                       font: medium
-                    - content: 'SN: AAAAXXXX'
+                    - content: "SN: AAAAXXXX"
                       font: medium
-                    - content: 'SW VERSION: 0.1'
+                    - content: "SW VERSION: 0.1"
                       font: medium
-                    - content: 'API: https://localhost'
+                    - content: "API: https://localhost"
                       font: medium
-                    - content: ' ARTICOLI'
+                    - content: " ARTICOLI"
                       font: medium
-                    - content: ' DIESEL'
+                    - content: " DIESEL"
                       font: medium
-                    - content: ' VERDE'
+                    - content: " VERDE"
                       font: medium
-                    - content: ' METANO'
+                    - content: " METANO"
                       font: medium
                   display:
-                    - content: ' STAMPA DI PROVA'
+                    - content: " STAMPA DI PROVA"
                       font: large
-                    - content: 'TERMINALE: AAAAAAAA'
+                    - content: "TERMINALE: AAAAAAAA"
                       font: medium
-                    - content: 'ISCODE: ISAAAAAAA'
+                    - content: "ISCODE: ISAAAAAAA"
                       font: medium
-                    - content: 'RETE: AAAAA'
+                    - content: "RETE: AAAAA"
                       font: medium
-                    - content: 'SN: XXTRSD2002'
+                    - content: "SN: XXTRSD2002"
                       font: medium
-                    - content: 'SW VERSION: 0.1'
+                    - content: "SW VERSION: 0.1"
                       font: medium
-                    - content: 'API: https://localhost'
+                    - content: "API: https://localhost"
                       font: medium
-                    - content: ' ARTICOLI'
+                    - content: " ARTICOLI"
                       font: medium
-                    - content: ' DIESEL'
+                    - content: " DIESEL"
                       font: medium
-                    - content: ' VERDE'
+                    - content: " VERDE"
                       font: medium
-                    - content: ' METANO'
+                    - content: " METANO"
                       font: medium
       tags:
         - Configuration
   /configuration/ack:
     parameters: []
     post:
-      summary: ''
+      summary: ""
       operationId: post-configuration-ack
       responses:
-        '200':
+        "200":
           description: OK
-        '404':
+        "404":
           description: Terminal not found
-        '422':
+        "422":
           description: Unprocessable Entity (malformed or missing input)
-        '500':
+        "500":
           description: Internal Server Error
-      description: 'Endpoint to call when a configuration phase (first or forced dll) is completed to inform the server about the result, success or not.'
+      description: "Endpoint to call when a configuration phase (first or forced dll) is completed to inform the server about the result, success or not."
       requestBody:
         content:
           application/json:
@@ -499,10 +499,10 @@ paths:
               required:
                 - guid
                 - is_success
-        description: ''
+        description: ""
       tags:
         - Configuration
-  '/configuration/gt/{issuer}/keys':
+  "/configuration/gt/{issuer}/keys":
     parameters:
       - schema:
           type: string
@@ -518,7 +518,7 @@ paths:
       description: |-
         Available issuers:
         - DKV
-  '/configuration/gt/{issuer}/params':
+  "/configuration/gt/{issuer}/params":
     parameters:
       - schema:
           type: string
@@ -539,12 +539,12 @@ paths:
       summary: Abort fuel coupon transaction
       operationId: delete-fuelcoupons-abort
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GenericOutput'
+                $ref: "#/components/schemas/GenericOutput"
       description: Used to abort a fuel coupon transaction. It's used if the validation phase is interrupted.
       requestBody:
         content:
@@ -567,12 +567,12 @@ paths:
       summary: Activate fuelcoupons
       operationId: activate-fuelcoupons
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GenericOutput'
+                $ref: "#/components/schemas/GenericOutput"
       tags:
         - Fuelcoupons
       requestBody:
@@ -583,11 +583,11 @@ paths:
               x-examples:
                 Example 1:
                   fuelcoupon_codes:
-                    - '0000000000009961511269694'
-                    - '0000000000009922799362682'
-                    - '0000000000009940137197369'
-                    - '0000000000009979607505144'
-                    - '0000000000009956422989229'
+                    - "0000000000009961511269694"
+                    - "0000000000009922799362682"
+                    - "0000000000009940137197369"
+                    - "0000000000009979607505144"
+                    - "0000000000009956422989229"
               properties:
                 fuelcoupon_codes:
                   type: array
@@ -597,7 +597,7 @@ paths:
                   type: integer
                   x-stoplight:
                     id: ktygn5kkxjsdy
-      description: ''
+      description: ""
     parameters: []
   /fuelcoupons/reversal/info:
     get:
@@ -605,17 +605,17 @@ paths:
       tags:
         - Fuelcoupons
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/InfoPosFuelcouponReversalOutput'
-        '401':
+                $ref: "#/components/schemas/InfoPosFuelcouponReversalOutput"
+        "401":
           description: Unauthorized
-        '422':
+        "422":
           description: Unprocessable Entity (WebDAV)
-        '500':
+        "500":
           description: Internal Server Error
       operationId: get-fuelcoupons-reversal-info
       parameters:
@@ -629,17 +629,17 @@ paths:
       summary: Validate fuelcoupon
       operationId: post-fuelcoupons-validate
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FuelcouponReversalValidationOutput'
+                $ref: "#/components/schemas/FuelcouponReversalValidationOutput"
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/FuelcouponReversalValidationInput'
+              $ref: "#/components/schemas/FuelcouponReversalValidationInput"
       tags:
         - Fuelcoupons
       description: Used to validate a fuel ccoupon before a reversal operation.
@@ -649,95 +649,125 @@ paths:
       summary: Validate fuelcoupon
       operationId: post-fuelcoupons-reversal-validate
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FuelcouponValidationOutput'
+                $ref: "#/components/schemas/FuelcouponValidationOutput"
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/FuelcouponValidationInput'
+              $ref: "#/components/schemas/FuelcouponValidationInput"
       tags:
         - Fuelcoupons
+  /logs:
+    post:
+      summary: Send log messages
+      operationId: post-logs
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal Server Error
+      tags:
+        - Logs
+  /logs/traces:
+    post:
+      summary: Send log traces
+      operationId: post-logs-traces
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal Server Error
+      tags:
+        - Logs
   /recharges:
     post:
       summary: Recharge card
       operationId: post-recharges
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GenericOutput'
-        '400':
+                $ref: "#/components/schemas/GenericOutput"
+        "400":
           description: Bad Request
-        '401':
+        "401":
           description: Unauthorized
-        '500':
+        "500":
           description: Internal Server Error
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/RechargesInput'
+              $ref: "#/components/schemas/RechargesInput"
       tags:
         - Recharges
-      description: ''
+      description: ""
   /recharges/reversal:
     post:
       summary: Reverse a card recharge
       operationId: post-recharges-reversal
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GenericOutput'
-        '400':
+                $ref: "#/components/schemas/GenericOutput"
+        "400":
           description: Bad Request
-        '401':
+        "401":
           description: Unauthorized
-        '500':
+        "500":
           description: Internal Server Error
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/RechargesReversalInput'
-      description: ''
+              $ref: "#/components/schemas/RechargesReversalInput"
+      description: ""
       tags:
         - Recharges
   /recharges/reversal/info:
     get:
       summary: Retrieve recharge info for reversal
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RechargesReversal'
+                $ref: "#/components/schemas/RechargesReversal"
               examples:
                 Example 1:
                   value:
                     id: 529818
-                    date_time: '2023-01-20T17:45:24Z'
+                    date_time: "2023-01-20T17:45:24Z"
                     bill: 100
                     bonus_credit: 20
                     update_required: false
                     requires_pin: true
-        '204':
-          description: 'No Content: it''s returned if no reversable recharges are found'
-        '400':
+        "204":
+          description: "No Content: it's returned if no reversable recharges are found"
+        "400":
           description: Bad Request
-        '401':
+        "401":
           description: Unauthorized
-        '500':
+        "500":
           description: Internal Server Error
       operationId: get-recharges-reversal
       parameters:
@@ -753,7 +783,7 @@ paths:
     get:
       summary: Available rewards
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
@@ -761,15 +791,15 @@ paths:
                 type: array
                 description: List of campaign which has available rewards for the input card
                 items:
-                  $ref: '#/components/schemas/CampaignRewards'
-        '400':
+                  $ref: "#/components/schemas/CampaignRewards"
+        "400":
           description: Bad Request
-        '401':
+        "401":
           description: Unauthorized
-        '500':
+        "500":
           description: Internal Server Error
       operationId: get-rewards-track
-      description: 'For point cards, return the list of available rewards, filtering with available points and active campaigns.'
+      description: "For point cards, return the list of available rewards, filtering with available points and active campaigns."
       parameters:
         - schema:
             type: string
@@ -777,7 +807,7 @@ paths:
           name: card_track
       tags:
         - Rewards
-  '/rewards/deliveries/{id}':
+  "/rewards/deliveries/{id}":
     parameters:
       - schema:
           type: string
@@ -785,16 +815,16 @@ paths:
         in: path
         required: true
     patch:
-      summary: ''
+      summary: ""
       operationId: patch-rewards-deliveries-id
       responses:
-        '204':
+        "204":
           description: No Content
-        '400':
+        "400":
           description: Bad Request
-        '401':
+        "401":
           description: Unauthorized
-      description: ''
+      description: ""
       tags:
         - Rewards
   /rewards/pending:
@@ -803,17 +833,17 @@ paths:
       tags:
         - Rewards
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PendingRewardsOutput'
-        '401':
+                $ref: "#/components/schemas/PendingRewardsOutput"
+        "401":
           description: Unauthorized
-        '422':
+        "422":
           description: Unprocessable Entity (WebDAV)
-        '500':
+        "500":
           description: Internal Server Error
       operationId: get-rewards-pending
       description: Get rewards pending
@@ -824,16 +854,16 @@ paths:
           name: card_track
   /rewards/pending/reversal:
     post:
-      summary: ''
+      summary: ""
       operationId: post-rewards-pending-reversal
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GenericOutput'
-        '500':
+                $ref: "#/components/schemas/GenericOutput"
+        "500":
           description: Internal Server Error
       description: Reverse a pending reward and restore cards points
       requestBody:
@@ -851,7 +881,7 @@ paths:
               required:
                 - reward_request_id
                 - card_track
-        description: ''
+        description: ""
       tags:
         - Rewards
   /rewards/request:
@@ -862,20 +892,20 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/RewardMemoRequest'
+              $ref: "#/components/schemas/RewardMemoRequest"
       responses:
-        '204':
+        "204":
           description: No Content
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GenericOutput'
-        '400':
+                $ref: "#/components/schemas/GenericOutput"
+        "400":
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RewardMemoErrorResponse'
+                $ref: "#/components/schemas/RewardMemoErrorResponse"
       description: Used for reward request and for reversal of an existing reward request
       tags:
         - Rewards
@@ -885,7 +915,7 @@ paths:
       tags:
         - Supplies
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
@@ -916,7 +946,7 @@ paths:
                       description: Product name
                     measure_unit:
                       type: string
-                      description: 'The product measure unit display name. Eg: Lt, Kg, h'
+                      description: "The product measure unit display name. Eg: Lt, Kg, h"
                   required:
                     - supply_id
                     - article_code
@@ -925,9 +955,9 @@ paths:
                     - amount
                     - product
                     - measure_unit
-        '401':
+        "401":
           description: Unauthorized
-        '422':
+        "422":
           description: Unprocessable Entity (WebDAV)
       operationId: get-supplies-datacollection
       description: Used to get the last 10 supplies from a specific pump of a fuel station with the new data collection active.
@@ -947,27 +977,27 @@ paths:
       summary: Transaction supply
       operationId: post-transactions
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GenericOutputTransaction'
+                $ref: "#/components/schemas/GenericOutputTransaction"
                 description: Supply response data
-        '400':
+        "400":
           description: Bad Request
-        '401':
+        "401":
           description: Unauthorized
-        '500':
+        "500":
           description: Internal Server Error
       description: Used to validate and registered a supply using a payment card.
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SupplyInput'
+              $ref: "#/components/schemas/SupplyInput"
               description: Oil supply request data
-        description: ''
+        description: ""
       parameters:
         - schema:
             type: string
@@ -982,17 +1012,17 @@ paths:
       summary: Transactions ACK
       operationId: post-transactions-ack
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GenericOutput'
+                $ref: "#/components/schemas/GenericOutput"
           headers:
             header-0:
               schema:
                 type: string
-        '422':
+        "422":
           description: |-
             Unprocessable Entity (WebDAV)
             Input is malformed
@@ -1003,70 +1033,70 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TransactionAckInput'
-        description: ''
+              $ref: "#/components/schemas/TransactionAckInput"
+        description: ""
       tags:
         - Transactions
   /transactions/external:
     post:
-      summary: ''
+      summary: ""
       operationId: post-transactions-external
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GenericOutputTransaction'
-        '400':
+                $ref: "#/components/schemas/GenericOutputTransaction"
+        "400":
           description: Bad Request
-        '401':
+        "401":
           description: Unauthorized
-        '500':
+        "500":
           description: Internal Server Error
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ExternalTransactionInput'
+              $ref: "#/components/schemas/ExternalTransactionInput"
       description: Used to store data about bank transactions
       tags:
         - Transactions
   /transactions/external/reversal:
     post:
-      summary: ''
+      summary: ""
       operationId: post-transactions-external-reversal
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GenericOutput'
+                $ref: "#/components/schemas/GenericOutput"
       tags:
         - Reversal
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ExternalTransactionInput'
+              $ref: "#/components/schemas/ExternalTransactionInput"
       description: Used to perform a bank transaction reversal
   /transactions/fuelcoupons:
     post:
       summary: Fuelcoupon transaction
       operationId: post-transactions-fuelcoupons
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GenericOutputTransaction'
+                $ref: "#/components/schemas/GenericOutputTransaction"
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/FuelcouponTransactionInput'
+              $ref: "#/components/schemas/FuelcouponTransactionInput"
       tags:
         - Fuelcoupons
   /transactions/fuelcoupons/reversal:
@@ -1074,13 +1104,13 @@ paths:
       summary: Reversal fuelcoupon transaction
       operationId: fc-reversal
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FuelcouponReversalOutput'
-        '403':
+                $ref: "#/components/schemas/FuelcouponReversalOutput"
+        "403":
           description: Forbidden
           content:
             application/json:
@@ -1089,18 +1119,18 @@ paths:
                 properties:
                   message:
                     type: string
-        '500':
+        "500":
           description: Internal Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GenericOutput'
+                $ref: "#/components/schemas/GenericOutput"
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/FuelcouponTransactionReversalInput'
-        description: ''
+              $ref: "#/components/schemas/FuelcouponTransactionReversalInput"
+        description: ""
       description: Send transactionid for reversal fuelcoupon request
       tags:
         - Fuelcoupons
@@ -1110,13 +1140,13 @@ paths:
       summary: Automatic reversal fuelcoupon transaction
       operationId: post-automatic-fc-reversal
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GenericOutput'
-        '400':
+                $ref: "#/components/schemas/GenericOutput"
+        "400":
           description: Bad Request
           content:
             application/json:
@@ -1125,12 +1155,12 @@ paths:
                 properties:
                   message:
                     type: string
-        '500':
+        "500":
           description: Internal Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GenericOutput'
+                $ref: "#/components/schemas/GenericOutput"
       requestBody:
         content:
           application/json:
@@ -1162,7 +1192,7 @@ paths:
                 - original_transaction_code
                 - original_transaction_date_time
                 - stan
-        description: ''
+        description: ""
       description: The endpoint is used to automatically reverse a fuel coupon transaction.
       tags:
         - Fuelcoupons
@@ -1171,20 +1201,20 @@ paths:
     get:
       summary: Retrieve info to perform an oil or nonoil transaction
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Supplies-info'
-        '400':
+                $ref: "#/components/schemas/Supplies-info"
+        "400":
           description: Bad Request
-        '401':
+        "401":
           description: Unauthorized
-        '500':
+        "500":
           description: Internal Server Error
       operationId: get-transaction-info
-      description: ''
+      description: ""
       parameters:
         - schema:
             type: string
@@ -1209,27 +1239,27 @@ paths:
       summary: Transaction supply for external GT cards
       operationId: post-transactions-gt
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GenericOutputTransaction'
+                $ref: "#/components/schemas/GenericOutputTransaction"
                 description: Supply response data
-        '400':
+        "400":
           description: Bad Request
-        '401':
+        "401":
           description: Unauthorized
-        '500':
+        "500":
           description: Internal Server Error
       description: Used to validate and registered a supply using a payment card.
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SupplyInput'
+              $ref: "#/components/schemas/SupplyInput"
               description: Oil supply request data
-        description: ''
+        description: ""
       parameters:
         - schema:
             type: string
@@ -1244,18 +1274,18 @@ paths:
       summary: Transaction Reversal Gt
       operationId: post-transactions-reversal-gt
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GenericOutput'
+                $ref: "#/components/schemas/GenericOutput"
       description: The endpoint is used to reverse a GT transaction.
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TransactionReversalInput'
+              $ref: "#/components/schemas/TransactionReversalInput"
       tags:
         - Reversal
     parameters: []
@@ -1264,24 +1294,24 @@ paths:
       summary: Preauth request
       operationId: post-transactions-preauth
       responses:
-        '200':
+        "200":
           description: OK. You need to check inside the body to retrieve the preauth request result
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PreauthResponse'
-        '400':
+                $ref: "#/components/schemas/PreauthResponse"
+        "400":
           description: Bad Request
-        '401':
+        "401":
           description: Unauthorized
-        '500':
+        "500":
           description: Internal Server Error
       description: Used to check if the card has enough credit to perform the operation.
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PreauthRequest'
+              $ref: "#/components/schemas/PreauthRequest"
               description: Preauth request data
       tags:
         - Transactions
@@ -1290,20 +1320,20 @@ paths:
       summary: Transaction points
       operationId: post-transactions-points
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GenericOutput'
-        '400':
+                $ref: "#/components/schemas/GenericOutput"
+        "400":
           description: Bad Request
       description: Card points transaction
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CardPointsTransactionInput'
+              $ref: "#/components/schemas/CardPointsTransactionInput"
       tags:
         - Transactions
   /transactions/points/reversal:
@@ -1311,20 +1341,20 @@ paths:
       summary: Reversal transaction points
       operationId: post-transactions-points-reversal
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GenericOutput'
-        '500':
+                $ref: "#/components/schemas/GenericOutput"
+        "500":
           description: Internal Server Error
-      description: 'Endpoint used to reverse a points transaction '
+      description: "Endpoint used to reverse a points transaction "
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PointsReversalInput'
+              $ref: "#/components/schemas/PointsReversalInput"
       tags:
         - Transactions
     parameters: []
@@ -1332,19 +1362,19 @@ paths:
     post:
       summary: Transaction Reversal
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GenericOutput'
+                $ref: "#/components/schemas/GenericOutput"
       operationId: post-transactions-reversal
       description: The endpoint is used to reverse a transaction.
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TransactionReversalInput'
+              $ref: "#/components/schemas/TransactionReversalInput"
       tags:
         - Reversal
   /transactions/reversal/auto:
@@ -1353,12 +1383,12 @@ paths:
       tags:
         - Reversal
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GenericOutput'
+                $ref: "#/components/schemas/GenericOutput"
       operationId: post-auto-transactions-reversal
       description: The endpoint is used to automatically reverse a transaction.
       requestBody:
@@ -1404,12 +1434,12 @@ paths:
       summary: Automatic transaction reversal Gt
       operationId: post-auto-transactions-reversal-gt
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GenericOutputTransaction'
+                $ref: "#/components/schemas/GenericOutputTransaction"
       description: The endpoint is used to automatically reverse a GT transaction.
       requestBody:
         content:
@@ -1482,24 +1512,24 @@ paths:
     get:
       summary: Transaction reversal info
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/InfoPosTransactionReversalOutput'
-        '401':
+                $ref: "#/components/schemas/InfoPosTransactionReversalOutput"
+        "401":
           description: Unauthorized
           content:
             application/json:
               schema:
                 type: object
                 properties: {}
-        '404':
+        "404":
           description: Not Found
-        '422':
+        "422":
           description: Unprocessable Entity (WebDAV)
-        '500':
+        "500":
           description: Internal Server Error
       operationId: get-devices-pax-reversal-info
       parameters:
@@ -1538,7 +1568,7 @@ components:
           type: array
           description: Arrray of available rewards
           items:
-            $ref: '#/components/schemas/Reward'
+            $ref: "#/components/schemas/Reward"
       required:
         - id
         - name
@@ -1576,10 +1606,10 @@ components:
           extra_code: 0
           is_standalone: false
           item_id: 23
-          pan: '70055740001000049'
+          pan: "70055740001000049"
           points: 0
           transaction_number: 0
-          timestamp: '2023-07-11T16:18:43Z'
+          timestamp: "2023-07-11T16:18:43Z"
           is_oil: false
           is_reversal: true
       examples: []
@@ -1601,14 +1631,14 @@ components:
           description: Total amount for transaction
         km:
           type: integer
-          description: 'Km inserted by the user, if requested during transaction'
+          description: "Km inserted by the user, if requested during transaction"
         driver_code:
           type: integer
-          description: 'Driver code inserted by the user, if requested during transaction'
+          description: "Driver code inserted by the user, if requested during transaction"
         products:
           type: array
           items:
-            $ref: '#/components/schemas/Products'
+            $ref: "#/components/schemas/Products"
     ChipInfo:
       title: ChipInfo
       x-stoplight:
@@ -1633,7 +1663,7 @@ components:
       type: object
       x-examples:
         Example 1:
-          terminal_id: '0'
+          terminal_id: "0"
           supplier_id: 6
           card_types:
             - id: 2
@@ -1730,11 +1760,11 @@ components:
               measure_unit_id: 1
           ticket:
             header:
-              - content: '        PV TEST BRESCIA'
+              - content: "        PV TEST BRESCIA"
                 font: large
-              - content: '       Via Orzinuovi, 17'
+              - content: "       Via Orzinuovi, 17"
                 font: medium
-              - content: '       25125 Brescia (BS)'
+              - content: "       25125 Brescia (BS)"
                 font: medium
       description: First/Forced dll
       examples: []
@@ -1750,7 +1780,7 @@ components:
             type: integer
         guid:
           type: string
-          description: 'Represent the dll unique identifier '
+          description: "Represent the dll unique identifier "
         articles:
           type: array
           items:
@@ -1795,11 +1825,11 @@ components:
           type: object
           description: "This object shows the possible operations for each card type.\nThe keys represents the card type id.\n\nAvailable operations are:\n\tT  --> transaction\n\tS  --> transaction reversal\n\tR  --> recharge\n\tSR --> recharge reversal\n\tRG --> card daily residue\n\tSP --> balance point\n\tPR --> reward request\n\tRP --> reward delivery\n\tLP --> available rewards list \n\tLPP --> pending rewards list\n\tSPR --> reward request reversal\n\tAB --> Activate fuelcoupons"
           properties:
-            '1':
+            "1":
               type: array
               items:
                 type: string
-            '2':
+            "2":
               type: array
               items:
                 type: string
@@ -1833,7 +1863,7 @@ components:
           properties:
             has_data_collection:
               type: boolean
-              description: 'If true, this terminal has the data collection active and can retrieve last transactions data'
+              description: "If true, this terminal has the data collection active and can retrieve last transactions data"
             pumps:
               type: integer
               description: Number of the pumps in the fuel station
@@ -1850,7 +1880,7 @@ components:
               type: string
               x-stoplight:
                 id: iw37rfninl1em
-            'can:_recharge':
+            "can:_recharge":
               type: boolean
               x-stoplight:
                 id: b0bp3e05pf6y7
@@ -1969,7 +1999,7 @@ components:
         id: 8c5jblucfrd8y
       x-examples:
         Example 1:
-          terminal_id: '0'
+          terminal_id: "0"
           supplier_id: 6
           card_types:
             - id: 2
@@ -2066,11 +2096,11 @@ components:
               measure_unit_id: 1
           ticket:
             header:
-              - content: '        PV TEST BRESCIA'
+              - content: "        PV TEST BRESCIA"
                 font: large
-              - content: '       Via Orzinuovi, 17'
+              - content: "       Via Orzinuovi, 17"
                 font: medium
-              - content: '       25125 Brescia (BS)'
+              - content: "       25125 Brescia (BS)"
                 font: medium
       description: configuration print model
       examples: []
@@ -2138,11 +2168,11 @@ components:
           type: object
           description: "This object shows the possible operations for each card type.\nThe keys represents the card type id.\n\nAvailable operations are:\n\tT  --> transaction\n\tS  --> transaction reversal\n\tR  --> recharge\n\tSR --> recharge reversal\n\tRG --> card daily residue\n\tSP --> balance point\n\tPR --> reward request\n\tRP --> reward delivery\n\tLP --> available rewards list \n\tLPP --> pending rewards list\n\tSPR --> reward request reversal\n\tAB --> Activate fuelcoupons"
           properties:
-            '1':
+            "1":
               type: array
               items:
                 type: string
-            '2':
+            "2":
               type: array
               items:
                 type: string
@@ -2159,13 +2189,13 @@ components:
           properties:
             has_data_collection:
               type: boolean
-              description: 'If true, this terminal has the data collection active and can retrieve last transactions data'
+              description: "If true, this terminal has the data collection active and can retrieve last transactions data"
             pumps:
               type: integer
               description: Number of the pumps in the fuel station
         guid:
           type: string
-          description: 'Represent the dll unique identifier '
+          description: "Represent the dll unique identifier "
         payment_modes:
           type: object
           properties:
@@ -2209,7 +2239,7 @@ components:
       x-stoplight:
         id: mkvtbtobg0yya
       type: object
-      description: 'Input model for the information required only for external GTs (eg: DKV)'
+      description: "Input model for the information required only for external GTs (eg: DKV)"
       properties:
         pos_data_code:
           type: string
@@ -2257,7 +2287,7 @@ components:
           x-stoplight:
             id: hx85nx73ee5k5
           items:
-            $ref: '#/components/schemas/Products'
+            $ref: "#/components/schemas/Products"
             x-stoplight:
               id: umf6z7fnrskru
         date_time:
@@ -2334,7 +2364,7 @@ components:
         articles:
           type: array
           items:
-            $ref: '#/components/schemas/Products'
+            $ref: "#/components/schemas/Products"
         date_time:
           type: string
           format: date-time
@@ -2348,8 +2378,8 @@ components:
         Example 1:
           transaction_number: 2
           original_transaction_code: 9aa1e62c5b30ec5abc81e471
-          original_transaction_date_time: '2023-10-04T14:36:59.816Z'
-          reversal_transaction_date_time: '2023-10-04T15:36:59.816Z'
+          original_transaction_date_time: "2023-10-04T14:36:59.816Z"
+          reversal_transaction_date_time: "2023-10-04T15:36:59.816Z"
       properties:
         transaction_number:
           type: integer
@@ -2379,7 +2409,7 @@ components:
       type: object
       x-examples:
         Example 1:
-          fuelcoupon_code: '0000000000009906970358268'
+          fuelcoupon_code: "0000000000009906970358268"
           transaction_id: 53c786b82d124fadb1e8e374
       properties:
         fuelcoupon_code:
@@ -2395,7 +2425,7 @@ components:
         id: q3mlfck95rfz7
       x-examples:
         Example 1:
-          fuelcoupon_code: '0000000000009906970358268'
+          fuelcoupon_code: "0000000000009906970358268"
           transaction_id: 53c786b82d124fadb1e8e374
       properties:
         fuelcoupons_codes:
@@ -2408,7 +2438,7 @@ components:
             type: string
       required:
         - fuelcoupons_codes
-      title: ''
+      title: ""
     FuelcouponValidationOutput:
       type: object
       x-examples:
@@ -2436,7 +2466,7 @@ components:
               - message
         transaction_code:
           type: string
-          description: 'This identifier is used to relates the fuelcoupons to the same transaction. So for the same transaction, if the user wants to use multiple fuelcoupons, the POS should send everytime the same transaction_id for each call to this API'
+          description: "This identifier is used to relates the fuelcoupons to the same transaction. So for the same transaction, if the user wants to use multiple fuelcoupons, the POS should send everytime the same transaction_id for each call to this API"
         locked_amount:
           type: integer
           description: Available amount for the used fuelcoupon
@@ -2503,19 +2533,19 @@ components:
       type: object
       x-examples:
         Example 1:
-          result: '000'
+          result: "000"
           ticket:
             - content: Ricarica effettuata!
               font: test
-            - content: 'Importo: 500.00'
-            - content: 'Abbuono: 0.00'
-            - content: 'Saldo tessera: 3510.00'
+            - content: "Importo: 500.00"
+            - content: "Abbuono: 0.00"
+            - content: "Saldo tessera: 3510.00"
           display:
             - content: Ricarica effettuata!
               font: test
-            - content: 'Importo: 500.00'
-            - content: 'Abbuono: 0.00'
-            - content: 'Saldo tessera: 3510.00'
+            - content: "Importo: 500.00"
+            - content: "Abbuono: 0.00"
+            - content: "Saldo tessera: 3510.00"
       properties:
         action_code:
           type: string
@@ -2526,7 +2556,7 @@ components:
             ..
         ticket:
           type: array
-          description: 'Representing the ticket data to print '
+          description: "Representing the ticket data to print "
           items:
             type: object
             properties:
@@ -2556,7 +2586,7 @@ components:
               - font
         icc_related_data:
           type: string
-          description: 'Conditional attribute, present only in case of chip Card. Represent the Chip Data '
+          description: "Conditional attribute, present only in case of chip Card. Represent the Chip Data "
       required:
         - action_code
         - display
@@ -2564,19 +2594,19 @@ components:
       type: object
       x-examples:
         Example 1:
-          result: '000'
+          result: "000"
           ticket:
             - content: Ricarica effettuata!
               font: test
-            - content: 'Importo: 500.00'
-            - content: 'Abbuono: 0.00'
-            - content: 'Saldo tessera: 3510.00'
+            - content: "Importo: 500.00"
+            - content: "Abbuono: 0.00"
+            - content: "Saldo tessera: 3510.00"
           display:
             - content: Ricarica effettuata!
               font: test
-            - content: 'Importo: 500.00'
-            - content: 'Abbuono: 0.00'
-            - content: 'Saldo tessera: 3510.00'
+            - content: "Importo: 500.00"
+            - content: "Abbuono: 0.00"
+            - content: "Saldo tessera: 3510.00"
       x-stoplight:
         id: 397ea325f2d9b
       title: GenericOutputTransaction
@@ -2604,7 +2634,7 @@ components:
           type: array
           description: Conditional data - Present only if the transaction passed. Represent the bought articles with informations about eventual discounts applied
           items:
-            $ref: '#/components/schemas/TransactionsData'
+            $ref: "#/components/schemas/TransactionsData"
             x-stoplight:
               id: 0jgpse19ixsp5
         display:
@@ -2624,7 +2654,7 @@ components:
               - font
         ticket:
           type: array
-          description: 'Representing the ticket data to print '
+          description: "Representing the ticket data to print "
           items:
             type: object
             properties:
@@ -2652,10 +2682,10 @@ components:
           description: true if the terminal must update its settings
         requires_pin:
           type: boolean
-          description: 'true if the pin mandatory for the next reversal '
+          description: "true if the pin mandatory for the next reversal "
         total_amount:
           type: number
-          description: 'Transaction total amount, the sum of each article amount'
+          description: "Transaction total amount, the sum of each article amount"
         original_transaction_number:
           type: integer
           description: Reversable transaction number
@@ -2664,7 +2694,7 @@ components:
           description: Reversable transaction date time
           format: date-time
         supplies:
-          $ref: '#/components/schemas/Supplies'
+          $ref: "#/components/schemas/Supplies"
           description: supplies model of the transaction
       required:
         - update_required
@@ -2681,7 +2711,7 @@ components:
           requires_pin: true
           total_amount: 0
           original_transaction_number: 0
-          original_transaction_date_time: '2019-08-24T14:15:22Z'
+          original_transaction_date_time: "2019-08-24T14:15:22Z"
           supplies:
             - - article_name: string
                 amount: 0
@@ -2698,10 +2728,10 @@ components:
           description: true if the terminal must update its settings
         requires_pin:
           type: boolean
-          description: 'true if the pin mandatory for the next reversal '
+          description: "true if the pin mandatory for the next reversal "
         total_amount:
           type: number
-          description: 'Transaction total amount, the sum of each article amount'
+          description: "Transaction total amount, the sum of each article amount"
         original_transaction_number:
           type: integer
           description: Reversable transaction number
@@ -2717,7 +2747,7 @@ components:
           description: supplies model of the transaction
           type: array
           items:
-            $ref: '#/components/schemas/SuppliesFuelcoupon'
+            $ref: "#/components/schemas/SuppliesFuelcoupon"
       required:
         - update_required
         - requires_pin
@@ -2780,7 +2810,7 @@ components:
                 description: Represent the single element transaction identifier
               is_oil:
                 type: boolean
-                description: 'Information about single element transaction typology: true if oil, false if not oil'
+                description: "Information about single element transaction typology: true if oil, false if not oil"
             required:
               - id
               - is_oil
@@ -2805,7 +2835,7 @@ components:
       properties:
         card_track:
           type: string
-          description: 'Track of the used card. Example: 70055730001000057=2209009000615800000'
+          description: "Track of the used card. Example: 70055730001000057=2209009000615800000"
         date_time:
           type: string
           description: Datetime of the request
@@ -2817,7 +2847,7 @@ components:
           type: integer
           description: Transaction id
         card_pin:
-          $ref: '#/components/schemas/PinDataInput'
+          $ref: "#/components/schemas/PinDataInput"
       required:
         - card_track
         - date_time
@@ -2848,7 +2878,7 @@ components:
           description: Option vehicle plate binded to the card
         icc_data:
           type: string
-          description: 'ICC data, for EMV transactions'
+          description: "ICC data, for EMV transactions"
         balance_amount:
           type: number
           description: Total balance amount
@@ -2883,7 +2913,7 @@ components:
           description: Product amount (quantity * unit_price)
         is_oil:
           type: boolean
-          description: 'If true, is an oil product, otherwise is a not oil product'
+          description: "If true, is an oil product, otherwise is a not oil product"
         discount_value:
           type: number
           description: Conditional data - Present only if there's a discount applied. Representing the applied discount value on unit price
@@ -2914,7 +2944,7 @@ components:
           payment_mode: 2
           key_label: QT_IFSF
           random_pin_key: 2C9E11B025F712CA37437D853BD6E7D4
-          transaction_id: ''
+          transaction_id: ""
       examples: []
       properties:
         card_track:
@@ -2926,12 +2956,12 @@ components:
         transaction_number:
           type: integer
         card_pin:
-          $ref: '#/components/schemas/PinDataInput'
+          $ref: "#/components/schemas/PinDataInput"
         custom_recharge_amount:
           type: integer
           x-stoplight:
             id: oq1otosjd7mkq
-          description: 'Custom recharge bill, mutually exclusive with bill IDfield'
+          description: "Custom recharge bill, mutually exclusive with bill IDfield"
         custom_recharge_rebate:
           type: number
           x-stoplight:
@@ -2996,7 +3026,7 @@ components:
           description: true if the terminal must update its settings
         requires_pin:
           type: boolean
-          description: 'true if the pin mandatory for the next reversal '
+          description: "true if the pin mandatory for the next reversal "
     RechargesReversalInput:
       type: object
       x-examples:
@@ -3006,14 +3036,14 @@ components:
           pin: IFGHERYIGEGTRH
           key_label: ASDFGHJ
           random_pin_key: GERGRDHE6HVJYJ TRJFJTYJRTJ
-          transaction_id: '32894987453'
+          transaction_id: "32894987453"
       properties:
         card_track:
           type: string
         recharge_id:
           type: integer
         card_pin:
-          $ref: '#/components/schemas/PinDataInput'
+          $ref: "#/components/schemas/PinDataInput"
         transaction_number:
           type: integer
         stan:
@@ -3059,11 +3089,11 @@ components:
           description: Card Track
         transaction_number:
           type: integer
-          description: 'set autoincrement transaction number '
+          description: "set autoincrement transaction number "
         timestamp:
           type: string
           format: date-time
-          description: 'Transaction date time '
+          description: "Transaction date time "
       required:
         - campaign_id
         - reward_id
@@ -3117,7 +3147,7 @@ components:
             description: quantity of the transaction
           is_oil:
             type: boolean
-            description: 'information about the selled articles: if oil or not'
+            description: "information about the selled articles: if oil or not"
           card_id:
             type: integer
             description: Card id used for the transaction
@@ -3126,7 +3156,7 @@ components:
             description: Card Pan used for the transaction
           ov_id:
             type: integer
-            description: 'Conditional attribute. Present only if the reverted transaction is selected using data collection '
+            description: "Conditional attribute. Present only if the reverted transaction is selected using data collection "
           measure_unit:
             type: string
             description: Unit of measure involved in this transaction
@@ -3157,7 +3187,7 @@ components:
             description: quantity of the transaction
           is_oil:
             type: boolean
-            description: 'information about the selled articles: if oil or not'
+            description: "information about the selled articles: if oil or not"
           fuelcoupon_id:
             type: integer
             description: Fuelcoupon id used for the transaction
@@ -3166,12 +3196,12 @@ components:
             description: Fuelcoupon number used for the transaction
           ov_id:
             type: integer
-            description: 'Conditional attribute. Present only if the reverted transaction is selected using data collection '
+            description: "Conditional attribute. Present only if the reverted transaction is selected using data collection "
           precision:
             type: integer
           measure_unit:
             type: string
-          ' fuelcoupon_code':
+          " fuelcoupon_code":
             type: string
             x-stoplight:
               id: eqgv64iog038q
@@ -3184,7 +3214,7 @@ components:
       properties:
         card_track:
           type: string
-          description: 'Track of the used card. Example: 70055730001000057=2209009000615800000'
+          description: "Track of the used card. Example: 70055730001000057=2209009000615800000"
         transaction_number:
           type: integer
           description: Transaction id
@@ -3198,10 +3228,10 @@ components:
             - array
           description: List of products bought.
           items:
-            $ref: '#/components/schemas/Products'
+            $ref: "#/components/schemas/Products"
         date_time:
           type: string
-          description: 'Request date time '
+          description: "Request date time "
         total_amount:
           type: number
           description: Transaction's total amount that the host should authorize
@@ -3214,22 +3244,22 @@ components:
         vehicle_code:
           type: string
         gt_info:
-          $ref: '#/components/schemas/ExternalGtInfo'
-          description: 'Conditional field: should be valorized only if the transaction is done with external Card Circuit'
+          $ref: "#/components/schemas/ExternalGtInfo"
+          description: "Conditional field: should be valorized only if the transaction is done with external Card Circuit"
         chip_info:
-          $ref: '#/components/schemas/ChipInfo'
+          $ref: "#/components/schemas/ChipInfo"
           description: |-
             Conditional Field: should be valorized only in case of chip card. 
             Contains the chip information
         card_pin:
-          $ref: '#/components/schemas/PinDataInput'
+          $ref: "#/components/schemas/PinDataInput"
           description: Card pin data
         driver_pin:
-          $ref: '#/components/schemas/PinDataInput'
+          $ref: "#/components/schemas/PinDataInput"
           description: Driver Pin data
         check_driver:
           type: boolean
-          description: 'If True, the driver_code will be checked on backend. Otherwise, there are no controls on driver_code value.'
+          description: "If True, the driver_code will be checked on backend. Otherwise, there are no controls on driver_code value."
         stan:
           type: integer
           x-stoplight:
@@ -3326,7 +3356,7 @@ components:
           x-stoplight:
             id: 4o57diwfb7e76
           items:
-            $ref: '#/components/schemas/Transaction'
+            $ref: "#/components/schemas/Transaction"
             x-stoplight:
               id: 1vclqvd4516sr
       required:
@@ -3362,7 +3392,7 @@ components:
           description: Article amount (quantity * unit_price)
         is_oil:
           type: boolean
-          description: 'If true, is an oil article, otherwise is a not oil article'
+          description: "If true, is an oil article, otherwise is a not oil article"
         discounted_value:
           type: number
           description: Conditional data - Present only if there's a discount applied. Representing the applied discount value on unit price
@@ -3421,7 +3451,7 @@ components:
           type: integer
           x-stoplight:
             id: fw773lk5d6bjn
-        '':
+        "":
           type: string
           x-stoplight:
             id: qyr6wqya7yugb
@@ -3447,11 +3477,11 @@ components:
           type: string
           description: Card track used for the reversal transaction
         card_pin:
-          $ref: '#/components/schemas/PinDataInput'
-          description: 'Pin data, conditional based on card type'
+          $ref: "#/components/schemas/PinDataInput"
+          description: "Pin data, conditional based on card type"
         transaction_number:
           type: integer
-          description: 'Transaction number '
+          description: "Transaction number "
         receipt_number:
           type: integer
           x-stoplight:
@@ -3465,17 +3495,17 @@ components:
         date_time:
           type: string
           format: date-time
-          description: 'Reversal transaction date time '
+          description: "Reversal transaction date time "
         ov_supplies_ids:
           type: array
           description: Conditional Data. Echoed "ov_id" attribute returned by getInfoReversal in the supplies.
           items:
             type: integer
         gt_info:
-          $ref: '#/components/schemas/ExternalGtInfo'
-          description: 'Conditional field: should be valorized only if the transaction is done with external Card Circuit'
+          $ref: "#/components/schemas/ExternalGtInfo"
+          description: "Conditional field: should be valorized only if the transaction is done with external Card Circuit"
         chip_info:
-          $ref: '#/components/schemas/ChipInfo'
+          $ref: "#/components/schemas/ChipInfo"
           description: |-
             Conditional Field: should be valorized only in case of chip card. 
             Contains the chip information
@@ -3505,12 +3535,12 @@ components:
           type: string
           x-stoplight:
             id: 4g3c6my5t4owj
-          description: 'Card track for the used one. It is a conditional field, present only if the payment mode require it. Eg: is not present for fuelcoupons'
+          description: "Card track for the used one. It is a conditional field, present only if the payment mode require it. Eg: is not present for fuelcoupons"
         fuelcoupon_code:
           type: string
           x-stoplight:
             id: qwjmnh4wvaloq
-          description: 'Fuelcoupon code for the used one. It is a conditional field, present only if the payment mode require it. Eg: is not present for card transactions or credit card'
+          description: "Fuelcoupon code for the used one. It is a conditional field, present only if the payment mode require it. Eg: is not present for card transactions or credit card"
         fuelcoupon_number:
           type: number
           x-stoplight:
@@ -3525,7 +3555,7 @@ components:
           type: object
           x-stoplight:
             id: sxetioh0u98r5
-          description: 'Contains all the customer data like km, driver code and all the data inserted by the user during card transaction'
+          description: "Contains all the customer data like km, driver code and all the data inserted by the user during card transaction"
           properties:
             driver_code:
               type: integer
@@ -3571,7 +3601,7 @@ components:
           type: number
           x-stoplight:
             id: z22f4glr6sbuo
-          description: 'Conditional field, representing the supply identifier selected by the user. It is present only if data-collection is enabled on fuelstation'
+          description: "Conditional field, representing the supply identifier selected by the user. It is present only if data-collection is enabled on fuelstation"
         article_name:
           type: string
           x-stoplight:
@@ -3591,7 +3621,7 @@ components:
           type: boolean
           x-stoplight:
             id: g1v2zjg9994d9
-          description: 'If true, is an oil product, otherwise is a not oil product'
+          description: "If true, is an oil product, otherwise is a not oil product"
         quantity:
           type: number
           x-stoplight:
@@ -3607,10 +3637,10 @@ components:
       type: oauth2
       flows:
         password:
-          tokenUrl: ''
-          refreshUrl: ''
+          tokenUrl: ""
+          refreshUrl: ""
           scopes: {}
-      description: ''
+      description: ""
   responses: {}
 security:
   - Cognito: []
