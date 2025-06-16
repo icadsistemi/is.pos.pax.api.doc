@@ -972,6 +972,21 @@ paths:
           in: query
           name: card_track
           description: Transacted card track
+  /supplies/datacollection/trigger:
+    post:
+      summary: Trigger DataCollection to download supplies
+      operationId: post-supplies-datacollection-trigger
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal Server Error
+      tags:
+        - Supplies
   /transactions:
     post:
       summary: Transaction supply
