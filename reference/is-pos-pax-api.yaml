@@ -1815,6 +1815,10 @@ components:
                 type: integer
               precision:
                 type: integer
+              category_id:
+                type: integer
+                x-stoplight:
+                  id: s3p51nyz8h4o8
         card_types:
           type: array
           items:
@@ -2004,6 +2008,23 @@ components:
                   type: string
                   x-stoplight:
                     id: i6i1ptzxaydhc
+        categories:
+          type: array
+          items:
+            type: object
+            x-stoplight:
+              id: d1bz89okyapeb
+            properties:
+              id:
+                type: integer
+                x-stoplight:
+                  id: r76hyz3es99fq
+              name:
+                type: string
+              code:
+                type: string
+                x-stoplight:
+                  id: stxxd0rjthhac
       required:
         - guid
         - card_types_operations
