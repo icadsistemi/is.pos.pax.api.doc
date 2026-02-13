@@ -1999,20 +1999,23 @@ components:
                   font:
                     type: string
             footer:
-              type: object
-              x-stoplight:
-                id: i3ou3wpdano45
-              properties:
-                content:
-                  type: string
-                  x-stoplight:
-                    id: hhycdbumjeebm
-                font:
-                  type: string
-                  x-stoplight:
-                    id: i6i1ptzxaydhc
+              type: array
+              items:
+                type: object
+                properties:
+                  content:
+                    type: string
+                  font:
+                    type: string
             qr_label:
-              type: string
+              type: array
+              items:
+                type: object
+                properties:
+                  content:
+                    type: string
+                  font:
+                    type: string
         categories:
           type: array
           items:
