@@ -2007,7 +2007,7 @@ components:
                     type: string
                   font:
                     type: string
-            qr_label:
+            qr:
               type: array
               items:
                 type: object
