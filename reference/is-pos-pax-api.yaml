@@ -1889,6 +1889,12 @@ components:
             pumps:
               type: integer
               description: Number of the pumps in the fuel station
+        fuelcoupons:
+          type: object
+          properties:
+            one_shot_automatic_amount:
+              type: boolean
+              description: If true the pos will not ask user for amount in case of one shot fuelcoupons
         fuel_station:
           type: object
           x-stoplight:
