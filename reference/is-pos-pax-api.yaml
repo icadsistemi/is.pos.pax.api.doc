@@ -2534,6 +2534,9 @@ components:
           description: VAT applied when the coupon was bought.
           minimum: 0
           maximum: 100
+        fuel_coupon_type:
+          type: string
+          description: Type of the fuel coupon, could be "0" for one shot fuelcoupons or "1" for multi use fuelcoupons
       required:
         - display
         - transaction_code
