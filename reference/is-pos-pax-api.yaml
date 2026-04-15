@@ -2535,8 +2535,8 @@ components:
           minimum: 0
           maximum: 100
         fuel_coupon_type:
-          type: string
-          description: Type of the fuel coupon, could be "0" for one shot fuelcoupons or "1" for multi use fuelcoupons
+          type: integer
+          description: Type of the fuel coupon, could be 0 for one shot fuelcoupons or 1 for multi use fuelcoupons
       required:
         - display
         - transaction_code
@@ -3685,6 +3685,9 @@ components:
           x-stoplight:
             id: qml1eb01074rh
           description: Six digits authorization code
+        card_payment:
+          type: boolean
+          description: "True if the transaction is a card payment so we can generate qr code."
     TransactionAckOutput:
       type: object
       x-examples:
