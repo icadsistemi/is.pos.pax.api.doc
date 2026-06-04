@@ -1902,16 +1902,12 @@ components:
           properties:
             is_code:
               type: string
-              x-stoplight:
-                id: n4fve9s1ihk3h
             merchant_code:
               type: string
-              x-stoplight:
-                id: iw37rfninl1em
-            "can:_recharge":
+            can_recharge:
               type: boolean
-              x-stoplight:
-                id: b0bp3e05pf6y7
+            fiscal_printer:
+              type: boolean
         measure_units:
           type: array
           items:
@@ -3404,14 +3400,15 @@ components:
                 description: Card track for the used one
             required:
               - card_track
+        tax_receipt:
+          type: boolean
+          description: True if the user wants the tax receipt.
         transactions:
           type: array
           x-stoplight:
             id: 4o57diwfb7e76
           items:
             $ref: "#/components/schemas/Transaction"
-            x-stoplight:
-              id: 1vclqvd4516sr
       required:
         - supply_receipt_number
         - transactions
